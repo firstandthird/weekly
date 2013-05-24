@@ -1,0 +1,4 @@
+
+suite('weekly', function() {
+
+});

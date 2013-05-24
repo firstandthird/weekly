@@ -1,0 +1,14 @@
+{
+  "name": "weekly",
+  "description": "jQuery Weekly Calendar Plugin",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jgallen23/weekly",
+  "license": "MIT",
+  "copyright": "Greg Allen",
+  "main": "dist/weekly.js",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "assert": "*"
+  }
+}
