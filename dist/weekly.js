@@ -1,3 +1,10 @@
+/*!
+ * weekly - jQuery Weekly Calendar Plugin
+ * v0.1.0
+ * https://github.com/jgallen23/weekly
+ * copyright Greg Allen 2013
+ * MIT License
+*/
 (function($) {
 
   $.declare('weekly', {
@@ -7,7 +14,7 @@
       weekOffset: 0,
       currentDate: new Date(),
       autoRender: true,
-      template: '##template##'
+      template: '<div>  <table>    <thead>      <tr>        <th class="weekly-timezone">Timezone</th>        <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>          <th class="weekly-date"><%= date.toString() %></th>        <% } %>    </thead>    <tbody>      <% for (var i = 0; i < times.length; i++) { var time = times[i]; %>        <tr>          <td class="weekly-time"><%= time %></td>          <% for (var x = 0; x < dates.length; x++) { var date = dates[x]; %>            <td>&nbsp;</td>          <% } %>        </tr>      <% } %>    </tbody>  </table></div>'
     },
 
     init: function() {

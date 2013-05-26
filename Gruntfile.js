@@ -10,6 +10,7 @@ module.exports = function(grunt) {
               ' * <%= info.license %> License\n'+
               '*/\n'
     },
+
     jshint: {
       main: [
         'Gruntfile.js', 
@@ -18,37 +19,63 @@ module.exports = function(grunt) {
         'test/*.js'
       ]
     },
+
     concat: {
       options: {
         banner: '<%= meta.banner %>'
       },
+
       dist: {
         src: 'lib/weekly.js',
         dest: 'dist/weekly.js'
       }
     },
+
+    template2js: {
+      dist: {
+        src: 'lib/template.html',
+        dest: 'dist/weekly.js'
+      }
+    },
+
     uglify: {
       options: {
         banner: '<%= meta.banner %>'
       },
+
       dist: {
         src: 'dist/weekly.js',
         dest: 'dist/weekly.min.js'
       }
     },
+
+    less: {
+      'default': {
+        src: 'lib/default.less',
+        dest: 'dist/weekly.css'
+      }
+    },
+
     watch: {
       main: {
-        files: '<%= jshint.main %>',
-        tasks: 'default' 
+        files: [
+          '<%= jshint.main %>',
+          'lib/template.html',
+          'lib/*.less'
+        ],
+        tasks: 'default'
       },
+
       ci: {
         files: [
           '<%= jshint.main %>',
-          'test/index.html'
+          'test/index.html',
+          'lib/template.html'
         ],
         tasks: ['default', 'mocha']
       }
     },
+
     mocha: {
       all: {
         src: 'test/index.html',
@@ -57,6 +84,7 @@ module.exports = function(grunt) {
         }
       }
     },
+
     plato: {
       main: {
         files: {
@@ -64,6 +92,7 @@ module.exports = function(grunt) {
         }
       }
     },
+
     reloadr: {
       main: [
         'example/*',
@@ -71,11 +100,13 @@ module.exports = function(grunt) {
         'dist/*'
       ]
     },
+
     connect: {
       server:{
         port: 8000,
         base: '.'
       },
+
       plato: {
         port: 8000,
         base: 'reports',
@@ -90,10 +121,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-mocha');
   grunt.loadNpmTasks('grunt-reloadr');
   grunt.loadNpmTasks('grunt-plato');
-  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'mocha']);
+  grunt.loadTasks('tasks');
+  grunt.registerTask('default', ['jshint', 'less', 'concat', 'template2js', 'uglify', 'mocha']);
   grunt.registerTask('dev', ['connect:server', 'reloadr', 'watch:main']);
   grunt.registerTask('ci', ['connect:server', 'watch:ci']);
   grunt.registerTask('reports', ['plato', 'connect:plato']);

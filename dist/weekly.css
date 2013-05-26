@@ -1,0 +1,12 @@
+.weekly table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.weekly table th,
+.weekly table td {
+  border: 1px solid #ccc;
+}
+.weekly table th:hover,
+.weekly table td:hover {
+  background: blue;
+}

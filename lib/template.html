@@ -1,0 +1,21 @@
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th class="weekly-timezone">Timezone</th>
+        <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>
+          <th class="weekly-date"><%= date.toString() %></th>
+        <% } %>
+    </thead>
+    <tbody>
+      <% for (var i = 0; i < times.length; i++) { var time = times[i]; %>
+        <tr>
+          <td class="weekly-time"><%= time %></td>
+          <% for (var x = 0; x < dates.length; x++) { var date = dates[x]; %>
+            <td>&nbsp;</td>
+          <% } %>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
