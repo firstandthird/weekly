@@ -65,6 +65,37 @@
 
     renderEvent: function(event) {
       console.log(event);
+
+      var startDate = event.start.getFullYear() + "-" + event.start.getMonth() + "-" + event.start.getDate();
+      var startTime = event.start.toTimeString().slice(0,5);
+      var endDate = event.end.getFullYear() + "-" + event.end.getMonth() + "-" + event.end.getDate();
+      var endTime = event.end.toTimeString().slice(0,5);
+      console.log('start:', startDate, 'end:', endDate);
+      console.log('start time:', startTime, 'end time:', endTime);
+
+      var topOffset = this.getTimeOffsetPercent(this.startTime, startTime);
+      var bottomOffset = this.getTimeOffsetPercent(this.endTime, endTime);
+
+      var eventTemplate = $('<div class="event"></div>');
+
+      eventTemplate.css({
+        top: topOffset + '%',
+        bottom: bottomOffset + '%'
+      });
+
+      this.el.find('.grid .day[data-date="' + startDate + '"]').append(eventTemplate);
+    },
+
+    toMilTime: function(time) {
+      if(time.toString().indexOf(':') === -1) {
+        time += '00';
+      }
+
+      return ~~(time.toString().split(':').join(''));
+    },
+
+    getTimeOffsetPercent: function(time, checkTime) {
+      return Math.abs(100-(this.toMilTime(time)/this.toMilTime(checkTime))*100);
     },
 
     addEvent: function(event) {

@@ -54,9 +54,16 @@
 }
 .weekly .grid .day {
   float: left;
+  position: relative;
 }
 .weekly .grid .day .time {
   padding: 10px;
   border-left: 1px solid #ecf0f1;
   border-top: 1px solid #ecf0f1;
+}
+.weekly .grid .day .event {
+  position: absolute;
+  background-color: #3498db;
+  left: 5px;
+  right: 5px;
 }

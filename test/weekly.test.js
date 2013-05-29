@@ -157,8 +157,8 @@ suite('weekly', function() {
 
       el.weekly('addEvent', {
         name: 'Test Event',
-        start: new Date(2013, 4, 13, 4, 11, 05),
-        end: new Date(2013, 4, 13, 4, 12, 45)
+        start: new Date(2013, 4, 13, 9, 05),
+        end: new Date(2013, 4, 13, 9, 45)
       });
     });
 

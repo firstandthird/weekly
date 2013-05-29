@@ -9,6 +9,7 @@
 
 @border: 1px solid #ECF0F1;
 @padding: 10px;
+@eventColor: #3498DB;
 
 .weekly {
   color: #7F8C8D;
@@ -59,11 +60,19 @@
 
     .day {
       float: left;
+      position: relative;
 
       .time {
         padding: @padding;
         border-left: @border;
         border-top: @border;
+      }
+
+      .event {
+        position: absolute;
+        background-color: @eventColor;
+        left: 5px;
+        right: 5px;
       }
     }
   }
