@@ -1,15 +1,69 @@
+.weekly-clearfix() {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+
+@border: 1px solid #ECF0F1;
+@padding: 10px;
 
 .weekly {
-  table {
-    width: 100%;
-    border-collapse: collapse;
+  color: #7F8C8D;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-    th,
-    td {
-      border: 1px solid #ccc;
+  * {
+    -mox-box-sizing: border-box;
+    box-sizing: border-box;
+  }
 
-      &:hover {
-        background: blue;
+  &:after {
+    .weekly-clearfix();
+  }
+
+  .days {
+    padding-left: 10%;
+    text-align: center;
+
+    &:after {
+      .weekly-clearfix();
+    }
+
+    .day {
+      float: left;
+      padding: @padding;
+      border-left: @border;
+    }
+  }
+  
+  .times {
+    float: left;
+    width: 10%;
+    text-align: right;
+
+    .time {
+      padding: @padding;
+      border-top: @border;
+    }
+  }
+
+  .grid {
+    float: left;
+    width: 90%;
+
+    &:after {
+      .weekly-clearfix();
+    }
+
+    .day {
+      float: left;
+
+      .time {
+        padding: @padding;
+        border-left: @border;
+        border-top: @border;
       }
     }
   }

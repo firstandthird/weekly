@@ -1,12 +1,62 @@
-.weekly table {
-  width: 100%;
-  border-collapse: collapse;
+.weekly {
+  color: #7F8C8D;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-.weekly table th,
-.weekly table td {
-  border: 1px solid #ccc;
+.weekly * {
+  -mox-box-sizing: border-box;
+  box-sizing: border-box;
 }
-.weekly table th:hover,
-.weekly table td:hover {
-  background: blue;
+.weekly:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+.weekly .days {
+  padding-left: 10%;
+  text-align: center;
+}
+.weekly .days:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+.weekly .days .day {
+  float: left;
+  padding: 10px;
+  border-left: 1px solid #ecf0f1;
+}
+.weekly .times {
+  float: left;
+  width: 10%;
+  text-align: right;
+}
+.weekly .times .time {
+  padding: 10px;
+  border-top: 1px solid #ecf0f1;
+}
+.weekly .grid {
+  float: left;
+  width: 90%;
+}
+.weekly .grid:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+.weekly .grid .day {
+  float: left;
+}
+.weekly .grid .day .time {
+  padding: 10px;
+  border-left: 1px solid #ecf0f1;
+  border-top: 1px solid #ecf0f1;
 }

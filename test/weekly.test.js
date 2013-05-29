@@ -137,9 +137,9 @@ suite('weekly', function() {
 
       var el = $('.weekly').weekly();
 
-      assert.equal(el.find('table').length, 1);
-      assert.equal(el.find('th').length, 8);
-      assert.equal(el.find('tr').length, 12);
+      assert.equal(el.find('.days').length, 1);
+      assert.equal(el.find('.times').length, 1);
+      assert.equal(el.find('.grid').length, 1);
 
     });
 
@@ -157,7 +157,8 @@ suite('weekly', function() {
 
       el.weekly('addEvent', {
         name: 'Test Event',
-        date: new Date(2013, 4, 13, 4, 0)
+        start: new Date(2013, 4, 13, 4, 11, 05),
+        end: new Date(2013, 4, 13, 4, 12, 45)
       });
     });
 

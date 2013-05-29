@@ -14,7 +14,7 @@
       weekOffset: 0,
       currentDate: new Date(),
       autoRender: true,
-      template: '<div>  <table>    <thead>      <tr>        <th class="weekly-timezone">Timezone</th>        <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>          <th class="weekly-date"><%= date.toString() %></th>        <% } %>    </thead>    <tbody>      <% for (var i = 0; i < times.length; i++) { var time = times[i]; %>        <tr>          <td class="weekly-time"><%= time %></td>          <% for (var x = 0; x < dates.length; x++) { var date = dates[x]; %>            <td>&nbsp;</td>          <% } %>        </tr>      <% } %>    </tbody>  </table></div>'
+      template: '<div class="days"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="day" style="width:<%= 100/dates.length %>%" data-date="<%= date.getFullYear() %>-<%= date.getMonth() %>-<%= date.getDate() %>"><%= date.toDateString() %></div><% } %></div><div class="times"><% for (var i = 0; i < times.length; i++) { var time = times[i]; %>  <div class="time" data-time="<%= time %>"><%= time %></div><% } %></div><div class="grid"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="day" style="width:<%= 100/dates.length %>%" data-date="<%= date.getFullYear() %>-<%= date.getMonth() %>-<%= date.getDate() %>">    <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>      <div class="time" data-time="<%= time %>">&nbsp;</div>    <% } %>  </div><% } %></div>'
     },
 
     init: function() {
@@ -71,7 +71,8 @@
       event = $.extend({
         name: 'Event',
         description: '',
-        duration: 1
+        start: null,
+        end: null
       }, event);
 
       this.renderEvent(event);
