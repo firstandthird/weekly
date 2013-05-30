@@ -29,6 +29,8 @@
         dates: this.getDates(),
         times: this.getTimes()
       });
+
+      this.timeDifference = (this.endTime + 13) - this.startTime;
     },
 
     getDates: function() {
@@ -73,8 +75,8 @@
       console.log('start:', startDate, 'end:', endDate);
       console.log('start time:', startTime, 'end time:', endTime);
 
-      var topOffset = this.getTimeOffsetPercent(this.startTime, startTime);
-      var bottomOffset = this.getTimeOffsetPercent(this.endTime + 12, endTime) + (100/((this.endTime+12)-this.startTime));
+      var topOffset = 100 - this.getTimeOffsetPercent(startTime);
+      var bottomOffset = this.getTimeOffsetPercent(endTime);
 
 
 
@@ -88,16 +90,30 @@
       this.el.find('.grid .day[data-date="' + startDate + '"]').append(eventTemplate);
     },
 
-    toMilTime: function(time) {
+    toFraction: function(time) {
       if(time.toString().indexOf(':') === -1) {
-        time += '00';
+        return time;
       }
 
-      return ~~(time.toString().split(':').join(''));
+      var parts = time.toString().split(':');
+
+      return parseFloat(parts[0] + '.' + 100/(60/parts[1]));
     },
 
-    getTimeOffsetPercent: function(time, checkTime) {
-      return Math.abs(100-(this.toMilTime(time)/this.toMilTime(checkTime))*100);
+    getTimeOffsetPercent: function(time) {
+      time = this.toFraction(time) - this.startTime;
+
+      console.log(time);
+
+      var diff = this.timeDifference - time;
+
+      if(diff < 0) {
+        diff = time - this.timeDifference;
+      }
+
+      var percent = (diff / this.timeDifference) * 100;
+
+      return percent;
     },
 
     addEvent: function(event) {
