@@ -66,19 +66,13 @@
     },
 
     renderEvent: function(event) {
-      console.log(event);
-
       var startDate = event.start.getFullYear() + "-" + event.start.getMonth() + "-" + event.start.getDate();
       var startTime = event.start.toTimeString().slice(0,5);
       var endDate = event.end.getFullYear() + "-" + event.end.getMonth() + "-" + event.end.getDate();
       var endTime = event.end.toTimeString().slice(0,5);
-      console.log('start:', startDate, 'end:', endDate);
-      console.log('start time:', startTime, 'end time:', endTime);
 
       var topOffset = 100 - this.getTimeOffsetPercent(startTime);
       var bottomOffset = this.getTimeOffsetPercent(endTime);
-
-
 
       var eventTemplate = $('<div class="event"></div>');
 
@@ -102,8 +96,6 @@
 
     getTimeOffsetPercent: function(time) {
       time = this.toFraction(time) - this.startTime;
-
-      console.log(time);
 
       var diff = this.timeDifference - time;
 

@@ -160,7 +160,20 @@ suite('weekly', function() {
         start: new Date(2013, 4, 13, 9, 05),
         end: new Date(2013, 4, 13, 9, 45)
       });
+
+      assert.equal(el.find('.event').length, 1);
     });
 
+    test('convert time to fraction', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      assert.equal(el.weekly('toFraction', "8:30"), 8.5);
+      assert.equal(el.weekly('toFraction', "8:00"), 8);
+      assert.equal(el.weekly('toFraction', "8"), 8);
+    });
   });
 });
