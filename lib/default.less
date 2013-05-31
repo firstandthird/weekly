@@ -10,10 +10,16 @@
 @border: 1px solid #ECF0F1;
 @padding: 10px;
 @eventColor: #3498DB;
+@eventPendingColor: #34495e;
 
 .weekly {
   color: #7F8C8D;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 
   * {
     -mox-box-sizing: border-box;
@@ -79,6 +85,13 @@
         .event-title {
           font-weight: bold;
         }
+      }
+
+      .event-pending {
+        position: absolute;
+        background-color: @eventPendingColor;
+        left: 5px;
+        right: 5px;
       }
     }
   }
