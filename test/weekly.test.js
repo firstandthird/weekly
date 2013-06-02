@@ -164,6 +164,28 @@ suite('weekly', function() {
       assert.equal(el.find('.event').length, 1);
     });
 
+    test('addEvent triggerd', function(done) {
+
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      var firstDate = el.find('.grid .day').first();
+
+      el.one('addEvent', function() {
+        assert.equal(firstDate.find('.event').length, 1);
+        done();
+      });
+
+      el.weekly('addEvent', {
+        name: 'Test Event',
+        start: new Date(2013, 4, 12, 9, 05),
+        end: new Date(2013, 4, 12, 9, 45)
+      });
+    });
+
     test('convert time to fraction', function() {
       var date = new Date(2013, 4, 15);
 

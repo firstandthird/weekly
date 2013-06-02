@@ -67,8 +67,6 @@
             end: new Date(parsedDate[0], parsedDate[1], parsedDate[2], eventData.endtime)
           });
 
-          this.el.trigger('addEvent', [eventData]);
-
           this.pendingEvent.remove();
           this.pendingEvent = null;
           this.pendingEventStart = null;
@@ -202,6 +200,8 @@
 
       this.renderEvent(event);
       this.events.push(event);
+
+      this.el.trigger('addEvent', [event]);
     }
   });
 
