@@ -7,6 +7,10 @@
   height: 0;
 }
 
+.event-border() {
+  border-radius: 3px;
+}
+
 @border: 1px solid #ECF0F1;
 @padding: 10px;
 @eventColor: #3498DB;
@@ -82,6 +86,7 @@
         left: 5px;
         right: 5px;
         color: #fff;
+        .event-border();
 
         .event-title {
           font-weight: bold;
@@ -93,6 +98,7 @@
         background-color: @eventPendingColor;
         left: 5px;
         right: 5px;
+        .event-border();
       }
     }
   }

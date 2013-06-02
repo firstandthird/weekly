@@ -32,6 +32,11 @@
       });
 
       this.timeDifference = (this.endTime + 13) - this.startTime;
+
+      this.registerClickToCreate();
+    },
+
+    registerClickToCreate: function() {
       this.mouseDown = false;
       this.pendingEvent = null;
       this.pendingEventStart = null;
@@ -51,7 +56,20 @@
 
       gridDays.on('mouseup', this.proxy(function(){
         this.mouseDown = false;
-        //this.pendingEvent = null;
+
+        var eventData = this.pendingEvent.data();
+
+        var parsedDate = eventData.date.split('-');
+
+        this.addEvent({
+          start: new Date(parsedDate[0], parsedDate[1], parsedDate[2], eventData.starttime),
+          end: new Date(parsedDate[0], parsedDate[1], parsedDate[2], eventData.endtime)
+        });
+
+        this.el.trigger('addEvent', [eventData]);
+
+        this.pendingEvent.remove();
+        this.pendingEvent = null;
         this.pendingEventStart = null;
       }));
 
@@ -77,6 +95,7 @@
           if(!this.pendingEvent) {
             target.append('<div class="event-pending"></div>');
             this.pendingEvent = target.find('.event-pending');
+            this.pendingEvent.data('date', target.data('date'));
           }
 
           this.pendingEvent.css({
@@ -84,7 +103,8 @@
             bottom: dayHeight - this.pendingEventEnd
           });
 
-          this.el.trigger('addEvent');
+          this.pendingEvent.data('starttime', ((this.pendingEventStart / hourHeight) || 0) + this.startTime);
+          this.pendingEvent.data('endtime', ((this.pendingEventEnd / hourHeight) || 1) + this.startTime);
         }
       }));
 
@@ -141,7 +161,7 @@
       eventTemplate.css({
         top: topOffset + '%',
         bottom: bottomOffset + '%'
-      }).append('<div class="event-title">' + event.name + '</div><div class="event-desc">' + event.description + '</div>');
+      }).append('<div class="event-title">' + startTime + '</div><div class="event-name">' + event.name + '</div><div class="event-desc">' + event.description + '</div>');
 
       this.el.find('.grid .day[data-date="' + startDate + '"]').append(eventTemplate);
     },
@@ -172,7 +192,7 @@
 
     addEvent: function(event) {
       event = $.extend({
-        name: 'Event',
+        name: '',
         description: '',
         start: null,
         end: null
