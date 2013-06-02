@@ -223,4 +223,38 @@ suite('weekly', function() {
       firstDate.simulate('mouseup');
     });
   });
+
+  suite('change date', function() {
+    test('next week', function() {
+      var date = new Date(2013, 4, 22);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      el.weekly('nextWeek');
+
+      var dates = el.weekly('getDates');
+      assert.equal(dates.length, 7);
+      assert.equal(dates[0].toDateString(), 'Sun May 26 2013');
+      assert.equal(dates[6].toDateString(), 'Sat Jun 01 2013');
+    });
+
+    test('prev week', function() {
+      var date = new Date(2013, 5, 5);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      el.weekly('prevWeek');
+
+      var dates = el.weekly('getDates');
+      assert.equal(dates.length, 7);
+      assert.equal(dates[0].toDateString(), 'Sun May 26 2013');
+      assert.equal(dates[6].toDateString(), 'Sat Jun 01 2013');
+    });
+  });
 });

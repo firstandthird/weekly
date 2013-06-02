@@ -31,6 +31,10 @@
         times: this.getTimes()
       });
 
+      for(var i = 0, c = this.events.length; i < c; i++) {
+        this.renderEvent(this.events[i]);
+      }
+
       this.timeDifference = (this.endTime + 13) - this.startTime;
 
       this.registerClickToCreate();
@@ -43,6 +47,7 @@
 
       var gridDays = this.el.find('.grid .day');
 
+      // Make sure anything previously bound is bound no more.
       gridDays.unbind('mousedown mousemove mouseup mouseout');
 
       gridDays.on('mousedown', this.proxy(function(event){
@@ -145,6 +150,22 @@
       }
 
       return times;
+    },
+
+    nextWeek: function() {
+      this.changeDate(7);
+    },
+
+    prevWeek: function() {
+      this.changeDate(-7);
+    },
+
+    changeDate: function(offsetDays) {
+      this.currentDate.setDate(this.currentDate.getDate() + offsetDays);
+
+      if (this.autoRender) {
+        this.update();
+      }
     },
 
     renderEvent: function(event) {
