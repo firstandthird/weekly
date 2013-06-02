@@ -76,6 +76,17 @@
   color: #fff;
   border-radius: 3px;
 }
+.weekly .grid .day .event .delete {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: #fff;
+  text-decoration: none;
+  display: none;
+}
+.weekly .grid .day .event:hover .delete {
+  display: block;
+}
 .weekly .grid .day .event .event-title {
   font-weight: bold;
 }

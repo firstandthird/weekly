@@ -88,6 +88,19 @@
         color: #fff;
         .event-border();
 
+        .delete {
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          color: #fff;
+          text-decoration: none;
+          display: none;
+        }
+
+        &:hover .delete {
+          display: block;
+        }
+
         .event-title {
           font-weight: bold;
         }
