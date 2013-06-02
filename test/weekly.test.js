@@ -257,4 +257,108 @@ suite('weekly', function() {
       assert.equal(dates[6].toDateString(), 'Sat Jun 01 2013');
     });
   });
+
+  suite('time format', function() {
+    test('day', function() {
+      var date = new Date(2013, 4, 8);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      assert.equal(el.weekly('timef', '%d %j %D %l', date), '08 8 Wed Wednesday');
+    });
+
+    test('month', function() {
+      var date = new Date(2013, 3, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      assert.equal(el.weekly('timef', '%n %F %m %M', date), '3 April 03 Apr');
+    });
+
+    test('week', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      assert.equal(el.weekly('timef', '%w', date), '3');
+    });
+
+    test('year', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      assert.equal(el.weekly('timef', '%Y %y', date), '2013 13');
+    });
+
+    test('time', function() {
+      var date = new Date(2013, 4, 15, 8, 30, 30, 50);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      assert.equal(el.weekly('timef', '%g %G %h %h %i %s %u %a %A %e', date), '8 8 08 08 30 30 50 am AM 420');
+
+      date = new Date(2013, 4, 15, 18, 5, 5, 5);
+
+      el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      assert.equal(el.weekly('timef', '%g %G %h %H %i %s %u %a %A %e', date), '6 18 06 18 05 05 5 pm PM 420');
+    });
+
+    test('st,nd,rt,th', function() {
+      var date = new Date(2013, 4, 1);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      assert.equal(el.weekly('timef', '%S', date), 'st');
+
+      date = new Date(2013, 4, 2);
+
+      el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      assert.equal(el.weekly('timef', '%S', date), 'nd');
+
+      date = new Date(2013, 4, 3);
+
+      el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      assert.equal(el.weekly('timef', '%S', date), 'rd');
+
+      date = new Date(2013, 4, 15);
+
+      el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      assert.equal(el.weekly('timef', '%S', date), 'th');
+    });
+  });
 });
