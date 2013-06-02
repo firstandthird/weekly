@@ -57,20 +57,22 @@
       gridDays.on('mouseup', this.proxy(function(){
         this.mouseDown = false;
 
-        var eventData = this.pendingEvent.data();
+        if(this.pendingEvent) {
+          var eventData = this.pendingEvent.data();
 
-        var parsedDate = eventData.date.split('-');
+          var parsedDate = eventData.date.split('-');
 
-        this.addEvent({
-          start: new Date(parsedDate[0], parsedDate[1], parsedDate[2], eventData.starttime),
-          end: new Date(parsedDate[0], parsedDate[1], parsedDate[2], eventData.endtime)
-        });
+          this.addEvent({
+            start: new Date(parsedDate[0], parsedDate[1], parsedDate[2], eventData.starttime),
+            end: new Date(parsedDate[0], parsedDate[1], parsedDate[2], eventData.endtime)
+          });
 
-        this.el.trigger('addEvent', [eventData]);
+          this.el.trigger('addEvent', [eventData]);
 
-        this.pendingEvent.remove();
-        this.pendingEvent = null;
-        this.pendingEventStart = null;
+          this.pendingEvent.remove();
+          this.pendingEvent = null;
+          this.pendingEventStart = null;
+        }
       }));
 
       gridDays.on('mousemove', this.proxy(function(event){
