@@ -175,5 +175,30 @@ suite('weekly', function() {
       assert.equal(el.weekly('toFraction', "8:00"), 8);
       assert.equal(el.weekly('toFraction', "8"), 8);
     });
+
+    test('drag to create', function(done) {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      var firstDate = el.find('.grid .day').first();
+
+      el.one('addEvent', function() {
+        assert.equal(firstDate.find('.event-pending').length, 1);
+        done();
+      });
+
+      firstDate.simulate('mousedown');
+
+      firstDate.simulate('mousemove', {
+        handle: 'center',
+        dx: 1,
+        dy: 100
+      });
+
+      firstDate.simulate('mouseup');
+    });
   });
 });

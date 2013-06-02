@@ -6,6 +6,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  position: relative;
 }
 .weekly * {
   -mox-box-sizing: border-box;

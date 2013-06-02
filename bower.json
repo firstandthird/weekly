@@ -12,6 +12,7 @@
     "fidel-template": "~0.2.0"
   },
   "devDependencies": {
-    "assert": "*"
+    "assert": "*",
+    "jquery-simulate": "https://raw.github.com/jquery/jquery-ui/master/tests/jquery.simulate.js"
   }
 }

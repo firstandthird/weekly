@@ -45,6 +45,7 @@
 
         if(this.pendingEvent) {
           this.pendingEvent.remove();
+          this.pendingEvent = null;
         }
       }));
 
@@ -58,7 +59,7 @@
         if(this.mouseDown) {
           var target = $(event.currentTarget);
           var targetOffset = target.offset();
-          var mouseOffsetTop = event.pageY - targetOffset.top;
+          var mouseOffsetTop = event.clientY - targetOffset.top;
           var dayHeight = $(event.currentTarget).height();
           var hourHeight = Math.round(dayHeight / this.timeDifference);
 
@@ -83,7 +84,7 @@
             bottom: dayHeight - this.pendingEventEnd
           });
 
-          console.log(this.pendingEventStart, this.pendingEventEnd);
+          this.el.trigger('addEvent');
         }
       }));
 
