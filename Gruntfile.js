@@ -28,6 +28,16 @@ module.exports = function(grunt) {
       dist: {
         src: 'lib/weekly.js',
         dest: 'dist/weekly.js'
+      },
+
+      full: {
+        src: [
+          'components/fidel/dist/fidel.js',
+          'components/template/dist/template.js',
+          'components/fidel-template/dist/fidel-template.js',
+          'lib/weekly.js'
+        ],
+        dest: 'dist/weekly.full.js'
       }
     },
 
@@ -35,6 +45,11 @@ module.exports = function(grunt) {
       dist: {
         src: 'lib/template.html',
         dest: 'dist/weekly.js'
+      },
+
+      full: {
+        src: 'lib/template.html',
+        dest: 'dist/weekly.full.js'
       }
     },
 
@@ -46,6 +61,11 @@ module.exports = function(grunt) {
       dist: {
         src: 'dist/weekly.js',
         dest: 'dist/weekly.min.js'
+      },
+
+      full: {
+        src: 'dist/weekly.full.js',
+        dest: 'dist/weekly.full.min.js'
       }
     },
 
