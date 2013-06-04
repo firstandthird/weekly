@@ -71,7 +71,7 @@ module.exports = function(grunt) {
 
     less: {
       'default': {
-        src: 'lib/default.less',
+        src: 'less/theme1.less',
         dest: 'dist/weekly.css'
       }
     },
@@ -87,7 +87,7 @@ module.exports = function(grunt) {
 
       styles: {
         files: [
-          'lib/*.less'
+          'less/*.less'
         ],
         tasks: 'styles'
       },

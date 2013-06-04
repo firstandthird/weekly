@@ -1,12 +1,12 @@
 .weekly {
-  color: #7F8C8D;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   position: relative;
+  color: #7f8c8d;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .weekly * {
   -mox-box-sizing: border-box;
@@ -35,7 +35,6 @@
 .weekly .days .day {
   float: left;
   padding: 10px;
-  border-left: 1px solid #ecf0f1;
 }
 .weekly .times {
   float: left;
@@ -44,7 +43,6 @@
 }
 .weekly .times .time {
   padding: 10px;
-  border-top: 1px solid #ecf0f1;
 }
 .weekly .grid {
   float: left;
@@ -64,37 +62,51 @@
 }
 .weekly .grid .day .time {
   padding: 10px;
-  border-left: 1px solid #ecf0f1;
-  border-top: 1px solid #ecf0f1;
 }
 .weekly .grid .day .event {
   position: absolute;
-  background-color: #3498db;
   padding: 10px;
   left: 5px;
   right: 5px;
-  color: #fff;
-  border-radius: 3px;
 }
 .weekly .grid .day .event .delete {
   position: absolute;
   top: 5px;
   right: 5px;
-  color: #fff;
   text-decoration: none;
   display: none;
 }
 .weekly .grid .day .event:hover .delete {
   display: block;
 }
+.weekly .grid .day .event-pending {
+  position: absolute;
+  left: 5px;
+  right: 5px;
+}
+.weekly .days .day {
+  border-left: 1px solid #ecf0f1;
+}
+.weekly .times .time {
+  border-top: 1px solid #ecf0f1;
+}
+.weekly .grid .day .time {
+  border-left: 1px solid #ecf0f1;
+  border-top: 1px solid #ecf0f1;
+}
+.weekly .grid .day .event {
+  background-color: #3498db;
+  color: #ffffff;
+  border-radius: 3px;
+}
+.weekly .grid .day .event .delete {
+  color: #ffffff;
+}
 .weekly .grid .day .event .event-title {
   font-weight: bold;
 }
-.weekly .grid .day .event-pending {
-  position: absolute;
+.weekly .grid .event-pending {
   background-color: #34495e;
-  left: 5px;
-  right: 5px;
   border-radius: 3px;
 }
 .weekly .today {
