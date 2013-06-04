@@ -13,28 +13,37 @@ module.exports = function(grunt) {
 
     jshint: {
       main: [
-        'Gruntfile.js', 
+        'Gruntfile.js',
         'bower.json',
         'lib/**/*.js',
         'test/*.js'
       ]
     },
-
+    bower: {
+      main: {
+        dest: 'dist/_bower.js',
+        exclude: [
+          'assert',
+          'jquery',
+          'jquery-simulate'
+        ]
+      }
+    },
     concat: {
       options: {
         banner: '<%= meta.banner %>'
       },
 
       dist: {
-        src: 'lib/weekly.js',
+        src: [
+          'lib/weekly.js'
+        ],
         dest: 'dist/weekly.js'
       },
 
       full: {
         src: [
-          'components/fidel/dist/fidel.js',
-          'components/template/dist/template.js',
-          'components/fidel-template/dist/fidel-template.js',
+          'dist/_bower.js',
           'lib/weekly.js'
         ],
         dest: 'dist/weekly.full.js'
@@ -68,6 +77,10 @@ module.exports = function(grunt) {
         dest: 'dist/weekly.full.min.js'
       }
     },
+
+    clean: [
+      'dist/_bower.js'
+    ],
 
     less: {
       'default': {
@@ -139,6 +152,13 @@ module.exports = function(grunt) {
           keepalive: true
         }
       }
+    },
+    bytesize: {
+      scripts: {
+        src: [
+          'dist/*'
+        ]
+      }
     }
   });
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -147,14 +167,17 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-bower-concat');
+  grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-bytesize');
   grunt.loadNpmTasks('grunt-mocha');
   grunt.loadNpmTasks('grunt-reloadr');
   grunt.loadNpmTasks('grunt-plato');
   grunt.loadTasks('tasks');
-  grunt.registerTask('scripts', ['jshint', 'concat', 'template2js', 'uglify']);
+  grunt.registerTask('scripts', ['jshint', 'bower', 'concat', 'template2js', 'uglify', 'clean', 'mocha', 'bytesize']);
   grunt.registerTask('styles', ['less']);
-  grunt.registerTask('default', ['scripts', 'styles', 'mocha']);
+  grunt.registerTask('default', ['scripts', 'styles']);
   grunt.registerTask('dev', ['connect:server', 'reloadr', 'watch']);
-  grunt.registerTask('ci', ['connect:server', 'watch']);
   grunt.registerTask('reports', ['plato', 'connect:plato']);
 };
