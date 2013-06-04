@@ -77,22 +77,27 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      main: {
+      scripts: {
         files: [
           '<%= jshint.main %>',
-          'lib/template.html',
+          'lib/template.html'
+        ],
+        tasks: 'scripts'
+      },
+
+      styles: {
+        files: [
           'lib/*.less'
         ],
-        tasks: 'default'
+        tasks: 'styles'
       },
 
       ci: {
         files: [
-          '<%= jshint.main %>',
-          'test/index.html',
-          'lib/template.html'
+          'Gruntfile.js',
+          'test/index.html'
         ],
-        tasks: ['default', 'mocha']
+        tasks: 'default'
       }
     },
 
@@ -146,8 +151,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-reloadr');
   grunt.loadNpmTasks('grunt-plato');
   grunt.loadTasks('tasks');
-  grunt.registerTask('default', ['jshint', 'less', 'concat', 'template2js', 'uglify', 'mocha']);
-  grunt.registerTask('dev', ['connect:server', 'reloadr', 'watch:main']);
-  grunt.registerTask('ci', ['connect:server', 'watch:ci']);
+  grunt.registerTask('scripts', ['jshint', 'concat', 'template2js', 'uglify']);
+  grunt.registerTask('styles', ['less']);
+  grunt.registerTask('default', ['scripts', 'styles', 'mocha']);
+  grunt.registerTask('dev', ['connect:server', 'reloadr', 'watch']);
+  grunt.registerTask('ci', ['connect:server', 'watch']);
   grunt.registerTask('reports', ['plato', 'connect:plato']);
 };
