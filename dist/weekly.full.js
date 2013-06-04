@@ -306,6 +306,14 @@ w.Fidel = Fidel;
       this.timeDifference = (this.endTime + 13) - this.startTime;
 
       this.registerClickToCreate();
+
+      this.highlightToday();
+    },
+
+    highlightToday: function() {
+      var today = new Date();
+
+      this.el.find('[data-date="' + this.timef('%Y-%n-%j', today) + '"]').addClass('today');
     },
 
     registerClickToCreate: function() {

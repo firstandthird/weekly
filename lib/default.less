@@ -15,6 +15,7 @@
 @padding: 10px;
 @eventColor: #3498DB;
 @eventPendingColor: #34495e;
+@today: rgba(241, 196, 15,.4);
 
 .weekly {
   color: #7F8C8D;
@@ -114,5 +115,9 @@
         .event-border();
       }
     }
+  }
+
+  .today {
+    background-color: @today;
   }
 }

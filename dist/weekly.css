@@ -97,3 +97,6 @@
   right: 5px;
   border-radius: 3px;
 }
+.weekly .today {
+  background-color: rgba(241, 196, 15, 0.4);
+}

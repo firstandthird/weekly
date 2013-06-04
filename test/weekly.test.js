@@ -143,6 +143,13 @@ suite('weekly', function() {
 
     });
 
+    test('highlight current date', function() {
+      var el = $('.weekly').weekly();
+      var today = new Date();
+
+      assert.equal(el.find('.today').length, 2);
+    });
+
   });
 
   suite('addEvent', function() {
@@ -164,7 +171,7 @@ suite('weekly', function() {
       assert.equal(el.find('.event').length, 1);
     });
 
-    test('addEvent triggerd', function(done) {
+    test('addEvent triggered', function(done) {
 
       var date = new Date(2013, 4, 15);
 
@@ -207,7 +214,7 @@ suite('weekly', function() {
       assert.equal(el.find('.event').length, 0);
     });
 
-    test('removeEvent triggerd', function(done) {
+    test('removeEvent triggered', function(done) {
 
       var date = new Date(2013, 4, 15);
 
