@@ -478,7 +478,7 @@ w.Fidel = Fidel;
       eventTemplate.css({
         top: topOffset + '%',
         bottom: bottomOffset + '%'
-      }).append('<button data-action="removeEvent" class="weekly-delete">×</button><div class="weekly-event-title">' + startTime + '</div><div class="weekly-event-name">' + event.name + '</div><div class="weekly-event-desc">' + event.description + '</div>');
+      }).append('<button data-action="removeEvent" class="weekly-delete">×</button><div class="weekly-event-title">' + this.timef('%g:%i %a', event.start) + '</div><div class="weekly-event-name">' + event.name + '</div><div class="weekly-event-desc">' + event.description + '</div>');
 
       this.el.find('.weekly-grid .weekly-day[data-date="' + startDate + '"]').append(eventTemplate);
     },
