@@ -14,7 +14,7 @@
       weekOffset: 0,
       currentDate: new Date(),
       autoRender: true,
-      template: '<div class="days"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="day" style="width:<%= 100/dates.length %>%" data-date="<%= date.getFullYear() %>-<%= date.getMonth() %>-<%= date.getDate() %>"><%= date.toDateString() %></div><% } %></div><div class="times"><% for (var i = 0; i < times.length; i++) { var time = times[i]; %>  <div class="time" data-time="<%= time %>"><%= time %></div><% } %></div><div class="grid"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="day" style="width:<%= 100/dates.length %>%" data-date="<%= date.getFullYear() %>-<%= date.getMonth() %>-<%= date.getDate() %>">    <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>      <div class="time" data-time="<%= time %>">&nbsp;</div>    <% } %>  </div><% } %></div>'
+      template: '<div class="weekly-days"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= date.getFullYear() %>-<%= date.getMonth() %>-<%= date.getDate() %>"><%= date.toDateString() %></div><% } %></div><div class="weekly-times"><% for (var i = 0; i < times.length; i++) { var time = times[i]; %>  <div class="weekly-time" data-time="<%= time %>"><%= time %></div><% } %></div><div class="weekly-grid"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= date.getFullYear() %>-<%= date.getMonth() %>-<%= date.getDate() %>">    <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>      <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>    <% } %>  </div><% } %></div>'
     },
 
     init: function() {
@@ -45,7 +45,7 @@
     highlightToday: function() {
       var today = new Date();
 
-      this.el.find('[data-date="' + this.timef('%Y-%n-%j', today) + '"]').addClass('today');
+      this.el.find('[data-date="' + this.timef('%Y-%n-%j', today) + '"]').addClass('weekly-today');
     },
 
     registerClickToCreate: function() {
@@ -53,7 +53,7 @@
       this.pendingEvent = null;
       this.pendingEventStart = null;
 
-      var gridDays = this.el.find('.grid .day');
+      var gridDays = this.el.find('.weekly-grid .weekly-day');
 
       // Make sure anything previously bound is bound no more.
       gridDays.unbind('mousedown mousemove mouseup mouseout');
@@ -106,8 +106,7 @@
           }
 
           if(!this.pendingEvent) {
-            target.append('<div class="event-pending"></div>');
-            this.pendingEvent = target.find('.event-pending');
+            this.pendingEvent = target.append('<div class="weekly-event-pending"></div>');
             this.pendingEvent.data('date', target.data('date'));
           }
 
@@ -185,16 +184,16 @@
       var topOffset = 100 - this.getTimeOffsetPercent(startTime);
       var bottomOffset = this.getTimeOffsetPercent(endTime);
 
-      var eventTemplate = $('<div class="event"></div>');
+      var eventTemplate = $('<div class="weekly-event"></div>');
 
       eventTemplate.data(event);
 
       eventTemplate.css({
         top: topOffset + '%',
         bottom: bottomOffset + '%'
-      }).append('<a href="#" data-action="removeEvent" class="delete">×</a><div class="event-title">' + startTime + '</div><div class="event-name">' + event.name + '</div><div class="event-desc">' + event.description + '</div>');
+      }).append('<button data-action="removeEvent" class="weekly-delete">×</a><div class="weekly-event-title">' + startTime + '</div><div class="weekly-event-name">' + event.name + '</div><div class="weekly-event-desc">' + event.description + '</div>');
 
-      this.el.find('.grid .day[data-date="' + startDate + '"]').append(eventTemplate);
+      this.el.find('.weekly-grid .weekly-day[data-date="' + startDate + '"]').append(eventTemplate);
     },
 
     toFraction: function(time) {
@@ -305,7 +304,7 @@
     },
 
     removeEvent: function(e) {
-      var el = $(e.target).parents('.event');
+      var el = $(e.target).parents('.weekly-event');
       var event = el.data();
 
       this.events.splice(event.id, 1);

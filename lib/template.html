@@ -1,20 +1,20 @@
-<div class="days">
+<div class="weekly-days">
 <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>
-  <div class="day" style="width:<%= 100/dates.length %>%" data-date="<%= date.getFullYear() %>-<%= date.getMonth() %>-<%= date.getDate() %>"><%= date.toDateString() %></div>
+  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= date.getFullYear() %>-<%= date.getMonth() %>-<%= date.getDate() %>"><%= date.toDateString() %></div>
 <% } %>
 </div>
 
-<div class="times">
+<div class="weekly-times">
 <% for (var i = 0; i < times.length; i++) { var time = times[i]; %>
-  <div class="time" data-time="<%= time %>"><%= time %></div>
+  <div class="weekly-time" data-time="<%= time %>"><%= time %></div>
 <% } %>
 </div>
 
-<div class="grid">
+<div class="weekly-grid">
 <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>
-  <div class="day" style="width:<%= 100/dates.length %>%" data-date="<%= date.getFullYear() %>-<%= date.getMonth() %>-<%= date.getDate() %>">
+  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= date.getFullYear() %>-<%= date.getMonth() %>-<%= date.getDate() %>">
     <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>
-      <div class="time" data-time="<%= time %>">&nbsp;</div>
+      <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>
     <% } %>
   </div>
 <% } %>

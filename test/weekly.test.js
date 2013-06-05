@@ -137,9 +137,9 @@ suite('weekly', function() {
 
       var el = $('.weekly').weekly();
 
-      assert.equal(el.find('.days').length, 1);
-      assert.equal(el.find('.times').length, 1);
-      assert.equal(el.find('.grid').length, 1);
+      assert.equal(el.find('.weekly-days').length, 1);
+      assert.equal(el.find('.weekly-times').length, 1);
+      assert.equal(el.find('.weekly-grid').length, 1);
 
     });
 
@@ -147,7 +147,7 @@ suite('weekly', function() {
       var el = $('.weekly').weekly();
       var today = new Date();
 
-      assert.equal(el.find('.today').length, 2);
+      assert.equal(el.find('.weekly-today').length, 2);
     });
 
   });
@@ -168,7 +168,7 @@ suite('weekly', function() {
         end: new Date(2013, 4, 13, 9, 45)
       });
 
-      assert.equal(el.find('.event').length, 1);
+      assert.equal(el.find('.weekly-event').length, 1);
     });
 
     test('addEvent triggered', function(done) {
@@ -179,10 +179,10 @@ suite('weekly', function() {
         currentDate: date
       });
 
-      var firstDate = el.find('.grid .day').first();
+      var firstDate = el.find('.weekly-grid .weekly-day').first();
 
       el.one('addEvent', function() {
-        assert.equal(firstDate.find('.event').length, 1);
+        assert.equal(firstDate.find('.weekly-event').length, 1);
         done();
       });
 
@@ -207,11 +207,11 @@ suite('weekly', function() {
         end: new Date(2013, 4, 13, 9, 45)
       });
 
-      assert.equal(el.find('.event').length, 1);
+      assert.equal(el.find('.weekly-event').length, 1);
 
-      el.find('.event .delete').click();
+      el.find('.weekly-event .weekly-delete').click();
 
-      assert.equal(el.find('.event').length, 0);
+      assert.equal(el.find('.weekly-event').length, 0);
     });
 
     test('removeEvent triggered', function(done) {
@@ -222,10 +222,10 @@ suite('weekly', function() {
         currentDate: date
       });
 
-      var firstDate = el.find('.grid .day').first();
+      var firstDate = el.find('.weekly-grid .weekly-day').first();
 
       el.one('removeEvent', function() {
-        assert.equal(firstDate.find('.event').length, 0);
+        assert.equal(firstDate.find('.weekly-event').length, 0);
         done();
       });
 
@@ -235,7 +235,7 @@ suite('weekly', function() {
         end: new Date(2013, 4, 12, 9, 45)
       });
 
-      el.find('.event .delete').click();
+      el.find('.weekly-event .weekly-delete').click();
     });
 
     test('convert time to fraction', function() {
@@ -257,10 +257,10 @@ suite('weekly', function() {
         currentDate: date
       });
 
-      var firstDate = el.find('.grid .day').first();
+      var firstDate = el.find('.weekly-grid .weeklyday').first();
 
       el.one('addEvent', function() {
-        assert.equal(firstDate.find('.event-pending').length, 1);
+        assert.equal(firstDate.find('.weekly-event-pending').length, 1);
         done();
       });
 
