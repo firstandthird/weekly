@@ -112,3 +112,24 @@
 .weekly .weekly-today {
   background-color: rgba(241, 196, 15, 0.4);
 }
+.weekly .weekly-time-navigation:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+.weekly .weekly-time-navigation .weekly-change-week-button {
+  background-color: #8e44ad;
+  border: 0;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+}
+.weekly .weekly-time-navigation .weekly-change-week-button.weekly-previous-week {
+  float: left;
+}
+.weekly .weekly-time-navigation .weekly-change-week-button.weekly-next-week {
+  float: right;
+}
