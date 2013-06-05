@@ -6,7 +6,6 @@
   user-select: none;
   position: relative;
   color: #7f8c8d;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .weekly * {
   -mox-box-sizing: border-box;
@@ -75,6 +74,9 @@
   right: 5px;
   text-decoration: none;
   display: none;
+  background: 0;
+  border: 0;
+  cursor: pointer;
 }
 .weekly .weekly-grid .weekly-day .weekly-event:hover .weekly-delete {
   display: block;
@@ -83,6 +85,26 @@
   position: absolute;
   left: 5px;
   right: 5px;
+}
+.weekly .weekly-time-navigation {
+  margin: 15px 0;
+}
+.weekly .weekly-time-navigation:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+.weekly .weekly-time-navigation .weekly-header {
+  text-align: center;
+}
+.weekly .weekly-time-navigation .weekly-change-week-button.weekly-previous-week {
+  float: left;
+}
+.weekly .weekly-time-navigation .weekly-change-week-button.weekly-next-week {
+  float: right;
 }
 .weekly .weekly-days .weekly-day {
   border-left: 1px solid #ecf0f1;
@@ -112,13 +134,8 @@
 .weekly .weekly-today {
   background-color: rgba(241, 196, 15, 0.4);
 }
-.weekly .weekly-time-navigation:after {
-  content: ".";
-  display: block;
-  clear: both;
-  visibility: hidden;
-  line-height: 0;
-  height: 0;
+.weekly .weekly-time-navigation .weekly-header {
+  font-weight: bold;
 }
 .weekly .weekly-time-navigation .weekly-change-week-button {
   background-color: #8e44ad;
@@ -126,10 +143,4 @@
   border-radius: 3px;
   color: #fff;
   cursor: pointer;
-}
-.weekly .weekly-time-navigation .weekly-change-week-button.weekly-previous-week {
-  float: left;
-}
-.weekly .weekly-time-navigation .weekly-change-week-button.weekly-next-week {
-  float: right;
 }

@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.1
+ * v0.0.2
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -282,7 +282,7 @@ w.Fidel = Fidel;
       weekOffset: 0,
       currentDate: new Date(),
       autoRender: true,
-      template: '<div class="weekly-time-navigation">  <button class="weekly-previous-week weekly-change-week-button" data-action="prevWeek">Previous Week</button>  <button class="weekly-next-week weekly-change-week-button" data-action="nextWeek">Next Week</button></div><div class="weekly-days"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= date.getFullYear() %>-<%= date.getMonth() %>-<%= date.getDate() %>"><%= date.toDateString() %></div><% } %></div><div class="weekly-times"><% for (var i = 0; i < times.length; i++) { var time = times[i]; %>  <div class="weekly-time" data-time="<%= time %>"><%= time %></div><% } %></div><div class="weekly-grid"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= date.getFullYear() %>-<%= date.getMonth() %>-<%= date.getDate() %>">    <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>      <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>    <% } %>  </div><% } %></div>'
+      template: '<div class="weekly-time-navigation">  <button class="weekly-previous-week weekly-change-week-button" data-action="prevWeek">Previous Week</button>  <button class="weekly-next-week weekly-change-week-button" data-action="nextWeek">Next Week</button>  <div class="weekly-header"><%= getWeekSpan(currentDate) %></div></div><div class="weekly-days"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%n-%j\', date) %>">    <%= timef(\'%D %m/%d\', date) %>  </div><% } %></div><div class="weekly-times"><% for (var i = 0; i < times.length; i++) { var time = times[i]; %>  <div class="weekly-time" data-time="<%= time %>"><%= time %></div><% } %></div><div class="weekly-grid"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%n-%j\', date) %>">    <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>      <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>    <% } %>  </div><% } %></div>'
     },
 
     init: function() {
@@ -295,6 +295,9 @@ w.Fidel = Fidel;
 
     update: function() {
       this.render({
+        timef: this.timef,
+        getWeekSpan: this.proxy(this.getWeekSpan),
+        currentDate: this.currentDate,
         dates: this.getDates(),
         times: this.getTimes()
       });
@@ -361,7 +364,6 @@ w.Fidel = Fidel;
       }));
 
       gridDays.on('click', this.proxy(function(event){
-        console.log(event);
         if($(event.target).is('.weekly-time,.weekly-day')) {
           this.createEvent(event);
           gridDays.trigger('mouseup');
@@ -414,17 +416,46 @@ w.Fidel = Fidel;
       this.pendingEvent.data('endtime', ((this.pendingEventEnd / hourHeight) || 1) + this.startTime);
     },
 
+    getWeekSpan: function(date, offset) {
+      var first = this.getFirstDayOfWeek(date, offset);
+      var last = this.getLastDayOfWeek(date, offset);
+
+      var span = this.timef('%M %d', first) + ' - ';
+      if (first.getMonth() == last.getMonth()) {
+        span += this.timef('%d', last);
+      } else {
+        span += this.timef('%M %d', last);
+      }
+      return span;
+    },
+
+    getFirstDayOfWeek: function(date, offset) {
+      offset = offset || 0;
+      var first = date.getDate() - date.getDay();
+      var newDate = new Date(date.getTime());
+      newDate.setDate(first + (offset * 7));
+      return newDate;
+    },
+
+    getLastDayOfWeek: function(date, weekOffset) {
+      weekOffset = weekOffset || 0;
+      var first = date.getDate() - date.getDay();
+      var newDate = new Date(date.getTime());
+      newDate.setDate(first + 6 + (weekOffset * 7));
+      return newDate;
+    },
+
     getDates: function() {
       var curr = this.currentDate;
 
-      var first = curr.getDate() - curr.getDay();
       var daysInWeek = 7;
 
       var days = [];
-      var sunday = new Date(curr.setDate(first + (this.weekOffset * daysInWeek)));
+      var sunday = this.getFirstDayOfWeek(curr, this.weekOffset);
 
       for (var i = 0, c = daysInWeek; i < c; i++) {
-        var d = new Date(sunday.setDate(sunday.getDate() - sunday.getDay() + i));
+        var d = new Date(sunday.getTime());
+        d.setDate(d.getDate() - d.getDay() + i);
         days.push(d);
       }
       return days;
@@ -457,9 +488,7 @@ w.Fidel = Fidel;
     changeDate: function(offsetDays) {
       this.currentDate.setDate(this.currentDate.getDate() + offsetDays);
 
-      if (this.autoRender) {
-        this.update();
-      }
+      this.update();
     },
 
     renderEvent: function(event) {

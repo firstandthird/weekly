@@ -1,4 +1,32 @@
 
+0.0.2 / 2013-06-05 
+==================
+
+  * split up core to layout and theme-mixin
+  * rearranged core.less to have styles and layout separate
+  * moved header in dom
+  * added getWeekSpan and header
+  * don't check autorender when changing dates
+  * updated template to use timef
+  * remove delete button styles
+  * added font-family to example/index.html
+  * removed font-family
+  * Added clearEvents method + tests.
+  * Handle arrays in addEvent.
+  * Show end time on events.
+  * Time correctly formatted on display.
+  * Styled buttons for next/previous.
+  * Added basic next/prev week buttons.
+  * Added test for click to create.
+  * Single click created event.
+  * Fixed failing test.
+  * Updated less to reflect class prefix.
+  * Changed remove to a button.
+  * Merge branch 'master' of github.com:jgallen23/weekly
+  * Added weekly- prefix to classes.
+  * updated example to use weekly.full
+  * updated build process
+
 0.0.1 / 2013-06-04 
 ==================
 
