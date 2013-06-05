@@ -92,6 +92,14 @@
         }
       }));
 
+      gridDays.on('click', this.proxy(function(event){
+        console.log(event);
+        if($(event.target).is('.weekly-time')) {
+          this.createEvent(event);
+          gridDays.trigger('mouseup');
+        }
+      }));
+
       gridDays.on('mousemove', this.proxy(function(event){
         if(this.moseDown) {
           this.createEvent(event);
