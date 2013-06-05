@@ -478,7 +478,7 @@ w.Fidel = Fidel;
       eventTemplate.css({
         top: topOffset + '%',
         bottom: bottomOffset + '%'
-      }).append('<button data-action="removeEvent" class="weekly-delete">×</button><div class="weekly-event-title">' + this.timef('%g:%i %a', event.start) + '</div><div class="weekly-event-name">' + event.name + '</div><div class="weekly-event-desc">' + event.description + '</div>');
+      }).append('<button data-action="removeEvent" class="weekly-delete">×</button><div class="weekly-event-title">' + this.timef('%g:%i %a', event.start) + ' - ' + this.timef('%g:%i %a', event.end) + '</div><div class="weekly-event-name">' + event.name + '</div><div class="weekly-event-desc">' + event.description + '</div>');
 
       this.el.find('.weekly-grid .weekly-day[data-date="' + startDate + '"]').append(eventTemplate);
     },
@@ -555,11 +555,11 @@ w.Fidel = Fidel;
           case '%A':
             return time.getHours() > 11 ? 'PM' : 'AM';
           case '%g':
-            return time.getHours() > 11 ? time.getHours() -12 : time.getHours();
+            return time.getHours() > 12 ? time.getHours() -12 : time.getHours();
           case '%G':
           return time.getHours();
           case '%h':
-            return ("0" + (time.getHours() > 11 ? time.getHours() -12 : time.getHours())).substr(-2,2);
+            return ("0" + (time.getHours() > 12 ? time.getHours() -12 : time.getHours())).substr(-2,2);
           case '%H':
             return ("0" + time.getHours()).substr(-2,2);
           case '%i':
