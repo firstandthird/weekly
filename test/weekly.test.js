@@ -6,6 +6,96 @@ suite('weekly', function() {
     $('.weekly').data('weekly', null);
   });
 
+  suite('#getFirstDayOfWeek', function() {
+    test('date', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      var first = el.weekly('getFirstDayOfWeek', date);
+      assert.equal(first.toDateString(), 'Sun May 12 2013');
+    });
+    test('date + offset', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      var first = el.weekly('getFirstDayOfWeek', date, 1);
+      assert.equal(first.toDateString(), 'Sun May 19 2013');
+    });
+  });
+
+  suite('#getLastDayOfWeek', function() {
+    test('date', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      var first = el.weekly('getLastDayOfWeek', date);
+      assert.equal(first.toDateString(), 'Sat May 18 2013');
+    });
+    test('date + offset', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      var first = el.weekly('getLastDayOfWeek', date, 1);
+      assert.equal(first.toDateString(), 'Sat May 25 2013');
+    });
+  });
+
+
+  suite('#getWeekSpan', function() {
+
+    test('same month', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      var span = el.weekly('getWeekSpan', date);
+      assert.equal(span, 'May 12 - 18');
+    });
+
+    test('different month', function() {
+      var date = new Date(2013, 4, 29);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      var span = el.weekly('getWeekSpan', date);
+      assert.equal(span, 'May 26 - Jun 01');
+    });
+
+    test('offset', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      var span = el.weekly('getWeekSpan', date, 1);
+      assert.equal(span, 'May 19 - 25');
+    });
+  });
+
   suite('getDates', function() {
 
     test('get dates in middle of month', function() {
