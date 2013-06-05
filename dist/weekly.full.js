@@ -575,6 +575,13 @@ w.Fidel = Fidel;
     },
 
     addEvent: function(event) {
+      if(event instanceof Array) {
+        for(var i = 0, c = event.length; i < c; i++) {
+          this.addEvent(event[i]);
+        }
+        return;
+      }
+
       event = $.extend({
         name: '',
         description: '',
