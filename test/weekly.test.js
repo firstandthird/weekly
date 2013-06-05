@@ -274,6 +274,23 @@ suite('weekly', function() {
 
       firstDate.simulate('mouseup');
     });
+
+    test('click to create', function(done) {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      var firstDate = el.find('.weekly-grid .weekly-day').first();
+
+      el.one('addEvent', function() {
+        assert.equal(firstDate.find('.weekly-event-pending').length, 1);
+        done();
+      });
+
+      firstDate.click();
+    });
   });
 
   suite('change date', function() {

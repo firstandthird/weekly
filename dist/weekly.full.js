@@ -362,7 +362,7 @@ w.Fidel = Fidel;
 
       gridDays.on('click', this.proxy(function(event){
         console.log(event);
-        if($(event.target).is('.weekly-time')) {
+        if($(event.target).is('.weekly-time,.weekly-day')) {
           this.createEvent(event);
           gridDays.trigger('mouseup');
         }
