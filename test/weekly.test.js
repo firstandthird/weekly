@@ -235,6 +235,31 @@ suite('weekly', function() {
       assert.equal(el.find('.weekly-event').length, 0);
     });
 
+    test('remove basic events', function() {
+
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      el.weekly('addEvent', [{
+        name: 'Test Event',
+        start: new Date(2013, 4, 13, 9, 05),
+        end: new Date(2013, 4, 13, 9, 45)
+      },{
+        name: 'Test Event',
+        start: new Date(2013, 4, 13, 9, 05),
+        end: new Date(2013, 4, 13, 9, 45)
+      }]);
+
+      assert.equal(el.find('.weekly-event').length, 2);
+
+      el.weekly('clearEvents');
+
+      assert.equal(el.find('.weekly-event').length, 0);
+    });
+
     test('removeEvent triggered', function(done) {
 
       var date = new Date(2013, 4, 15);

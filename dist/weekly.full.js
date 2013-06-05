@@ -607,6 +607,14 @@ w.Fidel = Fidel;
       this.el.trigger('removeEvent', event);
 
       return false;
+    },
+
+    clearEvents: function() {
+      this.el.find('.weekly-event').remove();
+
+      this.events = [];
+
+      this.el.trigger('clearedEvents');
     }
   });
 
