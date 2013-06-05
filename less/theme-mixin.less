@@ -1,0 +1,78 @@
+@import "layout";
+.weekly(
+  @fgColor: #7F8C8D;
+  @borderColor: #ECF0F1;
+  @eventColor: #3498DB;
+  @eventForegroundColor: #fff;
+  @eventPendingColor: #34495e;
+  @today: rgba(241, 196, 15,.4);
+  @eventBorderRadius: 3px;
+  ) {
+
+  .weekly-layout();
+
+  @border: 1px solid @borderColor;
+
+  color: @fgColor;
+
+  .event-border() {
+    border-radius: @eventBorderRadius;
+  }
+
+  .weekly-button() {
+    background-color: #8e44ad;
+    border: 0;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .weekly-days .weekly-day {
+    border-left: @border;
+  }
+
+  .weekly-times .weekly-time {
+    border-top: @border;
+  }
+  .weekly-grid {
+    .weekly-day {
+
+      .weekly-time {
+        border-left: @border;
+        border-top: @border;
+      }
+
+      .weekly-event {
+        background-color: @eventColor;
+        color: @eventForegroundColor;
+        .event-border();
+
+        .weekly-delete {
+          color: @eventForegroundColor;
+        }
+
+        .weekly-event-title {
+          font-weight: bold;
+        }
+      }
+    }
+    .weekly-event-pending {
+      background-color: @eventPendingColor;
+      .event-border();
+    }
+  }
+
+  .weekly-today {
+    background-color: @today;
+  }
+  
+  .weekly-time-navigation {
+    .weekly-header {
+      font-weight: bold;
+    }
+
+    .weekly-change-week-button {
+      .weekly-button();
+    }
+  }
+}
