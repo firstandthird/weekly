@@ -86,38 +86,8 @@
         }
       }));
 
-      gridDays.on('mousemove', this.proxy(function(event){
-        if(this.mouseDown) {
-          var target = $(event.currentTarget);
-          var targetOffset = target.offset();
-          var mouseOffsetTop = event.clientY - targetOffset.top;
-          var dayHeight = $(event.currentTarget).height();
-          var hourHeight = Math.round(dayHeight / this.timeDifference);
-
-          var tempStart = Math.floor(mouseOffsetTop / hourHeight) * hourHeight;
-          var tempEnd = Math.ceil(mouseOffsetTop / hourHeight) * hourHeight;
-
-          if(this.pendingEventStart === null) {
-            this.pendingEventStart = tempStart;
-          }
-
-          if(this.pendingEventEnd === null || tempEnd > this.pendingEventStart) {
-            this.pendingEventEnd = tempEnd;
-          }
-
-          if(!this.pendingEvent) {
-            this.pendingEvent = target.append('<div class="weekly-event-pending"></div>');
-            this.pendingEvent.data('date', target.data('date'));
-          }
-
-          this.pendingEvent.css({
-            top: this.pendingEventStart,
-            bottom: dayHeight - this.pendingEventEnd
-          });
-
-          this.pendingEvent.data('starttime', ((this.pendingEventStart / hourHeight) || 0) + this.startTime);
-          this.pendingEvent.data('endtime', ((this.pendingEventEnd / hourHeight) || 1) + this.startTime);
-        }
+      gridDays.on('mousemove click', this.proxy(function(event){
+        this.createEvent(event);
       }));
 
       gridDays.on('mouseleave', this.proxy(function(event){
@@ -125,6 +95,40 @@
           gridDays.trigger('mouseup');
         }
       }));
+    },
+
+    createEvent: function(event) {
+      if(this.mouseDown) {
+        var target = $(event.currentTarget);
+        var targetOffset = target.offset();
+        var mouseOffsetTop = event.clientY - targetOffset.top;
+        var dayHeight = $(event.currentTarget).height();
+        var hourHeight = Math.round(dayHeight / this.timeDifference);
+
+        var tempStart = Math.floor(mouseOffsetTop / hourHeight) * hourHeight;
+        var tempEnd = Math.ceil(mouseOffsetTop / hourHeight) * hourHeight;
+
+        if(this.pendingEventStart === null) {
+          this.pendingEventStart = tempStart;
+        }
+
+        if(this.pendingEventEnd === null || tempEnd > this.pendingEventStart) {
+          this.pendingEventEnd = tempEnd;
+        }
+
+        if(!this.pendingEvent) {
+          this.pendingEvent = target.append('<div class="weekly-event-pending"></div>');
+          this.pendingEvent.data('date', target.data('date'));
+        }
+
+        this.pendingEvent.css({
+          top: this.pendingEventStart,
+          bottom: dayHeight - this.pendingEventEnd
+        });
+
+        this.pendingEvent.data('starttime', ((this.pendingEventStart / hourHeight) || 0) + this.startTime);
+        this.pendingEvent.data('endtime', ((this.pendingEventEnd / hourHeight) || 1) + this.startTime);
+      }
     },
 
     getDates: function() {

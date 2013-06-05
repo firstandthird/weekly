@@ -27,7 +27,7 @@
     .weekly-clearfix();
   }
 
-  .days {
+  .weekly-days {
     padding-left: 10%;
     text-align: center;
 
@@ -35,23 +35,23 @@
       .weekly-clearfix();
     }
 
-    .day {
+    .weekly-day {
       float: left;
       padding: @padding;
     }
   }
 
-  .times {
+  .weekly-times {
     float: left;
     width: 10%;
     text-align: right;
 
-    .time {
+    .weekly-time {
       padding: @padding;
     }
   }
 
-  .grid {
+  .weekly-grid {
     float: left;
     width: 90%;
 
@@ -59,21 +59,21 @@
       .weekly-clearfix();
     }
 
-    .day {
+    .weekly-day {
       float: left;
       position: relative;
 
-      .time {
+      .weekly-time {
         padding: @padding;
       }
 
-      .event {
+      .weekly-event {
         position: absolute;
         padding: 10px;
         left: 5px;
         right: 5px;
 
-        .delete {
+        .weekly-delete {
           position: absolute;
           top: 5px;
           right: 5px;
@@ -81,13 +81,13 @@
           display: none;
         }
 
-        &:hover .delete {
+        &:hover .weekly-delete {
           display: block;
         }
 
       }
 
-      .event-pending {
+      .weekly-event-pending {
         position: absolute;
         left: 5px;
         right: 5px;
@@ -121,42 +121,42 @@
 
   font-family: @fontFamily;
 
-  .days .day {
+  .weekly-days .weekly-day {
     border-left: @border;
   }
 
-  .times .time {
+  .weekly-times .weekly-time {
     border-top: @border;
   }
-  .grid {
-    .day {
+  .weekly-grid {
+    .weekly-day {
 
-      .time {
+      .weekly-time {
         border-left: @border;
         border-top: @border;
       }
 
-      .event {
+      .weekly-event {
         background-color: @eventColor;
         color: @eventForegroundColor;
         .event-border();
 
-        .delete {
+        .weekly-delete {
           color: @eventForegroundColor;
         }
 
-        .event-title {
+        .weekly-event-title {
           font-weight: bold;
         }
       }
     }
-    .event-pending {
+    .weekly-event-pending {
       background-color: @eventPendingColor;
       .event-border();
     }
   }
 
-  .today {
+  .weekly-today {
     background-color: @today;
   }
 

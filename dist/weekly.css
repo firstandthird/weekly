@@ -20,11 +20,11 @@
   line-height: 0;
   height: 0;
 }
-.weekly .days {
+.weekly .weekly-days {
   padding-left: 10%;
   text-align: center;
 }
-.weekly .days:after {
+.weekly .weekly-days:after {
   content: ".";
   display: block;
   clear: both;
@@ -32,23 +32,23 @@
   line-height: 0;
   height: 0;
 }
-.weekly .days .day {
+.weekly .weekly-days .weekly-day {
   float: left;
   padding: 10px;
 }
-.weekly .times {
+.weekly .weekly-times {
   float: left;
   width: 10%;
   text-align: right;
 }
-.weekly .times .time {
+.weekly .weekly-times .weekly-time {
   padding: 10px;
 }
-.weekly .grid {
+.weekly .weekly-grid {
   float: left;
   width: 90%;
 }
-.weekly .grid:after {
+.weekly .weekly-grid:after {
   content: ".";
   display: block;
   clear: both;
@@ -56,59 +56,59 @@
   line-height: 0;
   height: 0;
 }
-.weekly .grid .day {
+.weekly .weekly-grid .weekly-day {
   float: left;
   position: relative;
 }
-.weekly .grid .day .time {
+.weekly .weekly-grid .weekly-day .weekly-time {
   padding: 10px;
 }
-.weekly .grid .day .event {
+.weekly .weekly-grid .weekly-day .weekly-event {
   position: absolute;
   padding: 10px;
   left: 5px;
   right: 5px;
 }
-.weekly .grid .day .event .delete {
+.weekly .weekly-grid .weekly-day .weekly-event .weekly-delete {
   position: absolute;
   top: 5px;
   right: 5px;
   text-decoration: none;
   display: none;
 }
-.weekly .grid .day .event:hover .delete {
+.weekly .weekly-grid .weekly-day .weekly-event:hover .weekly-delete {
   display: block;
 }
-.weekly .grid .day .event-pending {
+.weekly .weekly-grid .weekly-day .weekly-event-pending {
   position: absolute;
   left: 5px;
   right: 5px;
 }
-.weekly .days .day {
+.weekly .weekly-days .weekly-day {
   border-left: 1px solid #ecf0f1;
 }
-.weekly .times .time {
+.weekly .weekly-times .weekly-time {
   border-top: 1px solid #ecf0f1;
 }
-.weekly .grid .day .time {
+.weekly .weekly-grid .weekly-day .weekly-time {
   border-left: 1px solid #ecf0f1;
   border-top: 1px solid #ecf0f1;
 }
-.weekly .grid .day .event {
+.weekly .weekly-grid .weekly-day .weekly-event {
   background-color: #3498db;
   color: #ffffff;
   border-radius: 3px;
 }
-.weekly .grid .day .event .delete {
+.weekly .weekly-grid .weekly-day .weekly-event .weekly-delete {
   color: #ffffff;
 }
-.weekly .grid .day .event .event-title {
+.weekly .weekly-grid .weekly-day .weekly-event .weekly-event-title {
   font-weight: bold;
 }
-.weekly .grid .event-pending {
+.weekly .weekly-grid .weekly-event-pending {
   background-color: #34495e;
   border-radius: 3px;
 }
-.weekly .today {
+.weekly .weekly-today {
   background-color: rgba(241, 196, 15, 0.4);
 }
