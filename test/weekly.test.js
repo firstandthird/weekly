@@ -257,7 +257,7 @@ suite('weekly', function() {
         currentDate: date
       });
 
-      var firstDate = el.find('.weekly-grid .weeklyday').first();
+      var firstDate = el.find('.weekly-grid .weekly-day').first();
 
       el.one('addEvent', function() {
         assert.equal(firstDate.find('.weekly-event-pending').length, 1);
