@@ -44,6 +44,7 @@
   padding: 10px;
 }
 .weekly .weekly-grid {
+  position: relative;
   float: left;
   width: 90%;
 }

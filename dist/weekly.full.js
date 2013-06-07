@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.2
+ * v0.0.3
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -370,12 +370,6 @@ w.Fidel = Fidel;
         }
       }));
 
-      gridDays.on('mousemove', this.proxy(function(event){
-        if(this.moseDown) {
-          this.createEvent(event);
-        }
-      }));
-
       gridDays.on('mouseleave', this.proxy(function(event){
         if(this.mouseDown) {
           gridDays.trigger('mouseup');
@@ -385,8 +379,8 @@ w.Fidel = Fidel;
 
     createEvent: function(event) {
       var target = $(event.currentTarget);
-      var targetOffset = target.offset();
-      var mouseOffsetTop = event.clientY - targetOffset.top;
+      var targetOffset = target.parent().offset();
+      var mouseOffsetTop = event.pageY - targetOffset.top;
       var dayHeight = $(event.currentTarget).height();
       var hourHeight = Math.round(dayHeight / this.timeDifference);
 
