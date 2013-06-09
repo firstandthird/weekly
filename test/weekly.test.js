@@ -516,7 +516,7 @@ suite('weekly', function() {
         autoRender: false
       });
 
-      assert.equal(el.weekly('timef', '%g %G %h %h %i %s %u %a %A %e', date), '8 8 08 08 30 30 50 am AM 240');
+      assert.equal(el.weekly('timef', '%g %G %h %h %i %s %u %a %A %e', date), '8 8 08 08 30 30 50 am AM ' + date.getTimezoneOffset());
 
       date = new Date(2013, 4, 15, 18, 5, 5, 5);
 
@@ -525,7 +525,7 @@ suite('weekly', function() {
         autoRender: false
       });
 
-      assert.equal(el.weekly('timef', '%g %G %h %H %i %s %u %a %A %e', date), '6 18 06 18 05 05 5 pm PM 240');
+      assert.equal(el.weekly('timef', '%g %G %h %H %i %s %u %a %A %e', date), '6 18 06 18 05 05 5 pm PM ' + date.getTimezoneOffset());
     });
 
     test('st,nd,rt,th', function() {
