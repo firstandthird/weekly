@@ -273,6 +273,50 @@ w.Fidel = Fidel;
   };
 })(window.Fidel);
 
+/*global jQuery */
+/*!
+* FitText.js 1.1
+*
+* Copyright 2011, Dave Rupert http://daverupert.com
+* Released under the WTFPL license
+* http://sam.zoy.org/wtfpl/
+*
+* Date: Thu May 05 14:23:00 2011 -0600
+*/
+
+(function( $ ){
+
+  $.fn.fitText = function( kompressor, options ) {
+
+    // Setup options
+    var compressor = kompressor || 1,
+        settings = $.extend({
+          'minFontSize' : Number.NEGATIVE_INFINITY,
+          'maxFontSize' : Number.POSITIVE_INFINITY
+        }, options);
+
+    return this.each(function(){
+
+      // Store the object
+      var $this = $(this);
+
+      // Resizer() resizes items based on the object width divided by the compressor * 10
+      var resizer = function () {
+        $this.css('font-size', Math.max(Math.min($this.width() / (compressor*10), parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)));
+      };
+
+      // Call once to set.
+      resizer();
+
+      // Call on resize. Opera debounces their resize by default.
+      $(window).on('resize.fittext orientationchange.fittext', resizer);
+
+    });
+
+  };
+
+})( jQuery );
+
 (function($) {
 
   $.declare('weekly', {
@@ -311,6 +355,8 @@ w.Fidel = Fidel;
       this.registerClickToCreate();
 
       this.highlightToday();
+
+      this.el.find(".weekly-days .weekly-day, .weekly-times .weekly-time").fitText();
     },
 
     highlightToday: function() {
@@ -503,7 +549,11 @@ w.Fidel = Fidel;
         bottom: bottomOffset + '%'
       }).append('<button data-action="removeEvent" class="weekly-delete">×</button><div class="weekly-event-title">' + this.timef('%g:%i %a', event.start) + ' - ' + this.timef('%g:%i %a', event.end) + '</div><div class="weekly-event-name">' + event.name + '</div><div class="weekly-event-desc">' + event.description + '</div>');
 
-      this.el.find('.weekly-grid .weekly-day[data-date="' + startDate + '"]').append(eventTemplate);
+      var selectedDay = this.el.find('.weekly-grid .weekly-day[data-date="' + startDate + '"]');
+
+      selectedDay.append(eventTemplate);
+
+      selectedDay.find(".weekly-event").fitText();
     },
 
     toFraction: function(time) {

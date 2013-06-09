@@ -33,7 +33,9 @@
 }
 .weekly .weekly-days .weekly-day {
   float: left;
-  padding: 10px;
+  padding: 0 10px;
+  height: 38px;
+  line-height: 38px;
 }
 .weekly .weekly-times {
   float: left;
@@ -41,7 +43,9 @@
   text-align: right;
 }
 .weekly .weekly-times .weekly-time {
-  padding: 10px;
+  padding: 0 10px;
+  height: 38px;
+  line-height: 38px;
 }
 .weekly .weekly-grid {
   position: relative;
@@ -61,7 +65,9 @@
   position: relative;
 }
 .weekly .weekly-grid .weekly-day .weekly-time {
-  padding: 10px;
+  padding: 0 10px;
+  height: 38px;
+  line-height: 38px;
 }
 .weekly .weekly-grid .weekly-day .weekly-event {
   position: absolute;

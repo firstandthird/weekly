@@ -1,6 +1,7 @@
 .weekly-layout() {
 
-  @padding: 10px;
+  @padding: 0 10px;
+  @gridHeight: 38px;
   .weekly-clearfix() {
     content: ".";
     display: block;
@@ -37,6 +38,8 @@
     .weekly-day {
       float: left;
       padding: @padding;
+      height: @gridHeight;
+      line-height: @gridHeight;
     }
   }
 
@@ -47,6 +50,8 @@
 
     .weekly-time {
       padding: @padding;
+      height: @gridHeight;
+      line-height: @gridHeight;
     }
   }
 
@@ -65,6 +70,8 @@
 
       .weekly-time {
         padding: @padding;
+        height: @gridHeight;
+        line-height: @gridHeight;
       }
 
       .weekly-event {
