@@ -461,6 +461,24 @@ suite('weekly', function() {
       assert.equal(dates[0].toDateString(), 'Sun May 26 2013');
       assert.equal(dates[6].toDateString(), 'Sat Jun 01 2013');
     });
+
+    test('today', function() {
+      var date = new Date(2013, 5, 5);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      el.weekly('prevWeek');
+
+      el.weekly('jumpToday');
+
+      var dates = el.weekly('getDates');
+      assert.equal(dates.length, 7);
+      assert.equal(dates[0].toDateString(), 'Sun Jun 02 2013');
+      assert.equal(dates[6].toDateString(), 'Sat Jun 08 2013');
+    });
   });
 
   suite('time format', function() {
