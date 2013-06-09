@@ -44,6 +44,12 @@
 
       this.highlightToday();
 
+      if(!this.weekOffset) {
+        this.el.find(".weekly-change-today-button").css('display', 'none');
+      } else {
+        this.el.find(".weekly-change-today-button").css('display', 'block');
+      }
+
       this.el.find(".weekly-days .weekly-day, .weekly-times .weekly-time").fitText();
     },
 

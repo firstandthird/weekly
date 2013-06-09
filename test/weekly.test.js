@@ -479,6 +479,23 @@ suite('weekly', function() {
       assert.equal(dates[0].toDateString(), 'Sun Jun 02 2013');
       assert.equal(dates[6].toDateString(), 'Sat Jun 08 2013');
     });
+
+    test('today button should only show when not today', function() {
+      var date = new Date(2013, 5, 5);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      el.weekly('prevWeek');
+
+      assert.equal(el.find('.weekly-change-today-button').css('display'), 'block');
+
+      el.weekly('jumpToday');
+
+      assert.equal(el.find('.weekly-change-today-button').css('display'), 'none');
+    });
   });
 
   suite('time format', function() {

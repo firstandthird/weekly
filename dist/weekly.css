@@ -113,6 +113,9 @@
 .weekly .weekly-time-navigation .weekly-change-week-button.weekly-next-week {
   float: right;
 }
+.weekly .weekly-time-navigation .weekly-jump-today {
+  float: left;
+}
 .weekly .weekly-days .weekly-day {
   border-left: 1px solid #ecf0f1;
 }
