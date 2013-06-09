@@ -207,15 +207,15 @@
     },
 
     nextWeek: function() {
-      this.changeDate(7);
+      this.changeDate(1);
     },
 
     prevWeek: function() {
-      this.changeDate(-7);
+      this.changeDate(-1);
     },
 
-    changeDate: function(offsetDays) {
-      this.currentDate.setDate(this.currentDate.getDate() + offsetDays);
+    changeDate: function(offsetWeek) {
+      this.weekOffset += offsetWeek;
 
       this.update();
     },
