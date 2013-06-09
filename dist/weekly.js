@@ -64,6 +64,7 @@
       gridDays.unbind('mousedown mousemove mouseup mouseout');
 
       gridDays.on('mousedown', this.proxy(function(event){
+        if(event.which !== 1) return;
         this.mouseDown = true;
 
         if(this.pendingEvent) {
