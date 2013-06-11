@@ -1,4 +1,17 @@
 
+0.0.4 / 2013-06-11 
+==================
+
+  * Hides today button when on today + tests.
+  * Added jump to today method and added test.
+  * Changed changeWeek methods to use weekOffset.
+  * Actually fized timezone offset test.
+  * Fixed breaking time test.
+  * Fixed breaking tests due to fittext.
+  * Fixed bug where event would be created when right or middle clicking.
+  * Added fittext and made text size more responsive.
+  * Fixed time offsets.
+
 0.0.3 / 2013-06-05 
 ==================
 
