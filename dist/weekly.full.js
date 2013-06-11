@@ -1,69 +1,53 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.4
+ * v0.0.5
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
 */
+/*global jQuery */
 /*!
- * template - A simple javascript template engine.
- * v0.2.0
- * https://github.com/jgallen23/template
- * copyright Greg Allen 2013
- * MIT License
+* FitText.js 1.1
+*
+* Copyright 2011, Dave Rupert http://daverupert.com
+* Released under the WTFPL license
+* http://sam.zoy.org/wtfpl/
+*
+* Date: Thu May 05 14:23:00 2011 -0600
 */
-//template.js
-//modified version of john resig's micro templating
-//http://ejohn.org/blog/javascript-micro-templating/
 
-(function(w){
-  var oldRef = w.template;
-  var cache = {};
+(function( $ ){
 
-  opts = {
-    openTag: '<%',
-    closeTag: '%>'
+  $.fn.fitText = function( kompressor, options ) {
+
+    // Setup options
+    var compressor = kompressor || 1,
+        settings = $.extend({
+          'minFontSize' : Number.NEGATIVE_INFINITY,
+          'maxFontSize' : Number.POSITIVE_INFINITY
+        }, options);
+
+    return this.each(function(){
+
+      // Store the object
+      var $this = $(this);
+
+      // Resizer() resizes items based on the object width divided by the compressor * 10
+      var resizer = function () {
+        $this.css('font-size', Math.max(Math.min($this.width() / (compressor*10), parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)));
+      };
+
+      // Call once to set.
+      resizer();
+
+      // Call on resize. Opera debounces their resize by default.
+      $(window).on('resize.fittext orientationchange.fittext', resizer);
+
+    });
+
   };
 
-  var template = function tmpl(str, data){
-    // Figure out if we're getting a template, or if we need to
-    // load the template - and be sure to cache the result.
-    var fn = !/\W/.test(str) ?
-      cache[str] = cache[str] ||
-        tmpl(str) :
-
-      // Generate a reusable function that will serve as a template
-      // generator (and which will be cached).
-      new Function("obj",
-        "var p=[],print=function(){p.push.apply(p,arguments);};" +
-
-        // Introduce the data as local variables using with(){}
-        "with(obj){p.push('" +
-
-        // Convert the template into pure JavaScript
-        str
-          .replace(/[\r\t\n]/g, " ")
-          .split(opts.openTag).join("\t")
-          .replace(new RegExp("((^|"+opts.closeTag+")[^\t]*)'", 'g'), "$1\r")
-          .replace(new RegExp("\t=(.*?)"+opts.closeTag, 'g'), "',$1,'")
-          .split("\t").join("');")
-          .split(opts.closeTag).join("p.push('")
-          .split("\r").join("\\'") + "');}return p.join('');");
-
-    // Provide some basic currying to the user
-    return data ? fn( data ) : fn;
-  };
-
-  template.options = opts;
-  template.noConflict = function() {
-    w.template = oldRef;
-    return template;
-  };
-
-  w.template = template;
-})(window);
-
-
+})( jQuery );
 /*!
  * fidel - a ui view controller
  * v2.2.1
@@ -255,6 +239,63 @@ Fidel.onPostInit = function(fn) {
 
 w.Fidel = Fidel;
 })(window, window.jQuery || window.Zepto);
+/*!
+ * template - A simple javascript template engine.
+ * v0.2.0
+ * https://github.com/jgallen23/template
+ * copyright Greg Allen 2013
+ * MIT License
+*/
+//template.js
+//modified version of john resig's micro templating
+//http://ejohn.org/blog/javascript-micro-templating/
+
+(function(w){
+  var oldRef = w.template;
+  var cache = {};
+
+  opts = {
+    openTag: '<%',
+    closeTag: '%>'
+  };
+
+  var template = function tmpl(str, data){
+    // Figure out if we're getting a template, or if we need to
+    // load the template - and be sure to cache the result.
+    var fn = !/\W/.test(str) ?
+      cache[str] = cache[str] ||
+        tmpl(str) :
+
+      // Generate a reusable function that will serve as a template
+      // generator (and which will be cached).
+      new Function("obj",
+        "var p=[],print=function(){p.push.apply(p,arguments);};" +
+
+        // Introduce the data as local variables using with(){}
+        "with(obj){p.push('" +
+
+        // Convert the template into pure JavaScript
+        str
+          .replace(/[\r\t\n]/g, " ")
+          .split(opts.openTag).join("\t")
+          .replace(new RegExp("((^|"+opts.closeTag+")[^\t]*)'", 'g'), "$1\r")
+          .replace(new RegExp("\t=(.*?)"+opts.closeTag, 'g'), "',$1,'")
+          .split("\t").join("');")
+          .split(opts.closeTag).join("p.push('")
+          .split("\r").join("\\'") + "');}return p.join('');");
+
+    // Provide some basic currying to the user
+    return data ? fn( data ) : fn;
+  };
+
+  template.options = opts;
+  template.noConflict = function() {
+    w.template = oldRef;
+    return template;
+  };
+
+  w.template = template;
+})(window);
 
 /*!
  * fidel-template - A fidel plugin to render a clientside template
@@ -272,50 +313,6 @@ w.Fidel = Fidel;
     this.el.html(Fidel.template(tmpl, data));
   };
 })(window.Fidel);
-
-/*global jQuery */
-/*!
-* FitText.js 1.1
-*
-* Copyright 2011, Dave Rupert http://daverupert.com
-* Released under the WTFPL license
-* http://sam.zoy.org/wtfpl/
-*
-* Date: Thu May 05 14:23:00 2011 -0600
-*/
-
-(function( $ ){
-
-  $.fn.fitText = function( kompressor, options ) {
-
-    // Setup options
-    var compressor = kompressor || 1,
-        settings = $.extend({
-          'minFontSize' : Number.NEGATIVE_INFINITY,
-          'maxFontSize' : Number.POSITIVE_INFINITY
-        }, options);
-
-    return this.each(function(){
-
-      // Store the object
-      var $this = $(this);
-
-      // Resizer() resizes items based on the object width divided by the compressor * 10
-      var resizer = function () {
-        $this.css('font-size', Math.max(Math.min($this.width() / (compressor*10), parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)));
-      };
-
-      // Call once to set.
-      resizer();
-
-      // Call on resize. Opera debounces their resize by default.
-      $(window).on('resize.fittext orientationchange.fittext', resizer);
-
-    });
-
-  };
-
-})( jQuery );
 
 (function($) {
 
