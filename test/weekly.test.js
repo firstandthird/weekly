@@ -240,6 +240,31 @@ suite('weekly', function() {
       assert.equal(el.find('.weekly-today').length, 2);
     });
 
+    test('weekSpan updates on prev', function() {
+      var date = new Date(2013, 5, 5);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      el.weekly('prevWeek');
+
+      assert.equal(el.weekly('getWeekSpan', date, -1), el.find('.weekly-header').html());
+    });
+
+    test('weekSpan updates on next', function() {
+      var date = new Date(2013, 5, 5);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        autoRender: false
+      });
+
+      el.weekly('nextWeek');
+
+      assert.equal(el.weekly('getWeekSpan', date, 1), el.find('.weekly-header').html());
+    });
   });
 
   suite('addEvent', function() {
