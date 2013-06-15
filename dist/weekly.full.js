@@ -323,7 +323,7 @@ w.Fidel = Fidel;
       weekOffset: 0,
       currentDate: new Date(),
       autoRender: true,
-      template: '<div class="weekly-time-navigation">  <button class="weekly-previous-week weekly-change-week-button" data-action="prevWeek">&laquo; <span class="week"></span></button>  <button class="weekly-next-week weekly-change-week-button" data-action="nextWeek"><span class="week"></span> &raquo;</button>  <button class="weekly-jump-today weekly-change-today-button" data-action="jumpToday">Today</button>  <div class="weekly-header"></div></div><div class="weekly-days" style="padding-left:<%= 100/dates.length %>%"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%n-%j\', date) %>">    <%= timef(\'%D %m/%d\', date) %>  </div><% } %></div><div class="weekly-times" style="width:<%= 100/dates.length %>%"><% for (var i = 0; i < times.length; i++) { var time = times[i]; %>  <div class="weekly-time" data-time="<%= time %>"><%= time %></div><% } %></div><div class="weekly-grid" style="width:<%= 100-(100/dates.length) %>%"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%n-%j\', date) %>">    <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>      <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>    <% } %>  </div><% } %></div>'
+      template: '<div class="weekly-time-navigation">  <button class="weekly-previous-week weekly-change-week-button" data-action="prevWeek">&laquo; <span class="week"></span></button>  <button class="weekly-next-week weekly-change-week-button" data-action="nextWeek"><span class="week"></span> &raquo;</button>  <button class="weekly-jump-today weekly-change-today-button" data-action="jumpToday">Today</button>  <div class="weekly-header"></div></div><div class="weekly-days"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%n-%j\', date) %>">    <%= timef(\'%D %m/%d\', date) %>  </div><% } %></div><div class="weekly-times"><% for (var i = 0; i < times.length; i++) { var time = times[i]; %>  <div class="weekly-time" data-time="<%= time %>"><%= time %></div><% } %></div><div class="weekly-grid"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%n-%j\', date) %>">    <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>      <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>    <% } %>  </div><% } %></div>'
     },
 
     init: function() {
@@ -384,10 +384,10 @@ w.Fidel = Fidel;
       var gridDays = this.el.find('.weekly-grid .weekly-day');
 
       // Make sure anything previously bound is bound no more.
-      gridDays.unbind('mousedown mousemove mouseup mouseout');
+      gridDays.unbind('mousedown mousemove mouseup mouseout click');
 
       gridDays.on('mousedown', this.proxy(function(event){
-        if(event.which !== 1) return;
+        if(event.which !== 1 || $(event.target).is('.weekly-dragger')) return;
         this.mouseDown = true;
 
         if(this.pendingEvent) {
@@ -412,6 +412,53 @@ w.Fidel = Fidel;
           this.pendingEvent.remove();
           this.pendingEvent = null;
           this.pendingEventStart = null;
+        }
+      }));
+
+      gridDays.on('mousemove', this.proxy(function(event){
+        if(this.mouseDown) {
+          this.createEvent(event);
+        }
+      }));
+
+      gridDays.on('click', this.proxy(function(event){
+        if($(event.target).is('.weekly-time,.weekly-day')) {
+          this.createEvent(event);
+          gridDays.trigger('mouseup');
+        }
+      }));
+
+      gridDays.on('mouseleave', this.proxy(function(event){
+        if(this.mouseDown) {
+          gridDays.trigger('mouseup');
+        }
+      }));
+    },
+
+    registerModifyEvent: function() {
+      this.mouseDown = false;
+      this.pendingEvent = null;
+      this.pendingEventStart = null;
+
+      var eventDraggers = this.el.find('.weekly-grid .weekly-dragger');
+
+      // Make sure anything previously bound is bound no more.
+      eventDraggers.unbind('mousedown mousemove mouseup mouseout click');
+
+      eventDraggers.on('mousedown', this.proxy(function(event){
+        if(event.which !== 1) return;
+        this.mouseDown = true;
+
+        this.eventOffset = 0;
+      }));
+
+      gridDays.on('mouseup', this.proxy(function(){
+        this.mouseDown = false;
+
+        if(this.eventOffset) {
+          var eventData = this.pendingEvent.data();
+
+          this.eventOffset = 0;
         }
       }));
 
@@ -466,6 +513,19 @@ w.Fidel = Fidel;
 
       this.pendingEvent.data('starttime', ((this.pendingEventStart / hourHeight) || 0) + this.startTime);
       this.pendingEvent.data('endtime', ((this.pendingEventEnd / hourHeight) || 1) + this.startTime);
+    },
+
+    modifyEvent: function(event) {
+      var target = $(event.currentTarget);
+      var targetOffset = target.parent().offset();
+      var mouseOffsetTop = event.pageY - targetOffset.top;
+      var dayHeight = $(event.currentTarget).height();
+      var hourHeight = Math.round(dayHeight / this.timeDifference);
+
+      var tempStart = Math.floor(mouseOffsetTop / hourHeight) * hourHeight;
+      var tempEnd = Math.ceil(mouseOffsetTop / hourHeight) * hourHeight;
+
+      console.log(tempStart, tempEnd);
     },
 
     getWeekSpan: function(date, offset) {
@@ -567,7 +627,13 @@ w.Fidel = Fidel;
       eventTemplate.css({
         top: topOffset + '%',
         bottom: bottomOffset + '%'
-      }).append('<button data-action="removeEvent" class="weekly-delete">×</button><div class="weekly-event-title">' + this.timef('%g:%i %a', event.start) + ' -<br>' + this.timef('%g:%i %a', event.end) + '</div><div class="weekly-event-name">' + event.name + '</div><div class="weekly-event-desc">' + event.description + '</div>');
+      }).append([
+        '<button data-action="removeEvent" class="weekly-delete">×</button>',
+        '<div class="weekly-event-title">' + this.timef('%g:%i %a', event.start) + ' -<br>' + this.timef('%g:%i %a', event.end) + '</div>',
+        '<div class="weekly-event-name">' + event.name + '</div>',
+        '<div class="weekly-event-desc">' + event.description + '</div>',
+        '<div class="weekly-dragger"></div>'
+      ].join(''));
 
       var selectedDay = this.el.find('.weekly-grid .weekly-day[data-date="' + startDate + '"]');
 

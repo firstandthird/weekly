@@ -91,10 +91,28 @@
           cursor: pointer;
         }
 
+        .weekly-dragger {
+          position: absolute;
+          background-color: #2980b9;
+          border: 1px solid rgba(0,0,0,.15);
+          border-radius: 2px;
+          padding-top: 2px;
+          color: red;
+          bottom: 3px;
+          left: 25%;
+          right: 25%;
+          cursor: row-resize;
+          display: none;
+        }
+
         &:hover .weekly-delete {
           display: block;
         }
 
+        &:hover .weekly-dragger {
+          display: block;
+        }
+        
       }
 
       .weekly-event-pending {
