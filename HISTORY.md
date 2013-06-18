@@ -1,4 +1,13 @@
 
+0.0.6 / 2013-06-18 
+==================
+
+  * WIP - Drag to modify event.
+  * Font sizes are a little more reasonable.
+  * Added dates to next/previous buttons.
+  * Event time now wraps.
+  * Updated header week on prev/next.
+
 0.0.5 / 2013-06-11 
 ==================
 
