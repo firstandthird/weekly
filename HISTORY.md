@@ -1,4 +1,10 @@
 
+0.0.7 / 2013-06-18 
+==================
+
+  * set background color for weekly-dragger based on eventColor
+  * option for min/max for fitText
+
 0.0.6 / 2013-06-18 
 ==================
 
