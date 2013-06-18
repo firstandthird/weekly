@@ -12,11 +12,42 @@
   </head>
   <body>
     <div class="weekly"></div>
+    <button data-action="clear">Clear</button>
 
     <script src="../components/jquery/jquery.js"></script>
     <script src="../dist/weekly.full.js"></script>
     <script>
-      $('.weekly').weekly();
+      var today = new Date();
+      var event1 = {
+        start: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 10),
+        end: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 12),
+        id: '123'
+      }
+      var event2 = {
+        start: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 13),
+        end: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 15),
+        id: '456'
+      }
+
+      var w = $('.weekly')
+        .weekly()
+        .on('addEvent', function(e, evnt) {
+          console.log('event added', evnt);
+        })
+        .on('removeEvent', function(e, evnt) {
+          console.log('event removed', evnt);
+        })
+        .on('clearEvents', function() {
+          console.log('events cleared');
+        })
+        .weekly('addEvent', [event1, event2]);
+
+
+      $('[data-action=clear]').on('click', function() {
+        w.weekly('clearEvents');
+      });
+
+
     </script>
   </body>
 </html>
