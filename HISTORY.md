@@ -1,4 +1,11 @@
 
+0.0.8 / 2013-06-18 
+==================
+
+  * updated example
+  * changed clearedEvents to clearEvents
+  * changed .id to ._index so .id can be used for fetching from db
+
 0.0.7 / 2013-06-18 
 ==================
 

@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.7
+ * v0.0.8
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -758,7 +758,7 @@ w.Fidel = Fidel;
         end: null
       }, event);
 
-      event.id = this.events.length;
+      event._index = this.events.length;
 
       this.renderEvent(event);
       this.events.push(event);
@@ -770,7 +770,7 @@ w.Fidel = Fidel;
       var el = $(e.target).parents('.weekly-event');
       var event = el.data();
 
-      this.events.splice(event.id, 1);
+      this.events.splice(event._index, 1);
       el.remove();
 
       this.el.trigger('removeEvent', event);
@@ -783,7 +783,7 @@ w.Fidel = Fidel;
 
       this.events = [];
 
-      this.el.trigger('clearedEvents');
+      this.el.trigger('clearEvents');
     }
   });
 
