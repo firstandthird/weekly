@@ -134,7 +134,6 @@ module.exports = function(grunt) {
     reloadr: {
       main: [
         'example/*',
-        'test/*',
         'dist/*'
       ]
     },
