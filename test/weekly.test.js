@@ -521,6 +521,39 @@ suite('weekly', function() {
 
       assert.equal(el.find('.weekly-change-today-button').css('display'), 'none');
     });
+
+    test('weekChange should fire on init', function(done) {
+      var date = new Date(2013, 5, 5);
+
+      $('.weekly')
+        .on('weekChange', function(e, data) {
+          assert.equal(typeof data, 'object');
+          assert.equal(data.dates instanceof Array, true);
+          assert.equal(data.times instanceof Array, true);
+          done();
+        })
+        .weekly({
+          currentDate: date
+        });
+    });
+
+    test('weekChange should fire when the dates have changes', function(done) {
+      var date = new Date(2013, 5, 5);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      el.on('weekChange', function(e, data) {
+        assert.equal(typeof data, 'object');
+        assert.equal(data.dates instanceof Array, true);
+        assert.equal(data.times instanceof Array, true);
+        done();
+      });
+
+      el.weekly('prevWeek');
+
+    });
   });
 
   suite('time format', function() {
