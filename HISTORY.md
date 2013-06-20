@@ -1,4 +1,10 @@
 
+0.0.9 / 2013-06-20 
+==================
+
+  * fixed issue where tests weren't running on 2nd save of test files
+  * added weekChange event
+
 0.0.8 / 2013-06-18 
 ==================
 
