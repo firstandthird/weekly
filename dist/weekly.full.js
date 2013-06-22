@@ -354,6 +354,7 @@ w.Fidel = Fidel;
       this.timeDifference = (this.endTime + 13) - this.startTime;
 
       this.registerClickToCreate();
+      this.registerModifyEvent();
 
       this.highlightToday();
 
@@ -443,48 +444,39 @@ w.Fidel = Fidel;
     },
 
     registerModifyEvent: function() {
-      this.mouseDown = false;
-      this.pendingEvent = null;
-      this.pendingEventStart = null;
+      this.mouseModifyDown = false;
 
-      var eventDraggers = this.el.find('.weekly-grid .weekly-dragger');
+      var eventDraggers = this.el.find('.weekly-grid');
+
+      this.currentDragger = null;
 
       // Make sure anything previously bound is bound no more.
-      eventDraggers.unbind('mousedown mousemove mouseup mouseout click');
+      eventDraggers.find('.weekly-dragger').unbind('mousedown mousemove mouseup mouseout click');
 
-      eventDraggers.on('mousedown', this.proxy(function(event){
+      eventDraggers.on('mousedown', '.weekly-dragger', this.proxy(function(event){
         if(event.which !== 1) return;
-        this.mouseDown = true;
+        this.mouseModifyDown = true;
+
+        this.currentDragger = $(event.target);
 
         this.eventOffset = 0;
       }));
 
-      gridDays.on('mouseup', this.proxy(function(){
-        this.mouseDown = false;
+      eventDraggers.on('mouseup', '.weekly-day', this.proxy(function(){
+        this.mouseModifyDown = false;
 
-        if(this.eventOffset) {
-          var eventData = this.pendingEvent.data();
+        this.currentDragger = null;
+      }));
 
-          this.eventOffset = 0;
+      eventDraggers.on('mousemove', '.weekly-day', this.proxy(function(event){
+        if(this.mouseModifyDown) {
+          this.modifyEvent(event);
         }
       }));
 
-      gridDays.on('mousemove', this.proxy(function(event){
-        if(this.mouseDown) {
-          this.createEvent(event);
-        }
-      }));
-
-      gridDays.on('click', this.proxy(function(event){
-        if($(event.target).is('.weekly-time,.weekly-day')) {
-          this.createEvent(event);
-          gridDays.trigger('mouseup');
-        }
-      }));
-
-      gridDays.on('mouseleave', this.proxy(function(event){
-        if(this.mouseDown) {
-          gridDays.trigger('mouseup');
+      eventDraggers.on('mouseleave', this.proxy(function(event){
+        if(this.mouseModifyDown) {
+          this.currentDragger.trigger('mouseup');
         }
       }));
     },
@@ -523,16 +515,28 @@ w.Fidel = Fidel;
     },
 
     modifyEvent: function(event) {
-      var target = $(event.currentTarget);
+      var target = this.currentDragger.parents('.weekly-event');
       var targetOffset = target.parent().offset();
       var mouseOffsetTop = event.pageY - targetOffset.top;
       var dayHeight = $(event.currentTarget).height();
       var hourHeight = Math.round(dayHeight / this.timeDifference);
 
-      var tempStart = Math.floor(mouseOffsetTop / hourHeight) * hourHeight;
       var tempEnd = Math.ceil(mouseOffsetTop / hourHeight) * hourHeight;
 
-      console.log(tempStart, tempEnd);
+      if(tempEnd < (targetOffset.top + dayHeight)) {
+        target.css({
+          bottom: dayHeight - tempEnd
+        });
+      }
+
+      var duration = target.outerHeight() / hourHeight;
+      var end = new Date(target.data('start'));
+      end.setHours(end.getHours() + duration);
+      target.data('end', end);
+
+      this.events[target.data('_index')].end = end;
+
+      this.el.trigger('modifyEvent', this.events[target.data('_index')]);
     },
 
     getWeekSpan: function(date, offset) {
