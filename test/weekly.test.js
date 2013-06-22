@@ -454,6 +454,40 @@ suite('weekly', function() {
     });
   });
 
+  suite('modify event', function() {
+    test('drag to modify', function(done) {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      el.weekly('addEvent', [{
+        name: 'Test Event',
+        start: new Date(2013, 4, 13, 9, 05),
+        end: new Date(2013, 4, 13, 9, 45)
+      }]);
+
+      var firstDate = el.find('.weekly-grid .weekly-event').first().parents('.weekly-day');
+      var dragger = firstDate.find('.weekly-dragger');
+
+      el.one('modifyEvent', function(event, data) {
+        assert.equal(typeof data, 'object');
+        done();
+      });
+
+      dragger.simulate('mousedown');
+
+      firstDate.simulate('mousemove', {
+        handle: 'center',
+        dx: 1,
+        dy: 100
+      });
+
+      firstDate.simulate('mouseup');
+    });
+  });
+
   suite('change date', function() {
     test('next week', function() {
       var date = new Date(2013, 4, 22);
