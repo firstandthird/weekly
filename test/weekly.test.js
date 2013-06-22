@@ -452,6 +452,21 @@ suite('weekly', function() {
 
       firstDate.click();
     });
+
+    test('readonly mode', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        readOnly: true
+      });
+
+      var firstDate = el.find('.weekly-grid .weekly-day').first();
+
+      firstDate.click();
+
+      assert.equal(firstDate.find('.weekly-event-pending').length, 0);
+    });
   });
 
   suite('modify event', function() {
