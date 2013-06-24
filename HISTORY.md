@@ -1,4 +1,11 @@
 
+0.0.10 / 2013-06-24 
+==================
+
+  * Added readonly mode + test.
+  * Basic test for draf to modify.
+  * Finished drag to modify event.
+
 0.0.9 / 2013-06-20 
 ==================
 
