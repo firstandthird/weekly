@@ -30,7 +30,10 @@
       }
 
       var w = $('.weekly')
-        .weekly()
+        .weekly({
+          //autoSplit: true,
+          //enableResize: false
+        })
         .on('addEvent', function(e, evnt) {
           console.log('event added', evnt);
         })

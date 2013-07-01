@@ -317,7 +317,8 @@ suite('weekly', function() {
 
       var firstDate = el.find('.weekly-grid .weekly-day').first();
 
-      el.one('addEvent', function() {
+      el.one('addEvent', function(e, evt) {
+        assert.equal(evt.name, 'Test Event');
         assert.equal(firstDate.find('.weekly-event').length, 1);
         done();
       });
@@ -706,6 +707,104 @@ suite('weekly', function() {
       });
 
       assert.equal(el.weekly('timef', '%S', date), 'th');
+    });
+  });
+
+  suite('splitEvent', function() {
+    test('split time', function() {
+      var event = {
+        name: 'Test Event',
+        start: new Date(2013, 4, 13, 9, 0),
+        end: new Date(2013, 4, 13, 12, 0)
+      };
+
+      var el = $('.weekly').weekly({
+        autoRender: false
+      });
+
+      var span = el.weekly('splitEvent', event);
+      assert.equal(span instanceof Array, true);
+      assert.equal(span.length, 3);
+      assert.equal(typeof span[0], 'object');
+      assert.equal(span[0].name, 'Test Event');
+      assert.equal(span[0].start.getTime(), new Date(2013, 4, 13, 9, 0).getTime());
+      assert.equal(span[0].end.getTime(), new Date(2013, 4, 13, 10, 0).getTime());
+      assert.equal(span[1].name, 'Test Event');
+      assert.equal(span[1].start.getTime(), new Date(2013, 4, 13, 10, 0).getTime());
+      assert.equal(span[1].end.getTime(), new Date(2013, 4, 13, 11, 0).getTime());
+      assert.equal(span[2].name, 'Test Event');
+      assert.equal(span[2].start.getTime(), new Date(2013, 4, 13, 11, 0).getTime());
+      assert.equal(span[2].end.getTime(), new Date(2013, 4, 13, 12, 0).getTime());
+    });
+
+  });
+
+  suite('auto split', function() {
+    test('auto split events by interval', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        autoSplit: true,
+        currentDate: date
+      });
+
+      el.weekly('addEvent', {
+        name: 'Test Event',
+        start: new Date(2013, 4, 13, 9, 0),
+        end: new Date(2013, 4, 13, 12, 0)
+      });
+
+      assert.equal(el.find('.weekly-event').length, 3);
+    });
+
+    test('pass in array of events', function() {
+
+      var events = [{
+        name: 'Test Event',
+        start: new Date(2013, 4, 13, 9, 0),
+        end: new Date(2013, 4, 13, 12, 0)
+      }, {
+        name: 'Test Event 2',
+        start: new Date(2013, 4, 13, 13, 0),
+        end: new Date(2013, 4, 13, 15, 0)
+      }];
+
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        autoSplit: true,
+        currentDate: date
+      });
+
+      el.weekly('addEvent', events);
+
+      assert.equal(el.find('.weekly-event').length, 5);
+
+    });
+
+    test('single event fire for one split event', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        autoSplit: true,
+        currentDate: date
+      });
+
+      var count = 0;
+      el.on('addEvent', function(e, data) {
+        assert.equal(data instanceof Array, true);
+        assert.equal(data.length, 3);
+        count++;
+      });
+
+      el.weekly('addEvent', {
+        name: 'Test Event',
+        start: new Date(2013, 4, 13, 9, 0),
+        end: new Date(2013, 4, 13, 12, 0)
+      });
+
+      assert.equal(count, 1);
+
     });
   });
 });
