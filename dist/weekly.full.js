@@ -312,13 +312,6 @@
   };
 })(window.Fidel);
 
-/*!
- * weekly - jQuery Weekly Calendar Plugin
- * v0.0.11
- * https://github.com/jgallen23/weekly
- * copyright Greg Allen 2013
- * MIT License
-*/
 /**
  * Simple date and time formatter based on php's date() syntax.
  */
