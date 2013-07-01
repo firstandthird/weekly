@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.10
+ * v0.0.11
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -327,7 +327,9 @@ w.Fidel = Fidel;
       fitTextMin: 11,
       fitTextMax: 15,
       template: '<div class="weekly-time-navigation">  <button class="weekly-previous-week weekly-change-week-button" data-action="prevWeek">&laquo; <span class="week"></span></button>  <button class="weekly-next-week weekly-change-week-button" data-action="nextWeek"><span class="week"></span> &raquo;</button>  <button class="weekly-jump-today weekly-change-today-button" data-action="jumpToday">Today</button>  <div class="weekly-header"></div></div><div class="weekly-days"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%n-%j\', date) %>">    <%= timef(\'%D %m/%d\', date) %>  </div><% } %></div><div class="weekly-times"><% for (var i = 0; i < times.length; i++) { var time = times[i]; %>  <div class="weekly-time" data-time="<%= time %>"><%= time %></div><% } %></div><div class="weekly-grid"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%n-%j\', date) %>">    <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>      <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>    <% } %>  </div><% } %></div>',
-      readOnly: false
+      readOnly: false,
+      enableResize: true,
+      autoSplit: false
     },
 
     init: function() {
@@ -649,6 +651,10 @@ w.Fidel = Fidel;
         '<div class="weekly-dragger"></div>'
       ].join(''));
 
+      if (!this.enableResize) {
+        eventTemplate.find('.weekly-dragger').remove();
+      }
+
       var selectedDay = this.el.find('.weekly-grid .weekly-day[data-date="' + startDate + '"]');
 
       selectedDay.append(eventTemplate);
@@ -752,6 +758,21 @@ w.Fidel = Fidel;
       });
     },
 
+    splitEvent: function(event) {
+      var diff = event.end.getTime() - event.start.getTime();
+      var hour = 60 * 60 * 1000;
+      var count = Math.ceil(diff / hour); //divide by 1 hour
+      var startTime = event.start.getTime();
+      var events = [];
+      for (var i = 0; i < count; i++) {
+        var newEvent = $.extend({}, event); //clone event
+        newEvent.start = new Date(startTime + (hour * i));
+        newEvent.end = new Date(startTime + (hour * (i+1)));
+        events.push(newEvent);
+      }
+      return events;
+    },
+
     addEvent: function(event) {
       if(event instanceof Array) {
         for(var i = 0, c = event.length; i < c; i++) {
@@ -760,19 +781,30 @@ w.Fidel = Fidel;
         return;
       }
 
-      event = $.extend({
-        name: '',
-        description: '',
-        start: null,
-        end: null
-      }, event);
+      if (this.autoSplit) {
+        event = this.splitEvent(event);
+      } else {
+        event = [event];
+      }
 
-      event._index = this.events.length;
+      for (var x = 0, y = event.length; x < y; x++) {
+        var e = event[x];
 
-      this.renderEvent(event);
-      this.events.push(event);
+        e = $.extend({
+          name: '',
+          description: '',
+          start: null,
+          end: null
+        }, e);
 
-      this.el.trigger('addEvent', [event]);
+        e._index = this.events.length;
+
+        this.renderEvent(e);
+        this.events.push(e);
+      }
+
+      var eventData = (this.autoSplit) ? event : event[0];
+      this.emit('addEvent', [eventData]);
     },
 
     removeEvent: function(e) {

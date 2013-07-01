@@ -1,4 +1,10 @@
 
+0.0.11 / 2013-07-01 
+==================
+
+  * option to disable resize
+  * added autoSplit option to automatically split events into hour intervals
+
 0.0.10 / 2013-06-24 
 ==================
 
