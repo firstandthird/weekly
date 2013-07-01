@@ -427,7 +427,7 @@
 
     update: function() {
       var data = {
-        timef: this.timef,
+        timef: TimeFormat,
         getWeekSpan: this.proxy(this.getWeekSpan),
         currentDate: this.currentDate,
         dates: this.getDates(),
@@ -471,7 +471,7 @@
     highlightToday: function() {
       var today = new Date();
 
-      this.el.find('[data-date="' + this.timef('%Y-%n-%j', today) + '"]').addClass('weekly-today');
+      this.el.find('[data-date="' + TimeFormat('%Y-%n-%j', today) + '"]').addClass('weekly-today');
     },
 
     registerClickToCreate: function() {
@@ -633,11 +633,11 @@
       var first = this.getFirstDayOfWeek(date, offset);
       var last = this.getLastDayOfWeek(date, offset);
 
-      var span = this.timef('%M %d', first) + ' - ';
+      var span = TimeFormat('%M %d', first) + ' - ';
       if (first.getMonth() == last.getMonth()) {
-        span += this.timef('%d', last);
+        span += TimeFormat('%d', last);
       } else {
-        span += this.timef('%M %d', last);
+        span += TimeFormat('%M %d', last);
       }
       return span;
     },
@@ -730,7 +730,7 @@
         bottom: bottomOffset + '%'
       }).append([
         '<button data-action="removeEvent" class="weekly-delete">×</button>',
-        '<div class="weekly-event-title">' + this.timef('%g:%i %a', event.start) + ' -<br>' + this.timef('%g:%i %a', event.end) + '</div>',
+        '<div class="weekly-event-title">' + TimeFormat('%g:%i %a', event.start) + ' -<br>' + TimeFormat('%g:%i %a', event.end) + '</div>',
         '<div class="weekly-event-name">' + event.name + '</div>',
         '<div class="weekly-event-desc">' + event.description + '</div>',
         '<div class="weekly-dragger"></div>'
@@ -774,73 +774,6 @@
       var percent = (diff / this.timeDifference) * 100;
 
       return percent;
-    },
-
-    timef: function(format, time) {
-      if(!time instanceof Date) return;
-
-      var months = 'January|February|March|April|May|June|July|August|September|October|November|December'.split('|');
-      var days = 'Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday'.split('|');
-
-
-      // Implements PHP's date format syntax.
-      return format.replace(/%d|%D|%j|%l|%S|%w|%F|%m|%M|%n|%Y|%y|%a|%A|%g|%G|%h|%H|%i|%s|%u|%e/g, function(match) {
-        switch(match) {
-          case '%d':
-            return ("0" + time.getDate()).substr(-2,2);
-          case '%D':
-            return days[time.getDay()].substr(0,3);
-          case '%j':
-            return time.getDate();
-          case '%l':
-            return days[time.getDay()];
-          case '%S':
-            if(time.getDate() === 1) {
-              return 'st';
-            } else if(time.getDate() === 2) {
-              return 'nd';
-            } else if(time.getDate() === 3) {
-              return 'rd';
-            } else {
-              return 'th';
-            }
-            break;
-          case '%w':
-            return time.getDay();
-          case '%F':
-            return months[time.getMonth()];
-          case '%m':
-            return ("0" + time.getMonth()).substr(-2,2);
-          case '%M':
-            return months[time.getMonth()].substr(0,3);
-          case '%n':
-            return time.getMonth();
-          case '%Y':
-            return time.getFullYear();
-          case '%y':
-            return time.getFullYear().toString().substr(-2,2);
-          case '%a':
-            return time.getHours() > 11 ? 'pm' : 'am';
-          case '%A':
-            return time.getHours() > 11 ? 'PM' : 'AM';
-          case '%g':
-            return time.getHours() > 12 ? time.getHours() -12 : time.getHours();
-          case '%G':
-          return time.getHours();
-          case '%h':
-            return ("0" + (time.getHours() > 12 ? time.getHours() -12 : time.getHours())).substr(-2,2);
-          case '%H':
-            return ("0" + time.getHours()).substr(-2,2);
-          case '%i':
-            return ("0" + time.getMinutes()).substr(-2,2);
-          case '%s':
-            return ("0" + time.getSeconds()).substr(-2,2);
-          case '%u':
-            return time.getMilliseconds();
-          case '%e':
-            return time.getTimezoneOffset();
-        }
-      });
     },
 
     splitEvent: function(event) {
