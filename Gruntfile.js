@@ -41,9 +41,17 @@ module.exports = function(grunt) {
         dest: 'dist/weekly.js'
       },
 
+      time: {
+        src: [
+          'lib/time.js'
+        ],
+        dest: 'dist/time.js'
+      },
+
       full: {
         src: [
           'dist/_bower.js',
+          'dist/time.js',
           'lib/weekly.js'
         ],
         dest: 'dist/weekly.full.js'
@@ -70,6 +78,11 @@ module.exports = function(grunt) {
       dist: {
         src: 'dist/weekly.js',
         dest: 'dist/weekly.min.js'
+      },
+
+      time: {
+        src: 'dist/time.js',
+        dest: 'dist/time.min.js'
       },
 
       full: {
@@ -115,8 +128,14 @@ module.exports = function(grunt) {
     },
 
     mocha: {
-      all: {
+      weekly: {
         src: 'test/index.html',
+        options: {
+          run: true
+        }
+      },
+      time: {
+        src: 'test/time.html',
         options: {
           run: true
         }

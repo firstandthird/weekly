@@ -50,157 +50,157 @@
 })( jQuery );
 /*!
  * fidel - a ui view controller
- * v2.2.1
+ * v2.2.2
  * https://github.com/jgallen23/fidel
- * copyright JGA 2013
+ * copyright Greg Allen 2013
  * MIT License
 */
-
 (function(w, $) {
+  var _id = 0;
+  var Fidel = function(obj) {
+    this.obj = obj;
+  };
 
-var _id = 0;
-var Fidel = function(obj) {
-  this.obj = obj;
-};
+  Fidel.prototype.__init = function(options) {
+    $.extend(this, this.obj);
+    this.id = _id++;
+    this.obj.defaults = this.obj.defaults || {};
+    $.extend(this, this.obj.defaults, options);
+    $('body').trigger('FidelPreInit', this);
+    this.setElement(this.el || $('<div/>'));
+    if (this.init) {
+      this.init();
+    }
+    $('body').trigger('FidelPostInit', this);
+  };
+  Fidel.prototype.eventSplitter = /^(\w+)\s*(.*)$/;
 
-Fidel.prototype.__init = function(options) {
-  $.extend(this, this.obj);
-  this.id = _id++;
-  this.obj.defaults = this.obj.defaults || {};
-  $.extend(this, this.obj.defaults, options);
-  $('body').trigger('FidelPreInit', this);
-  this.setElement(this.el || $('<div/>'));
-  if (this.init) {
-    this.init();
-  }
-  $('body').trigger('FidelPostInit', this);
-};
-Fidel.prototype.eventSplitter = /^(\w+)\s*(.*)$/;
+  Fidel.prototype.setElement = function(el) {
+    this.el = el;
+    this.getElements();
+    this.delegateEvents();
+    this.dataElements();
+    this.delegateActions();
+  };
 
-Fidel.prototype.setElement = function(el) {
-  this.el = el;
-  this.getElements();
-  this.delegateEvents();
-  this.dataElements();
-  this.delegateActions();
-};
+  Fidel.prototype.find = function(selector) {
+    return this.el.find(selector);
+  };
 
-Fidel.prototype.find = function(selector) {
-  return this.el.find(selector);
-};
+  Fidel.prototype.proxy = function(func) {
+    return $.proxy(func, this);
+  };
 
-Fidel.prototype.proxy = function(func) {
-  return $.proxy(func, this);
-};
+  Fidel.prototype.getElements = function() {
+    if (!this.elements)
+      return;
 
-Fidel.prototype.getElements = function() {
-  if (!this.elements)
-    return;
+    for (var selector in this.elements) {
+      var elemName = this.elements[selector];
+      this[elemName] = this.find(selector);
+    }
+  };
 
-  for (var selector in this.elements) {
-    var elemName = this.elements[selector];
-    this[elemName] = this.find(selector);
-  }
-};
+  Fidel.prototype.dataElements = function() {
+    var self = this;
+    this.find('[data-element]').each(function(index, item) {
+      var el = $(item);
+      var name = el.data('element');
+      self[name] = el;
+    });
+  };
 
-Fidel.prototype.dataElements = function() {
-  var self = this;
-  this.find('[data-element]').each(function(index, item) {
-    var el = $(item);
-    var name = el.data('element');
-    self[name] = el;
-  });
-};
+  Fidel.prototype.delegateEvents = function() {
+    var self = this;
+    if (!this.events)
+      return;
+    for (var key in this.events) {
+      var methodName = this.events[key];
+      var match = key.match(this.eventSplitter);
+      var eventName = match[1], selector = match[2];
 
-Fidel.prototype.delegateEvents = function() {
-  var self = this;
-  if (!this.events)
-    return;
-  for (var key in this.events) {
-    var methodName = this.events[key];
-    var match = key.match(this.eventSplitter);
-    var eventName = match[1], selector = match[2];
+      var method = this.proxy(this[methodName]);
 
-    var method = this.proxy(this[methodName]);
-
-    if (selector === '') {
-      this.el.on(eventName, method);
-    } else {
-      if (this[selector] && typeof this[selector] != 'function') {
-        this[selector].on(eventName, method);
+      if (selector === '') {
+        this.el.on(eventName, method);
       } else {
-        this.el.on(eventName, selector, method);
+        if (this[selector] && typeof this[selector] != 'function') {
+          this[selector].on(eventName, method);
+        } else {
+          this.el.on(eventName, selector, method);
+        }
       }
     }
-  }
-};
-
-Fidel.prototype.delegateActions = function() {
-  var self = this;
-  self.el.on('click', '[data-action]', function(e) {
-    var el = $(this);
-    var action = el.attr('data-action');
-    if (self[action]) {
-      self[action](e, el);
-    }
-  });
-};
-
-Fidel.prototype.on = function(eventName, cb) {
-  this.el.on(eventName+'.fidel'+this.id, cb);
-};
-
-Fidel.prototype.one = function(eventName, cb) {
-  this.el.one(eventName+'.fidel'+this.id, cb);
-};
-
-Fidel.prototype.emit = function(eventName, data, namespaced) {
-  var ns = (namespaced) ? '.fidel'+this.id : '';
-  this.el.trigger(eventName+ns, data);
-};
-
-Fidel.prototype.hide = function() {
-  if (this.views) {
-    for (var key in this.views) {
-      this.views[key].hide();
-    }
-  }
-  this.el.hide();
-};
-Fidel.prototype.show = function() {
-  if (this.views) {
-    for (var key in this.views) {
-      this.views[key].show();
-    }
-  }
-  this.el.show();
-};
-
-Fidel.prototype.destroy = function() {
-  this.el.empty();
-  this.emit('destroy');
-  this.el.unbind('.fidel'+this.id);
-};
-
-Fidel.declare = function(obj) {
-  var FidelModule = function(el, options) {
-    this.__init(el, options);
   };
-  FidelModule.prototype = new Fidel(obj);
-  return FidelModule;
-};
 
-//for plugins
-Fidel.onPreInit = function(fn) {
-  $('body').on('FidelPreInit', function(e, obj) {
-    fn.call(obj);
-  });
-};
-Fidel.onPostInit = function(fn) {
-  $('body').on('FidelPostInit', function(e, obj) {
-    fn.call(obj);
-  });
-};
+  Fidel.prototype.delegateActions = function() {
+    var self = this;
+    self.el.on('click', '[data-action]', function(e) {
+      var el = $(this);
+      var action = el.attr('data-action');
+      if (self[action]) {
+        self[action](e, el);
+      }
+    });
+  };
+
+  Fidel.prototype.on = function(eventName, cb) {
+    this.el.on(eventName+'.fidel'+this.id, cb);
+  };
+
+  Fidel.prototype.one = function(eventName, cb) {
+    this.el.one(eventName+'.fidel'+this.id, cb);
+  };
+
+  Fidel.prototype.emit = function(eventName, data, namespaced) {
+    var ns = (namespaced) ? '.fidel'+this.id : '';
+    this.el.trigger(eventName+ns, data);
+  };
+
+  Fidel.prototype.hide = function() {
+    if (this.views) {
+      for (var key in this.views) {
+        this.views[key].hide();
+      }
+    }
+    this.el.hide();
+  };
+  Fidel.prototype.show = function() {
+    if (this.views) {
+      for (var key in this.views) {
+        this.views[key].show();
+      }
+    }
+    this.el.show();
+  };
+
+  Fidel.prototype.destroy = function() {
+    this.el.empty();
+    this.emit('destroy');
+    this.el.unbind('.fidel'+this.id);
+  };
+
+  Fidel.declare = function(obj) {
+    var FidelModule = function(el, options) {
+      this.__init(el, options);
+    };
+    FidelModule.prototype = new Fidel(obj);
+    return FidelModule;
+  };
+
+  //for plugins
+  Fidel.onPreInit = function(fn) {
+    $('body').on('FidelPreInit', function(e, obj) {
+      fn.call(obj);
+    });
+  };
+  Fidel.onPostInit = function(fn) {
+    $('body').on('FidelPostInit', function(e, obj) {
+      fn.call(obj);
+    });
+  };
+  w.Fidel = Fidel;
+})(window, window.jQuery || window.Zepto);
 
 (function($) {
   $.declare = function(name, obj) {
@@ -227,18 +227,16 @@ Fidel.onPostInit = function(fn) {
         }
       });
 
-      return methodValue || els;
+      return (typeof methodValue !== 'undefined') ? methodValue : els;
     };
 
     $.fn[name].defaults = obj.defaults || {};
 
   };
 
-  $.Fidel = Fidel;
-})(jQuery);
+  $.Fidel = window.Fidel;
 
-w.Fidel = Fidel;
-})(window, window.jQuery || window.Zepto);
+})(jQuery);
 /*!
  * template - A simple javascript template engine.
  * v0.2.0
@@ -314,6 +312,93 @@ w.Fidel = Fidel;
   };
 })(window.Fidel);
 
+/*!
+ * weekly - jQuery Weekly Calendar Plugin
+ * v0.0.11
+ * https://github.com/jgallen23/weekly
+ * copyright Greg Allen 2013
+ * MIT License
+*/
+/**
+ * Simple date and time formatter based on php's date() syntax.
+ */
+
+(function(w) {
+  var oldRef = w.TimeFormat;
+
+  var months = 'January|February|March|April|May|June|July|August|September|October|November|December'.split('|');
+  var days = 'Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday'.split('|');
+
+  var TimeFormat = function(format, time) {
+    if(!time instanceof Date) return;
+    // Implements PHP's date format syntax.
+    return format.replace(/%d|%D|%j|%l|%S|%w|%F|%m|%M|%n|%Y|%y|%a|%A|%g|%G|%h|%H|%i|%s|%u|%e/g, function(match) {
+      switch(match) {
+        case '%d':
+          return ("0" + time.getDate()).substr(-2,2);
+        case '%D':
+          return days[time.getDay()].substr(0,3);
+        case '%j':
+          return time.getDate();
+        case '%l':
+          return days[time.getDay()];
+        case '%S':
+          if(time.getDate() === 1) {
+            return 'st';
+          } else if(time.getDate() === 2) {
+            return 'nd';
+          } else if(time.getDate() === 3) {
+            return 'rd';
+          } else {
+            return 'th';
+          }
+          break;
+        case '%w':
+          return time.getDay();
+        case '%F':
+          return months[time.getMonth()];
+        case '%m':
+          return ("0" + time.getMonth()).substr(-2,2);
+        case '%M':
+          return months[time.getMonth()].substr(0,3);
+        case '%n':
+          return time.getMonth();
+        case '%Y':
+          return time.getFullYear();
+        case '%y':
+          return time.getFullYear().toString().substr(-2,2);
+        case '%a':
+          return time.getHours() > 11 ? 'pm' : 'am';
+        case '%A':
+          return time.getHours() > 11 ? 'PM' : 'AM';
+        case '%g':
+          return time.getHours() > 12 ? time.getHours() -12 : time.getHours();
+        case '%G':
+        return time.getHours();
+        case '%h':
+          return ("0" + (time.getHours() > 12 ? time.getHours() -12 : time.getHours())).substr(-2,2);
+        case '%H':
+          return ("0" + time.getHours()).substr(-2,2);
+        case '%i':
+          return ("0" + time.getMinutes()).substr(-2,2);
+        case '%s':
+          return ("0" + time.getSeconds()).substr(-2,2);
+        case '%u':
+          return time.getMilliseconds();
+        case '%e':
+          return time.getTimezoneOffset();
+      }
+    });
+  };
+
+  TimeFormat.noConflict = function() {
+    w.TimeFormat = oldRef;
+    return TimeFormat;
+  };
+
+  w.TimeFormat = TimeFormat;
+
+})(window);
 (function($) {
 
   $.declare('weekly', {
