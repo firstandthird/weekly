@@ -35,7 +35,7 @@ suite('weekly', function() {
 
       el.weekly('prevWeek');
 
-      assert.equal(Dates.getWeekSpan(date, -1), el.find('.weekly-header').html());
+      assert.equal(dateUtils.getWeekSpan(date, -1), el.find('.weekly-header').html());
     });
 
     test('weekSpan updates on next', function() {
@@ -48,7 +48,7 @@ suite('weekly', function() {
 
       el.weekly('nextWeek');
 
-      assert.equal(Dates.getWeekSpan(date, 1), el.find('.weekly-header').html());
+      assert.equal(dateUtils.getWeekSpan(date, 1), el.find('.weekly-header').html());
     });
   });
 
@@ -300,7 +300,7 @@ suite('weekly', function() {
 
       el.weekly('nextWeek');
 
-      var dates = Dates.getDates(date, 1);
+      var dates = dateUtils.getdateUtils(date, 1);
       assert.equal(dates.length, 7);
       assert.equal(dates[0].toDateString(), 'Sun May 26 2013');
       assert.equal(dates[6].toDateString(), 'Sat Jun 01 2013');
@@ -316,7 +316,7 @@ suite('weekly', function() {
 
       el.weekly('prevWeek');
 
-      var dates = Dates.getDates(date, -1);
+      var dates = dateUtils.getdateUtils(date, -1);
       assert.equal(dates.length, 7);
       assert.equal(dates[0].toDateString(), 'Sun May 26 2013');
       assert.equal(dates[6].toDateString(), 'Sat Jun 01 2013');
@@ -334,7 +334,7 @@ suite('weekly', function() {
 
       el.weekly('jumpToday');
 
-      var dates = Dates.getDates(date, 0);
+      var dates = dateUtils.getdateUtils(date, 0);
       assert.equal(dates.length, 7);
       assert.equal(dates[0].toDateString(), 'Sun Jun 02 2013');
       assert.equal(dates[6].toDateString(), 'Sat Jun 08 2013');

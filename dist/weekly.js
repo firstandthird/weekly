@@ -10,12 +10,12 @@
  */
 
 (function(w){
-  var oldRef = w.Dates;
+  var oldRef = w.dateUtils;
 
-  var Dates = {
+  var dateUtils = {
     noConflict: function() {
-      w.Dates = oldRef;
-      return Dates;
+      w.dateUtils = oldRef;
+      return dateUtils;
     },
     getFirstDayOfWeek: function(date, offset) {
       offset = offset || 0;
@@ -31,7 +31,7 @@
       newDate.setDate(first + 6 + (weekOffset * 7));
       return newDate;
     },
-    getDates: function(date, weekOffset) {
+    getdateUtils: function(date, weekOffset) {
       var daysInWeek = 7;
 
       var days = [];
@@ -73,7 +73,7 @@
     }
   };
 
-  w.Dates = Dates;
+  w.dateUtils = dateUtils;
 })(window);
 (function($) {
 
@@ -104,10 +104,10 @@
     update: function() {
       var data = {
         timef: TimeFormat,
-        getWeekSpan: Dates.getWeekSpan,
+        getWeekSpan: dateUtils.getWeekSpan,
         currentDate: this.currentDate,
-        dates: Dates.getDates(this.currentDate, this.weekOffset),
-        times: Dates.getTimes(this.startTime, this.endTime)
+        dates: dateUtils.getdateUtils(this.currentDate, this.weekOffset),
+        times: dateUtils.getTimes(this.startTime, this.endTime)
       };
       this.render(data);
 
@@ -130,10 +130,10 @@
         this.el.find(".weekly-change-today-button").css('display', 'block');
       }
 
-      this.el.find('.weekly-time-navigation .weekly-previous-week .week').html(Dates.getWeekSpan(this.currentDate, this.weekOffset - 1));
-      this.el.find('.weekly-time-navigation .weekly-next-week .week').html(Dates.getWeekSpan(this.currentDate, this.weekOffset + 1));
+      this.el.find('.weekly-time-navigation .weekly-previous-week .week').html(dateUtils.getWeekSpan(this.currentDate, this.weekOffset - 1));
+      this.el.find('.weekly-time-navigation .weekly-next-week .week').html(dateUtils.getWeekSpan(this.currentDate, this.weekOffset + 1));
 
-      this.el.find('.weekly-time-navigation .weekly-header').html(Dates.getWeekSpan(this.currentDate, this.weekOffset));
+      this.el.find('.weekly-time-navigation .weekly-header').html(dateUtils.getWeekSpan(this.currentDate, this.weekOffset));
 
       if (this.fitText) {
         this.el.find(".weekly-days .weekly-day, .weekly-times .weekly-time").fitText(1, {
