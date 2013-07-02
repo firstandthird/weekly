@@ -5,6 +5,76 @@
  * copyright Greg Allen 2013
  * MIT License
 */
+/**
+ * Date helpers
+ */
+
+(function(w){
+  var oldRef = w.Dates;
+
+  var Dates = {
+    noConflict: function() {
+      w.Dates = oldRef;
+      return Dates;
+    },
+    getFirstDayOfWeek: function(date, offset) {
+      offset = offset || 0;
+      var first = date.getDate() - date.getDay();
+      var newDate = new Date(date.getTime());
+      newDate.setDate(first + (offset * 7));
+      return newDate;
+    },
+    getLastDayOfWeek: function(date, weekOffset) {
+      weekOffset = weekOffset || 0;
+      var first = date.getDate() - date.getDay();
+      var newDate = new Date(date.getTime());
+      newDate.setDate(first + 6 + (weekOffset * 7));
+      return newDate;
+    },
+    getDates: function(date, weekOffset) {
+      var daysInWeek = 7;
+
+      var days = [];
+      var sunday = this.getFirstDayOfWeek(date, weekOffset);
+
+      for (var i = 0, c = daysInWeek; i < c; i++) {
+        var d = new Date(sunday.getTime());
+        d.setDate(d.getDate() - d.getDay() + i);
+        days.push(d);
+      }
+      return days;
+    },
+    getTimes: function(startTime, endTime) {
+      var end = endTime + 12;
+
+      var times = [];
+      for (var i = startTime; i <= end; i++) {
+        var hour = (i > 12) ? i - 12 : i;
+        var timeString = hour+':00 ';
+
+        timeString += (i > 11) ? 'PM' : 'AM';
+
+        times.push(timeString);
+      }
+
+      return times;
+    },
+    getWeekSpan: function(date, offset) {
+      var first = this.getFirstDayOfWeek(date, offset);
+      var last = this.getLastDayOfWeek(date, offset);
+
+      var span = TimeFormat('%M %d', first) + ' - ';
+      if (first.getMonth() == last.getMonth()) {
+        span += TimeFormat('%d', last);
+      } else {
+        span += TimeFormat('%M %d', last);
+      }
+      return span;
+    }
+  };
+
+  w.Dates = Dates;
+})(window);
 (function($) {
 
   $.declare('weekly', {
@@ -34,10 +104,10 @@
     update: function() {
       var data = {
         timef: TimeFormat,
-        getWeekSpan: this.proxy(this.getWeekSpan),
+        getWeekSpan: Dates.getWeekSpan,
         currentDate: this.currentDate,
-        dates: this.getDates(),
-        times: this.getTimes()
+        dates: Dates.getDates(this.currentDate, this.weekOffset),
+        times: Dates.getTimes(this.startTime, this.endTime)
       };
       this.render(data);
 
@@ -60,10 +130,10 @@
         this.el.find(".weekly-change-today-button").css('display', 'block');
       }
 
-      this.el.find('.weekly-time-navigation .weekly-previous-week .week').html(this.getWeekSpan(this.currentDate, this.weekOffset - 1));
-      this.el.find('.weekly-time-navigation .weekly-next-week .week').html(this.getWeekSpan(this.currentDate, this.weekOffset + 1));
+      this.el.find('.weekly-time-navigation .weekly-previous-week .week').html(Dates.getWeekSpan(this.currentDate, this.weekOffset - 1));
+      this.el.find('.weekly-time-navigation .weekly-next-week .week').html(Dates.getWeekSpan(this.currentDate, this.weekOffset + 1));
 
-      this.el.find('.weekly-time-navigation .weekly-header').html(this.getWeekSpan(this.currentDate, this.weekOffset));
+      this.el.find('.weekly-time-navigation .weekly-header').html(Dates.getWeekSpan(this.currentDate, this.weekOffset));
 
       if (this.fitText) {
         this.el.find(".weekly-days .weekly-day, .weekly-times .weekly-time").fitText(1, {
@@ -233,67 +303,6 @@
       this.events[target.data('_index')].end = end;
 
       this.el.trigger('modifyEvent', this.events[target.data('_index')]);
-    },
-
-    getWeekSpan: function(date, offset) {
-      var first = this.getFirstDayOfWeek(date, offset);
-      var last = this.getLastDayOfWeek(date, offset);
-
-      var span = TimeFormat('%M %d', first) + ' - ';
-      if (first.getMonth() == last.getMonth()) {
-        span += TimeFormat('%d', last);
-      } else {
-        span += TimeFormat('%M %d', last);
-      }
-      return span;
-    },
-
-    getFirstDayOfWeek: function(date, offset) {
-      offset = offset || 0;
-      var first = date.getDate() - date.getDay();
-      var newDate = new Date(date.getTime());
-      newDate.setDate(first + (offset * 7));
-      return newDate;
-    },
-
-    getLastDayOfWeek: function(date, weekOffset) {
-      weekOffset = weekOffset || 0;
-      var first = date.getDate() - date.getDay();
-      var newDate = new Date(date.getTime());
-      newDate.setDate(first + 6 + (weekOffset * 7));
-      return newDate;
-    },
-
-    getDates: function() {
-      var curr = this.currentDate;
-
-      var daysInWeek = 7;
-
-      var days = [];
-      var sunday = this.getFirstDayOfWeek(curr, this.weekOffset);
-
-      for (var i = 0, c = daysInWeek; i < c; i++) {
-        var d = new Date(sunday.getTime());
-        d.setDate(d.getDate() - d.getDay() + i);
-        days.push(d);
-      }
-      return days;
-    },
-
-    getTimes: function() {
-      var end = this.endTime + 12;
-
-      var times = [];
-      for (var i = this.startTime; i <= end; i++) {
-        var hour = (i > 12) ? i - 12 : i;
-        var timeString = hour+':00 ';
-
-        timeString += (i > 11) ? 'PM' : 'AM';
-
-        times.push(timeString);
-      }
-
-      return times;
     },
 
     nextWeek: function() {

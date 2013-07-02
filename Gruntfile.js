@@ -36,6 +36,7 @@ module.exports = function(grunt) {
 
       dist: {
         src: [
+          'lib/dates.js',
           'lib/weekly.js'
         ],
         dest: 'dist/weekly.js'
@@ -45,6 +46,7 @@ module.exports = function(grunt) {
         src: [
           'dist/_bower.js',
           'lib/time.js',
+          'lib/dates.js',
           'lib/weekly.js'
         ],
         dest: 'dist/weekly.full.js'
@@ -110,7 +112,8 @@ module.exports = function(grunt) {
         files: [
           'Gruntfile.js',
           'test/index.html',
-          'test/time.html'
+          'test/time.html',
+          'test/dates.html'
         ],
         tasks: 'default'
       }
@@ -125,6 +128,12 @@ module.exports = function(grunt) {
       },
       time: {
         src: 'test/time.html',
+        options: {
+          run: true
+        }
+      },
+      dates: {
+        src: 'test/dates.html',
         options: {
           run: true
         }
