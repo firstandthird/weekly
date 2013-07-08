@@ -1,4 +1,15 @@
 
+0.0.12 / 2013-07-08 
+==================
+
+  * added event trigger when clicking on an event
+  * added enableDelete.  if readOnly, set enableDelete and enableResize to false
+  * Renamed Dates to dateUtil.
+  * Added Dates lib and tests. Updated weekly to reflect these changes.
+  * Removed time lib from dist directory.
+  * Changed weekly over to use new TimeFormat library.
+  * Added TimeFormat library & tests.
+
 0.0.11 / 2013-07-01 
 ==================
 

@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.11
+ * v0.0.12
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -50,157 +50,157 @@
 })( jQuery );
 /*!
  * fidel - a ui view controller
- * v2.2.2
+ * v2.2.1
  * https://github.com/jgallen23/fidel
- * copyright Greg Allen 2013
+ * copyright JGA 2013
  * MIT License
 */
+
 (function(w, $) {
-  var _id = 0;
-  var Fidel = function(obj) {
-    this.obj = obj;
-  };
 
-  Fidel.prototype.__init = function(options) {
-    $.extend(this, this.obj);
-    this.id = _id++;
-    this.obj.defaults = this.obj.defaults || {};
-    $.extend(this, this.obj.defaults, options);
-    $('body').trigger('FidelPreInit', this);
-    this.setElement(this.el || $('<div/>'));
-    if (this.init) {
-      this.init();
-    }
-    $('body').trigger('FidelPostInit', this);
-  };
-  Fidel.prototype.eventSplitter = /^(\w+)\s*(.*)$/;
+var _id = 0;
+var Fidel = function(obj) {
+  this.obj = obj;
+};
 
-  Fidel.prototype.setElement = function(el) {
-    this.el = el;
-    this.getElements();
-    this.delegateEvents();
-    this.dataElements();
-    this.delegateActions();
-  };
+Fidel.prototype.__init = function(options) {
+  $.extend(this, this.obj);
+  this.id = _id++;
+  this.obj.defaults = this.obj.defaults || {};
+  $.extend(this, this.obj.defaults, options);
+  $('body').trigger('FidelPreInit', this);
+  this.setElement(this.el || $('<div/>'));
+  if (this.init) {
+    this.init();
+  }
+  $('body').trigger('FidelPostInit', this);
+};
+Fidel.prototype.eventSplitter = /^(\w+)\s*(.*)$/;
 
-  Fidel.prototype.find = function(selector) {
-    return this.el.find(selector);
-  };
+Fidel.prototype.setElement = function(el) {
+  this.el = el;
+  this.getElements();
+  this.delegateEvents();
+  this.dataElements();
+  this.delegateActions();
+};
 
-  Fidel.prototype.proxy = function(func) {
-    return $.proxy(func, this);
-  };
+Fidel.prototype.find = function(selector) {
+  return this.el.find(selector);
+};
 
-  Fidel.prototype.getElements = function() {
-    if (!this.elements)
-      return;
+Fidel.prototype.proxy = function(func) {
+  return $.proxy(func, this);
+};
 
-    for (var selector in this.elements) {
-      var elemName = this.elements[selector];
-      this[elemName] = this.find(selector);
-    }
-  };
+Fidel.prototype.getElements = function() {
+  if (!this.elements)
+    return;
 
-  Fidel.prototype.dataElements = function() {
-    var self = this;
-    this.find('[data-element]').each(function(index, item) {
-      var el = $(item);
-      var name = el.data('element');
-      self[name] = el;
-    });
-  };
+  for (var selector in this.elements) {
+    var elemName = this.elements[selector];
+    this[elemName] = this.find(selector);
+  }
+};
 
-  Fidel.prototype.delegateEvents = function() {
-    var self = this;
-    if (!this.events)
-      return;
-    for (var key in this.events) {
-      var methodName = this.events[key];
-      var match = key.match(this.eventSplitter);
-      var eventName = match[1], selector = match[2];
+Fidel.prototype.dataElements = function() {
+  var self = this;
+  this.find('[data-element]').each(function(index, item) {
+    var el = $(item);
+    var name = el.data('element');
+    self[name] = el;
+  });
+};
 
-      var method = this.proxy(this[methodName]);
+Fidel.prototype.delegateEvents = function() {
+  var self = this;
+  if (!this.events)
+    return;
+  for (var key in this.events) {
+    var methodName = this.events[key];
+    var match = key.match(this.eventSplitter);
+    var eventName = match[1], selector = match[2];
 
-      if (selector === '') {
-        this.el.on(eventName, method);
+    var method = this.proxy(this[methodName]);
+
+    if (selector === '') {
+      this.el.on(eventName, method);
+    } else {
+      if (this[selector] && typeof this[selector] != 'function') {
+        this[selector].on(eventName, method);
       } else {
-        if (this[selector] && typeof this[selector] != 'function') {
-          this[selector].on(eventName, method);
-        } else {
-          this.el.on(eventName, selector, method);
-        }
+        this.el.on(eventName, selector, method);
       }
     }
-  };
+  }
+};
 
-  Fidel.prototype.delegateActions = function() {
-    var self = this;
-    self.el.on('click', '[data-action]', function(e) {
-      var el = $(this);
-      var action = el.attr('data-action');
-      if (self[action]) {
-        self[action](e, el);
-      }
-    });
-  };
-
-  Fidel.prototype.on = function(eventName, cb) {
-    this.el.on(eventName+'.fidel'+this.id, cb);
-  };
-
-  Fidel.prototype.one = function(eventName, cb) {
-    this.el.one(eventName+'.fidel'+this.id, cb);
-  };
-
-  Fidel.prototype.emit = function(eventName, data, namespaced) {
-    var ns = (namespaced) ? '.fidel'+this.id : '';
-    this.el.trigger(eventName+ns, data);
-  };
-
-  Fidel.prototype.hide = function() {
-    if (this.views) {
-      for (var key in this.views) {
-        this.views[key].hide();
-      }
+Fidel.prototype.delegateActions = function() {
+  var self = this;
+  self.el.on('click', '[data-action]', function(e) {
+    var el = $(this);
+    var action = el.attr('data-action');
+    if (self[action]) {
+      self[action](e, el);
     }
-    this.el.hide();
-  };
-  Fidel.prototype.show = function() {
-    if (this.views) {
-      for (var key in this.views) {
-        this.views[key].show();
-      }
+  });
+};
+
+Fidel.prototype.on = function(eventName, cb) {
+  this.el.on(eventName+'.fidel'+this.id, cb);
+};
+
+Fidel.prototype.one = function(eventName, cb) {
+  this.el.one(eventName+'.fidel'+this.id, cb);
+};
+
+Fidel.prototype.emit = function(eventName, data, namespaced) {
+  var ns = (namespaced) ? '.fidel'+this.id : '';
+  this.el.trigger(eventName+ns, data);
+};
+
+Fidel.prototype.hide = function() {
+  if (this.views) {
+    for (var key in this.views) {
+      this.views[key].hide();
     }
-    this.el.show();
-  };
+  }
+  this.el.hide();
+};
+Fidel.prototype.show = function() {
+  if (this.views) {
+    for (var key in this.views) {
+      this.views[key].show();
+    }
+  }
+  this.el.show();
+};
 
-  Fidel.prototype.destroy = function() {
-    this.el.empty();
-    this.emit('destroy');
-    this.el.unbind('.fidel'+this.id);
-  };
+Fidel.prototype.destroy = function() {
+  this.el.empty();
+  this.emit('destroy');
+  this.el.unbind('.fidel'+this.id);
+};
 
-  Fidel.declare = function(obj) {
-    var FidelModule = function(el, options) {
-      this.__init(el, options);
-    };
-    FidelModule.prototype = new Fidel(obj);
-    return FidelModule;
+Fidel.declare = function(obj) {
+  var FidelModule = function(el, options) {
+    this.__init(el, options);
   };
+  FidelModule.prototype = new Fidel(obj);
+  return FidelModule;
+};
 
-  //for plugins
-  Fidel.onPreInit = function(fn) {
-    $('body').on('FidelPreInit', function(e, obj) {
-      fn.call(obj);
-    });
-  };
-  Fidel.onPostInit = function(fn) {
-    $('body').on('FidelPostInit', function(e, obj) {
-      fn.call(obj);
-    });
-  };
-  w.Fidel = Fidel;
-})(window, window.jQuery || window.Zepto);
+//for plugins
+Fidel.onPreInit = function(fn) {
+  $('body').on('FidelPreInit', function(e, obj) {
+    fn.call(obj);
+  });
+};
+Fidel.onPostInit = function(fn) {
+  $('body').on('FidelPostInit', function(e, obj) {
+    fn.call(obj);
+  });
+};
 
 (function($) {
   $.declare = function(name, obj) {
@@ -227,16 +227,18 @@
         }
       });
 
-      return (typeof methodValue !== 'undefined') ? methodValue : els;
+      return methodValue || els;
     };
 
     $.fn[name].defaults = obj.defaults || {};
 
   };
 
-  $.Fidel = window.Fidel;
-
+  $.Fidel = Fidel;
 })(jQuery);
+
+w.Fidel = Fidel;
+})(window, window.jQuery || window.Zepto);
 /*!
  * template - A simple javascript template engine.
  * v0.2.0
@@ -477,16 +479,27 @@
       template: '<div class="weekly-time-navigation">  <button class="weekly-previous-week weekly-change-week-button" data-action="prevWeek">&laquo; <span class="week"></span></button>  <button class="weekly-next-week weekly-change-week-button" data-action="nextWeek"><span class="week"></span> &raquo;</button>  <button class="weekly-jump-today weekly-change-today-button" data-action="jumpToday">Today</button>  <div class="weekly-header"></div></div><div class="weekly-days"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%n-%j\', date) %>">    <%= timef(\'%D %m/%d\', date) %>  </div><% } %></div><div class="weekly-times"><% for (var i = 0; i < times.length; i++) { var time = times[i]; %>  <div class="weekly-time" data-time="<%= time %>"><%= time %></div><% } %></div><div class="weekly-grid"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%n-%j\', date) %>">    <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>      <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>    <% } %>  </div><% } %></div>',
       readOnly: false,
       enableResize: true,
+      enableDelete: true,
       autoSplit: false
+    },
+
+    events: {
+      'click .weekly-event': 'eventClicked'
     },
 
     init: function() {
       this.events = [];
 
+      if (this.readOnly) {
+        this.enableResize = false;
+        this.enableDelete = false;
+      }
+
       if (this.autoRender) {
         this.update();
       }
     },
+
 
     update: function() {
       var data = {
@@ -741,7 +754,9 @@
       if (!this.enableResize) {
         eventTemplate.find('.weekly-dragger').remove();
       }
-
+      if (!this.enableDelete) {
+        eventTemplate.find('.weekly-delete').remove();
+      }
       var selectedDay = this.el.find('.weekly-grid .weekly-day[data-date="' + startDate + '"]');
 
       selectedDay.append(eventTemplate);
@@ -845,7 +860,14 @@
       this.events = [];
 
       this.el.trigger('clearEvents');
+    },
+
+    eventClicked: function(e) {
+      var el = $(e.currentTarget);
+      var event = el.data();
+      this.emit('eventClick', [event, el]);
     }
+
   });
 
 })(jQuery);
