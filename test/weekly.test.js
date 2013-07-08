@@ -544,4 +544,31 @@ suite('weekly', function() {
     });
   });
 
+  suite('triggered events', function() {
+
+    test('eventClick when clicking on an event', function(done) {
+      
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      el.weekly('addEvent', {
+        name: 'Test Event',
+        start: new Date(2013, 4, 13, 9, 05),
+        end: new Date(2013, 4, 13, 9, 45)
+      });
+
+      var ev = el.find('.weekly-event');
+      el.on('eventClick', function(e, evt, el) {
+        assert.equal(el.hasClass('weekly-event'), true);
+        assert.equal(evt.name, 'Test Event');
+        done();
+      });
+      ev.click();
+    });
+    
+  });
+
 });
