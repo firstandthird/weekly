@@ -81,9 +81,14 @@ module.exports = function(grunt) {
       }
     },
 
-    clean: [
-      'dist/_bower.js'
-    ],
+    clean: {
+      bower: [
+        'dist/_bower.js'
+      ],
+      dist: [
+        'dist'
+      ]
+    },
 
     less: {
       'default': {
@@ -98,14 +103,29 @@ module.exports = function(grunt) {
           '<%= jshint.main %>',
           'lib/template.html'
         ],
-        tasks: 'scripts'
+        tasks: 'scripts',
+        options: {
+          livereload: true
+        }
       },
 
       styles: {
         files: [
           'less/*.less'
         ],
-        tasks: 'styles'
+        tasks: 'styles',
+        options: {
+          livereload: true
+        }
+      },
+
+      example: {
+        files: [
+          'example/*'
+        ],
+        options: {
+          livereload: true
+        }
       },
 
       ci: {
@@ -148,13 +168,6 @@ module.exports = function(grunt) {
       }
     },
 
-    reloadr: {
-      main: [
-        'example/*',
-        'dist/*'
-      ]
-    },
-
     connect: {
       server:{
         port: 8000,
@@ -188,12 +201,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-bytesize');
   grunt.loadNpmTasks('grunt-mocha');
-  grunt.loadNpmTasks('grunt-reloadr');
   grunt.loadNpmTasks('grunt-plato');
   grunt.loadTasks('tasks');
-  grunt.registerTask('scripts', ['jshint', 'bower', 'concat', 'template2js', 'uglify', 'clean', 'mocha', 'bytesize']);
+  grunt.registerTask('scripts', ['jshint', 'bower', 'concat', 'template2js', 'uglify', 'clean:bower', 'mocha', 'bytesize']);
   grunt.registerTask('styles', ['less']);
   grunt.registerTask('default', ['scripts', 'styles']);
-  grunt.registerTask('dev', ['connect:server', 'reloadr', 'watch']);
+  grunt.registerTask('dev', ['connect:server', 'watch']);
   grunt.registerTask('reports', ['plato', 'connect:plato']);
 };
