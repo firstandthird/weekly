@@ -50,6 +50,61 @@ suite('weekly', function() {
 
       assert.equal(dateUtils.getWeekSpan(date, 1), el.find('.weekly-header').html());
     });
+
+    test('enableResize', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        enableResize: false
+      });
+
+      el.weekly('addEvent', {
+        name: 'Test Event',
+        start: new Date(2013, 4, 13, 9, 05),
+        end: new Date(2013, 4, 13, 9, 45)
+      });
+
+      assert.equal(el.find('.weekly-event').length, 1);
+      assert.equal(el.find('.weekly-dragger').length, 0);
+    });
+
+    test('enableDelete', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        enableDelete: false
+      });
+
+      el.weekly('addEvent', {
+        name: 'Test Event',
+        start: new Date(2013, 4, 13, 9, 05),
+        end: new Date(2013, 4, 13, 9, 45)
+      });
+
+      assert.equal(el.find('.weekly-event').length, 1);
+      assert.equal(el.find('.weekly-delete').length, 0);
+    });
+
+    test('readOnly - no close or resize', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        readOnly: true
+      });
+
+      el.weekly('addEvent', {
+        name: 'Test Event',
+        start: new Date(2013, 4, 13, 9, 05),
+        end: new Date(2013, 4, 13, 9, 45)
+      });
+
+      assert.equal(el.find('.weekly-event').length, 1);
+      assert.equal(el.find('.weekly-delete').length, 0);
+      assert.equal(el.find('.weekly-dragger').length, 0);
+    });
   });
 
   suite('addEvent', function() {
@@ -488,4 +543,5 @@ suite('weekly', function() {
 
     });
   });
+
 });
