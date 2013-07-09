@@ -37,6 +37,7 @@ module.exports = function(grunt) {
       dist: {
         src: [
           'lib/dates.js',
+          'lib/time.js',
           'lib/weekly.js'
         ],
         dest: 'dist/weekly.js'
