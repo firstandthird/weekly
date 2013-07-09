@@ -1,4 +1,10 @@
 
+0.0.13 / 2013-07-09 
+==================
+
+  * added time.js to build
+  * removed reloadr, added livereload option to watch
+
 0.0.12 / 2013-07-08 
 ==================
 
