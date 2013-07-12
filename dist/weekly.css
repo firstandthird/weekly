@@ -71,9 +71,13 @@
 }
 .weekly .weekly-grid .weekly-day .weekly-event {
   position: absolute;
-  padding: 10px;
+  padding: 5px;
   left: 5px;
   right: 5px;
+}
+.weekly .weekly-grid .weekly-day .weekly-event .weekly-event-time {
+  font-size: 10px;
+  margin-bottom: 4px;
 }
 .weekly .weekly-grid .weekly-day .weekly-event .weekly-delete {
   position: absolute;
@@ -150,9 +154,6 @@
 }
 .weekly .weekly-grid .weekly-day .weekly-event .weekly-dragger {
   background-color: #217dbb;
-}
-.weekly .weekly-grid .weekly-day .weekly-event .weekly-event-title {
-  font-weight: bold;
 }
 .weekly .weekly-grid .weekly-event-pending {
   background-color: #34495e;

@@ -1,4 +1,12 @@
 
+0.0.14 / 2013-07-12 
+==================
+
+  * if event has a type attribute, add weekly-event-[type] class
+  * test for populating title
+  * changed name to title
+  * added showing of event title
+
 0.0.13 / 2013-07-09 
 ==================
 

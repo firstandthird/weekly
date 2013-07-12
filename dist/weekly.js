@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.13
+ * v0.0.14
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -165,7 +165,7 @@
       currentDate: new Date(),
       autoRender: true,
       fitText: true,
-      fitTextMin: 11,
+      fitTextMin: 12,
       fitTextMax: 15,
       template: '<div class="weekly-time-navigation">  <button class="weekly-previous-week weekly-change-week-button" data-action="prevWeek">&laquo; <span class="week"></span></button>  <button class="weekly-next-week weekly-change-week-button" data-action="nextWeek"><span class="week"></span> &raquo;</button>  <button class="weekly-jump-today weekly-change-today-button" data-action="jumpToday">Today</button>  <div class="weekly-header"></div></div><div class="weekly-days"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%n-%j\', date) %>">    <%= timef(\'%D %m/%d\', date) %>  </div><% } %></div><div class="weekly-times"><% for (var i = 0; i < times.length; i++) { var time = times[i]; %>  <div class="weekly-time" data-time="<%= time %>"><%= time %></div><% } %></div><div class="weekly-grid"><% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%n-%j\', date) %>">    <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>      <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>    <% } %>  </div><% } %></div>',
       readOnly: false,
@@ -436,8 +436,8 @@
         bottom: bottomOffset + '%'
       }).append([
         '<button data-action="removeEvent" class="weekly-delete">×</button>',
-        '<div class="weekly-event-title">' + TimeFormat('%g:%i %a', event.start) + ' -<br>' + TimeFormat('%g:%i %a', event.end) + '</div>',
-        '<div class="weekly-event-name">' + event.name + '</div>',
+        '<div class="weekly-event-time">' + TimeFormat('%g:%i', event.start) + ' - ' + TimeFormat('%g:%i%a', event.end) + '</div>',
+        '<div class="weekly-event-title">' + event.title + '</div>',
         '<div class="weekly-event-desc">' + event.description + '</div>',
         '<div class="weekly-dragger"></div>'
       ].join(''));
@@ -445,15 +445,21 @@
       if (!this.enableResize) {
         eventTemplate.find('.weekly-dragger').remove();
       }
+
       if (!this.enableDelete) {
         eventTemplate.find('.weekly-delete').remove();
       }
+
+      if (event.type) {
+        eventTemplate.addClass('weekly-event-'+event.type.replace(/ /g, '-'));
+      }
+
       var selectedDay = this.el.find('.weekly-grid .weekly-day[data-date="' + startDate + '"]');
 
       selectedDay.append(eventTemplate);
 
       if (this.fitText) {
-        selectedDay.find(".weekly-event").fitText(1, {
+        selectedDay.find(".weekly-event-title").fitText(1, {
           'minFontSize': this.fitTextMin,
           'maxFontSize': this.fitTextMax
         });
@@ -517,7 +523,7 @@
         var e = event[x];
 
         e = $.extend({
-          name: '',
+          title: '',
           description: '',
           start: null,
           end: null
