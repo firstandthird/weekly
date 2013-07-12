@@ -122,6 +122,44 @@ suite('weekly', function() {
       assert.equal(el.find('.weekly-event-title').html(), 'Test Event');
 
     });
+
+    test('add class for event type', function() {
+
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      el.weekly('addEvent', {
+        title: 'Test Event',
+        type: 'test',
+        start: new Date(2013, 4, 13, 9, 05),
+        end: new Date(2013, 4, 13, 9, 45)
+      });
+
+      assert.equal(el.find('.weekly-event-test').length, 1);
+
+    });
+
+    test('add class for event type (with spaces)', function() {
+
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      el.weekly('addEvent', {
+        title: 'Test Event',
+        type: 'testing types',
+        start: new Date(2013, 4, 13, 9, 05),
+        end: new Date(2013, 4, 13, 9, 45)
+      });
+
+      assert.equal(el.find('.weekly-event-testing-types').length, 1);
+
+    });
   });
 
   suite('addEvent', function() {
