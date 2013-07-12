@@ -19,13 +19,21 @@
     <script>
       var today = new Date();
       var event1 = {
+        title: 'Test 1',
         start: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 10),
         end: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 12),
         id: '123'
       }
       var event2 = {
+        title: 'Test 2',
         start: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 13),
         end: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 15),
+        id: '456'
+      }
+      var event3 = {
+        title: 'Test 3',
+        start: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 8),
+        end: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 9),
         id: '456'
       }
 
@@ -43,7 +51,7 @@
         .on('clearEvents', function() {
           console.log('events cleared');
         })
-        .weekly('addEvent', [event1, event2]);
+        .weekly('addEvent', [event1, event2, event3]);
 
 
       $('[data-action=clear]').on('click', function() {
