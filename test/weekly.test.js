@@ -60,7 +60,7 @@ suite('weekly', function() {
       });
 
       el.weekly('addEvent', {
-        name: 'Test Event',
+        title: 'Test Event',
         start: new Date(2013, 4, 13, 9, 05),
         end: new Date(2013, 4, 13, 9, 45)
       });
@@ -78,7 +78,7 @@ suite('weekly', function() {
       });
 
       el.weekly('addEvent', {
-        name: 'Test Event',
+        title: 'Test Event',
         start: new Date(2013, 4, 13, 9, 05),
         end: new Date(2013, 4, 13, 9, 45)
       });
@@ -96,7 +96,7 @@ suite('weekly', function() {
       });
 
       el.weekly('addEvent', {
-        name: 'Test Event',
+        title: 'Test Event',
         start: new Date(2013, 4, 13, 9, 05),
         end: new Date(2013, 4, 13, 9, 45)
       });
@@ -118,7 +118,7 @@ suite('weekly', function() {
       });
 
       el.weekly('addEvent', {
-        name: 'Test Event',
+        title: 'Test Event',
         start: new Date(2013, 4, 13, 9, 05),
         end: new Date(2013, 4, 13, 9, 45)
       });
@@ -135,11 +135,11 @@ suite('weekly', function() {
       });
 
       el.weekly('addEvent', [{
-        name: 'Test Event',
+        title: 'Test Event',
         start: new Date(2013, 4, 13, 9, 05),
         end: new Date(2013, 4, 13, 9, 45)
       },{
-        name: 'Test Event',
+        title: 'Test Event',
         start: new Date(2013, 4, 13, 9, 05),
         end: new Date(2013, 4, 13, 9, 45)
       }]);
@@ -158,13 +158,13 @@ suite('weekly', function() {
       var firstDate = el.find('.weekly-grid .weekly-day').first();
 
       el.one('addEvent', function(e, evt) {
-        assert.equal(evt.name, 'Test Event');
+        assert.equal(evt.title, 'Test Event');
         assert.equal(firstDate.find('.weekly-event').length, 1);
         done();
       });
 
       el.weekly('addEvent', {
-        name: 'Test Event',
+        title: 'Test Event',
         start: new Date(2013, 4, 12, 9, 05),
         end: new Date(2013, 4, 12, 9, 45)
       });
@@ -179,7 +179,7 @@ suite('weekly', function() {
       });
 
       el.weekly('addEvent', {
-        name: 'Test Event',
+        title: 'Test Event',
         start: new Date(2013, 4, 13, 9, 05),
         end: new Date(2013, 4, 13, 9, 45)
       });
@@ -200,11 +200,11 @@ suite('weekly', function() {
       });
 
       el.weekly('addEvent', [{
-        name: 'Test Event',
+        title: 'Test Event',
         start: new Date(2013, 4, 13, 9, 05),
         end: new Date(2013, 4, 13, 9, 45)
       },{
-        name: 'Test Event',
+        title: 'Test Event',
         start: new Date(2013, 4, 13, 9, 05),
         end: new Date(2013, 4, 13, 9, 45)
       }]);
@@ -232,7 +232,7 @@ suite('weekly', function() {
       });
 
       el.weekly('addEvent', {
-        name: 'Test Event',
+        title: 'Test Event',
         start: new Date(2013, 4, 12, 9, 05),
         end: new Date(2013, 4, 12, 9, 45)
       });
@@ -319,7 +319,7 @@ suite('weekly', function() {
       });
 
       el.weekly('addEvent', [{
-        name: 'Test Event',
+        title: 'Test Event',
         start: new Date(2013, 4, 13, 9, 05),
         end: new Date(2013, 4, 13, 9, 45)
       }]);
@@ -449,7 +449,7 @@ suite('weekly', function() {
   suite('splitEvent', function() {
     test('split time', function() {
       var event = {
-        name: 'Test Event',
+        title: 'Test Event',
         start: new Date(2013, 4, 13, 9, 0),
         end: new Date(2013, 4, 13, 12, 0)
       };
@@ -462,13 +462,13 @@ suite('weekly', function() {
       assert.equal(span instanceof Array, true);
       assert.equal(span.length, 3);
       assert.equal(typeof span[0], 'object');
-      assert.equal(span[0].name, 'Test Event');
+      assert.equal(span[0].title, 'Test Event');
       assert.equal(span[0].start.getTime(), new Date(2013, 4, 13, 9, 0).getTime());
       assert.equal(span[0].end.getTime(), new Date(2013, 4, 13, 10, 0).getTime());
-      assert.equal(span[1].name, 'Test Event');
+      assert.equal(span[1].title, 'Test Event');
       assert.equal(span[1].start.getTime(), new Date(2013, 4, 13, 10, 0).getTime());
       assert.equal(span[1].end.getTime(), new Date(2013, 4, 13, 11, 0).getTime());
-      assert.equal(span[2].name, 'Test Event');
+      assert.equal(span[2].title, 'Test Event');
       assert.equal(span[2].start.getTime(), new Date(2013, 4, 13, 11, 0).getTime());
       assert.equal(span[2].end.getTime(), new Date(2013, 4, 13, 12, 0).getTime());
     });
@@ -485,7 +485,7 @@ suite('weekly', function() {
       });
 
       el.weekly('addEvent', {
-        name: 'Test Event',
+        title: 'Test Event',
         start: new Date(2013, 4, 13, 9, 0),
         end: new Date(2013, 4, 13, 12, 0)
       });
@@ -496,11 +496,11 @@ suite('weekly', function() {
     test('pass in array of events', function() {
 
       var events = [{
-        name: 'Test Event',
+        title: 'Test Event',
         start: new Date(2013, 4, 13, 9, 0),
         end: new Date(2013, 4, 13, 12, 0)
       }, {
-        name: 'Test Event 2',
+        title: 'Test Event 2',
         start: new Date(2013, 4, 13, 13, 0),
         end: new Date(2013, 4, 13, 15, 0)
       }];
@@ -534,7 +534,7 @@ suite('weekly', function() {
       });
 
       el.weekly('addEvent', {
-        name: 'Test Event',
+        title: 'Test Event',
         start: new Date(2013, 4, 13, 9, 0),
         end: new Date(2013, 4, 13, 12, 0)
       });
@@ -555,7 +555,7 @@ suite('weekly', function() {
       });
 
       el.weekly('addEvent', {
-        name: 'Test Event',
+        title: 'Test Event',
         start: new Date(2013, 4, 13, 9, 05),
         end: new Date(2013, 4, 13, 9, 45)
       });
@@ -563,7 +563,7 @@ suite('weekly', function() {
       var ev = el.find('.weekly-event');
       el.on('eventClick', function(e, evt, el) {
         assert.equal(el.hasClass('weekly-event'), true);
-        assert.equal(evt.name, 'Test Event');
+        assert.equal(evt.title, 'Test Event');
         done();
       });
       ev.click();
