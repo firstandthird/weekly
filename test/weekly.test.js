@@ -105,6 +105,23 @@ suite('weekly', function() {
       assert.equal(el.find('.weekly-delete').length, 0);
       assert.equal(el.find('.weekly-dragger').length, 0);
     });
+
+    test('populate title', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      el.weekly('addEvent', {
+        title: 'Test Event',
+        start: new Date(2013, 4, 13, 9, 05),
+        end: new Date(2013, 4, 13, 9, 45)
+      });
+
+      assert.equal(el.find('.weekly-event-title').html(), 'Test Event');
+
+    });
   });
 
   suite('addEvent', function() {
