@@ -160,6 +160,39 @@ suite('weekly', function() {
       assert.equal(el.find('.weekly-event-testing-types').length, 1);
 
     });
+
+    test('allowPreviousWeeks: true', function() {
+      var date = new Date();
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      assert.equal(el.find('.weekly-previous-week').length, 1);
+    });
+
+    test('allowPreviousWeeks: false', function() {
+      var date = new Date();
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        allowPreviousWeeks: false
+      });
+
+      assert.equal(el.find('.weekly-previous-week').length, 0);
+    });
+
+    test('allowPreviousWeeks: false, not current week', function() {
+      var date = new Date();
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        allowPreviousWeeks: false
+      });
+      el.weekly('nextWeek');
+
+      assert.equal(el.find('.weekly-previous-week').length, 1);
+    });
   });
 
   suite('addEvent', function() {
