@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.15
+ * v0.0.16
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
