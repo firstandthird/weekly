@@ -1,4 +1,10 @@
 
+0.0.15 / 2013-07-16 
+==================
+
+  * option to allowPreviousWeeks which hides the previous week button
+  * make delete button bigger
+
 0.0.14 / 2013-07-12 
 ==================
 
