@@ -1,4 +1,9 @@
 
+0.0.17 / 2013-07-17 
+==================
+
+  * added border around calendar, added option for eventSpacing
+
 0.0.16 / 2013-07-17 
 ==================
 

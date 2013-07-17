@@ -11,7 +11,7 @@
   -mox-box-sizing: border-box;
   box-sizing: border-box;
 }
-.weekly:after {
+.weekly .weekly-calendar:after {
   content: ".";
   display: block;
   clear: both;
@@ -72,8 +72,6 @@
 .weekly .weekly-grid .weekly-day .weekly-event {
   position: absolute;
   padding: 5px;
-  left: 5px;
-  right: 5px;
 }
 .weekly .weekly-grid .weekly-day .weekly-event .weekly-event-time {
   font-size: 10px;
@@ -114,6 +112,7 @@
 }
 .weekly .weekly-time-navigation {
   margin: 15px 0;
+  line-height: 22px;
 }
 .weekly .weekly-time-navigation:after {
   content: ".";
@@ -135,6 +134,9 @@
 .weekly .weekly-time-navigation .weekly-jump-today {
   float: left;
 }
+.weekly .weekly-calendar {
+  border: 1px solid #ecf0f1;
+}
 .weekly .weekly-days .weekly-day {
   border-left: 1px solid #ecf0f1;
 }
@@ -148,6 +150,8 @@
 .weekly .weekly-grid .weekly-day .weekly-event {
   background-color: #3498db;
   color: #ffffff;
+  left: 1px;
+  right: 1px;
   border-radius: 3px;
 }
 .weekly .weekly-grid .weekly-day .weekly-event .weekly-delete {
