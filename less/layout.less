@@ -23,7 +23,7 @@
     box-sizing: border-box;
   }
 
-  &:after {
+  .weekly-calendar:after {
     .weekly-clearfix();
   }
 
@@ -77,8 +77,6 @@
       .weekly-event {
         position: absolute;
         padding: 5px;
-        left: 5px;
-        right: 5px;
 
         .weekly-event-time {
           font-size: 10px;
@@ -129,6 +127,7 @@
 
   .weekly-time-navigation {
     margin: 15px 0;
+    line-height: 22px;
 
     &:after {
       .weekly-clearfix();

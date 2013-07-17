@@ -8,6 +8,7 @@
   @today: rgba(241, 196, 15,.4);
   @eventBorderRadius: 3px;
   @buttonColor: #8e44ad;
+  @eventSpacing: 1px;
   ) {
 
   .weekly-layout();
@@ -18,6 +19,10 @@
 
   .event-border() {
     border-radius: @eventBorderRadius;
+  }
+
+  .weekly-calendar {
+    border: 1px solid @borderColor;
   }
 
   .weekly-button() {
@@ -46,6 +51,8 @@
       .weekly-event {
         background-color: @eventColor;
         color: @eventForegroundColor;
+        left: @eventSpacing;
+        right: @eventSpacing;
         .event-border();
 
         .weekly-delete {
