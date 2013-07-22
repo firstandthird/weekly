@@ -472,6 +472,8 @@ suite('weekly', function() {
       });
 
       assert.equal(el.find('.weekly-event').length, 2);
+      var inst = el.data('weekly');
+      assert.equal(inst.events.length, 4);
 
     });
   });
