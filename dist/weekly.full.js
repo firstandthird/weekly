@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.19
+ * v0.0.20
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -845,8 +845,8 @@ w.Fidel = Fidel;
 
         if (e.start.getHours() >= this.startTime && e.end.getHours() <= (this.endTime + 12)) {
           this.renderEvent(e);
-          this.events.push(e);
         }
+        this.events.push(e);
       }
 
       var eventData = (this.autoSplit) ? event : event[0];
