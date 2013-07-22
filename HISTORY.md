@@ -1,4 +1,10 @@
 
+0.0.18 / 2013-07-22 
+==================
+
+  * don't render times outside of startTime and endTime
+  * added showToday option to not show today button
+
 0.0.17 / 2013-07-17 
 ==================
 
