@@ -136,15 +136,15 @@ suite('dates', function() {
     test('get times', function() {
       var times = dateUtils.getTimes(8, 6);
 
-      assert.equal(times.length, 11);
+      assert.equal(times.length, 10);
       assert.equal(times[0], '8:00 AM');
-      assert.deepEqual(times, ['8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM']);
+      assert.deepEqual(times, ['8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM']);
     });
 
     test('get times overriding start and end', function() {
       var times = dateUtils.getTimes(6, 3);
 
-      assert.deepEqual(times, ['6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM']);
+      assert.deepEqual(times, ['6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM']);
 
     });
   });

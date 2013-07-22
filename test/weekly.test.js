@@ -219,6 +219,20 @@ suite('weekly', function() {
       assert.equal(el.find('.weekly-jump-today').css('display'), 'none');
 
     });
+
+    test('endTime', function() {
+
+      var date = new Date();
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        endTime: 8
+      });
+
+      assert.equal(el.find('[data-time="7:00 PM"]').length, 8);
+      assert.equal(el.find('[data-time="8:00 PM"]').length, 0);
+
+    });
   });
 
   suite('addEvent', function() {
