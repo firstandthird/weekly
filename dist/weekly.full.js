@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.18
+ * v0.0.19
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -437,7 +437,7 @@ w.Fidel = Fidel;
       var end = endTime + 12;
 
       var times = [];
-      for (var i = startTime; i <= end; i++) {
+      for (var i = startTime; i < end; i++) {
         var hour = (i > 12) ? i - 12 : i;
         var timeString = hour+':00 ';
 
@@ -464,6 +464,7 @@ w.Fidel = Fidel;
 
   w.dateUtils = dateUtils;
 })(window);
+
 (function($) {
 
   $.declare('weekly', {
@@ -517,7 +518,7 @@ w.Fidel = Fidel;
         this.renderEvent(this.events[i]);
       }
 
-      this.timeDifference = (this.endTime + 13) - this.startTime;
+      this.timeDifference = (this.endTime + 12) - this.startTime;
 
       if(!this.readOnly) {
         this.registerClickToCreate();

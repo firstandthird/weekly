@@ -1,4 +1,9 @@
 
+0.0.19 / 2013-07-22 
+==================
+
+  * fixed for including the hour after the endTime
+
 0.0.18 / 2013-07-22 
 ==================
 
