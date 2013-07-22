@@ -193,6 +193,32 @@ suite('weekly', function() {
 
       assert.equal(el.find('.weekly-previous-week').length, 1);
     });
+
+    test('showToday: true', function() {
+      var date = new Date();
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+      el.weekly('nextWeek');
+
+      assert.equal(el.find('.weekly-jump-today').length, 1);
+      assert.equal(el.find('.weekly-jump-today').css('display'), 'block');
+
+    });
+
+    test('showToday: false', function() {
+      var date = new Date();
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        showToday: false
+      });
+      el.weekly('nextWeek');
+
+      assert.equal(el.find('.weekly-jump-today').css('display'), 'none');
+
+    });
   });
 
   suite('addEvent', function() {
