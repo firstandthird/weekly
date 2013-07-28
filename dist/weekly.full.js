@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.20
+ * v0.0.21
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -469,15 +469,16 @@ w.Fidel = Fidel;
 
   $.declare('weekly', {
     defaults: {
-      startTime: 8,
-      endTime: 6,
+      startTime: 0,
+      endTime: 12,
+      startTimeScrollOffset: '8:00 AM',
       weekOffset: 0,
       currentDate: new Date(),
       autoRender: true,
       fitText: true,
       fitTextMin: 12,
       fitTextMax: 15,
-      template: '<div class="weekly-time-navigation">  <% if (showPreviousWeekButton) { %>  <button class="weekly-previous-week weekly-change-week-button" data-action="prevWeek">&laquo; <span class="week"></span></button>  <% } %>  <button class="weekly-next-week weekly-change-week-button" data-action="nextWeek"><span class="week"></span> &raquo;</button>  <button class="weekly-jump-today weekly-change-today-button" data-action="jumpToday">Today</button>  <div class="weekly-header"></div></div><div class="weekly-calendar">  <div class="weekly-days">  <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>    <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%n-%j\', date) %>">      <%= timef(\'%D %m/%d\', date) %>    </div>  <% } %>  </div>  <div class="weekly-times">  <% for (var i = 0; i < times.length; i++) { var time = times[i]; %>    <div class="weekly-time" data-time="<%= time %>"><%= time %></div>  <% } %>  </div>  <div class="weekly-grid">  <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>    <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%n-%j\', date) %>">      <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>        <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>      <% } %>    </div>  <% } %>  </div></div>',
+      template: '<div class="weekly-time-navigation">  <% if (showPreviousWeekButton) { %>  <button class="weekly-previous-week weekly-change-week-button" data-action="prevWeek">&laquo; <span class="week"></span></button>  <% } %>  <button class="weekly-next-week weekly-change-week-button" data-action="nextWeek"><span class="week"></span> &raquo;</button>  <button class="weekly-jump-today weekly-change-today-button" data-action="jumpToday">Today</button>  <div class="weekly-header"></div></div><div class="weekly-calendar">  <div class="weekly-days">  <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>    <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%n-%j\', date) %>">      <%= timef(\'%D %m/%d\', date) %>    </div>  <% } %>  </div>  <div class="weekly-scroller">    <div class="weekly-times">    <% for (var i = 0; i < times.length; i++) { var time = times[i]; %>      <div class="weekly-time" data-time="<%= time %>"><%= time %></div>    <% } %>    </div>    <div class="weekly-grid">    <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>      <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%n-%j\', date) %>">        <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>          <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>        <% } %>      </div>    <% } %>    </div>  </div></div>',
       readOnly: false,
       enableResize: true,
       enableDelete: true,
@@ -543,6 +544,13 @@ w.Fidel = Fidel;
           'minFontSize': this.fitTextMin,
           'maxFontSize': this.fitTextMax
         });
+      }
+
+      if (this.startTimeScrollOffset) {
+        var top = $(window).scrollTop();
+        var el = this.el.find('[data-time="'+this.startTimeScrollOffset+'"]');
+        el[0].scrollIntoView();
+        $(window).scrollTop(top);
       }
       this.emit('weekChange', { dates: data.dates, times: data.times });
     },

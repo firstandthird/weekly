@@ -1,4 +1,14 @@
 
+0.0.21 / 2013-07-28 
+==================
+
+  * Merge branch 'feature/scroll-times'
+  * added startTimeScrollOffset option
+  * [example] updated to end at midnight
+  * [grunt] run default on dev
+  * Updated example.
+  * Added scroller around times and grid with option in theme mixin.
+
 0.0.20 / 2013-07-22 
 ==================
 

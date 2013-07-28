@@ -137,6 +137,10 @@
 .weekly .weekly-calendar {
   border: 1px solid #ecf0f1;
 }
+.weekly .weekly-scroller {
+  height: 400px;
+  overflow: auto;
+}
 .weekly .weekly-days .weekly-day {
   border-left: 1px solid #ecf0f1;
 }
