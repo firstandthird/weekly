@@ -9,6 +9,7 @@
   @eventBorderRadius: 3px;
   @buttonColor: #8e44ad;
   @eventSpacing: 1px;
+  @scrollerHeight: 400px;
   ) {
 
   .weekly-layout();
@@ -31,6 +32,11 @@
     border-radius: 3px;
     color: #fff;
     cursor: pointer;
+  }
+
+  .weekly-scroller {
+    height: @scrollerHeight;
+    overflow: auto;
   }
 
   .weekly-days .weekly-day {

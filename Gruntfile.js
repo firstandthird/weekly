@@ -207,6 +207,6 @@ module.exports = function(grunt) {
   grunt.registerTask('scripts', ['jshint', 'bower', 'concat', 'template2js', 'uglify', 'clean:bower', 'mocha', 'bytesize']);
   grunt.registerTask('styles', ['less']);
   grunt.registerTask('default', ['scripts', 'styles']);
-  grunt.registerTask('dev', ['connect:server', 'watch']);
+  grunt.registerTask('dev', ['default', 'connect:server', 'watch']);
   grunt.registerTask('reports', ['plato', 'connect:plato']);
 };
