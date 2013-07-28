@@ -233,6 +233,18 @@ suite('weekly', function() {
       assert.equal(el.find('[data-time="8:00 PM"]').length, 0);
 
     });
+
+    test('startTimeScrollOffset', function() {
+      var date = new Date();
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      var scroll = el.find('.weekly-scroller').scrollTop();
+      //assert.notEqual(scroll, 0);
+
+    });
   });
 
   suite('addEvent', function() {
