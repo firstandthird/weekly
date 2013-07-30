@@ -751,4 +751,31 @@ suite('weekly', function() {
     
   });
 
+  suite('change timezone', function(){
+
+    test('positive utc offset', function(){
+      var el = $('.weekly').weekly({
+        startTime: 4,
+        endTime: 14,
+        startTimeScrollOffset: false
+      });
+
+      var times = el.weekly('setTimezoneOffset', +1);
+
+      assert.equal(12, times.startTime);
+    });
+
+    test('negative utc offset', function(){
+      var el = $('.weekly').weekly({
+        startTime: 4,
+        endTime: 14,
+        startTimeScrollOffset: false
+      });
+
+      var times = el.weekly('setTimezoneOffset', -8);
+
+      assert.equal(3, times.startTime);
+    });
+  });
+
 });
