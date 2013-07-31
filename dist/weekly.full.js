@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.21
+ * v0.0.22
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -438,7 +438,7 @@ w.Fidel = Fidel;
 
       var times = [];
       for (var i = startTime; i < end; i++) {
-        var hour = (i > 12) ? i - 12 : i;
+        var hour = (i > 12 || i === 0) ? Math.abs(i - 12) : i;
         var timeString = hour+':00 ';
 
         timeString += (i > 11) ? 'PM' : 'AM';
