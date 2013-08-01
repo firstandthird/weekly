@@ -488,6 +488,22 @@ suite('weekly', function() {
       assert.equal(inst.events.length, 4);
 
     });
+
+    test('event ending at midnight should display correctly.', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      el.weekly('addEvent', {
+        title: 'Test Event',
+        start: new Date(2013, 4, 13, 22, 0),
+        end: new Date(2013, 4, 14, 0, 0)
+      });
+
+      assert.equal(el.find('.weekly-event').css('bottom'), '0%');
+    });
   });
 
   suite('modify event', function() {
