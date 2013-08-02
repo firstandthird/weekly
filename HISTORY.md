@@ -1,4 +1,11 @@
 
+0.0.23 / 2013-08-02 
+==================
+
+  * Merge remote-tracking branch 'origin/bug/scheduling-last-time'
+  * Fixed issue with months being one off.
+  * Fixed rendering bug if event ends at midnight.
+
 0.0.22 / 2013-07-31 
 ==================
 

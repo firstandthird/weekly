@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.22
+ * v0.0.23
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -353,7 +353,7 @@ w.Fidel = Fidel;
         case '%F':
           return months[time.getMonth()];
         case '%m':
-          return ("0" + time.getMonth()).substr(-2,2);
+          return ("0" + (time.getMonth() + 1)).substr(-2,2);
         case '%M':
           return months[time.getMonth()].substr(0,3);
         case '%n':
@@ -743,6 +743,10 @@ w.Fidel = Fidel;
       var startTime = event.start.toTimeString().slice(0,5);
       var endDate = event.end.getFullYear() + "-" + event.end.getMonth() + "-" + event.end.getDate();
       var endTime = event.end.toTimeString().slice(0,5);
+
+      if(endTime === "00:00") {
+        endTime = "24:00";
+      }
 
       var topOffset = 100 - this.getTimeOffsetPercent(startTime);
       var bottomOffset = this.getTimeOffsetPercent(endTime);
