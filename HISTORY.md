@@ -1,4 +1,12 @@
 
+0.0.24 / 2013-08-05 
+==================
+
+  * grunt connect to allow connections from anywhere
+  * tweaks to ui to fix scrollbar offset issue
+  * fixed display in firefox
+  * updated style for delete x
+
 0.0.23 / 2013-08-02 
 ==================
 

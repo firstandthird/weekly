@@ -8,7 +8,7 @@
   color: #7f8c8d;
 }
 .weekly * {
-  -mox-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 .weekly .weekly-calendar:after {
@@ -21,6 +21,7 @@
 }
 .weekly .weekly-days {
   padding-left: 10%;
+  padding-right: 15px;
   text-align: center;
 }
 .weekly .weekly-days:after {
@@ -137,12 +138,19 @@
 .weekly .weekly-calendar {
   border: 1px solid #ecf0f1;
 }
+.weekly .weekly-days {
+  border-bottom: 1px solid #ecf0f1;
+}
 .weekly .weekly-scroller {
   height: 400px;
   overflow: auto;
 }
-.weekly .weekly-days .weekly-day {
-  border-left: 1px solid #ecf0f1;
+.weekly .weekly-scroller::-webkit-scrollbar {
+  width: 15px;
+}
+.weekly .weekly-scroller::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
 }
 .weekly .weekly-times .weekly-time {
   border-top: 1px solid #ecf0f1;
@@ -160,6 +168,8 @@
 }
 .weekly .weekly-grid .weekly-day .weekly-event .weekly-delete {
   color: #ffffff;
+  font-size: 15px;
+  font-weight: bold;
 }
 .weekly .weekly-grid .weekly-day .weekly-event .weekly-dragger {
   background-color: #217dbb;

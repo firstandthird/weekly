@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.23
+ * v0.0.24
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -558,7 +558,7 @@ w.Fidel = Fidel;
     highlightToday: function() {
       var today = new Date();
 
-      this.el.find('[data-date="' + TimeFormat('%Y-%n-%j', today) + '"]').addClass('weekly-today');
+      this.el.find('.weekly-grid [data-date="' + TimeFormat('%Y-%n-%j', today) + '"]').addClass('weekly-today');
     },
 
     registerClickToCreate: function() {
@@ -759,7 +759,7 @@ w.Fidel = Fidel;
         top: topOffset + '%',
         bottom: bottomOffset + '%'
       }).append([
-        '<button data-action="removeEvent" class="weekly-delete">×</button>',
+        '<button data-action="removeEvent" class="weekly-delete">&times;</button>',
         '<div class="weekly-event-time">' + TimeFormat('%g:%i', event.start) + ' - ' + TimeFormat('%g:%i%a', event.end) + '</div>',
         '<div class="weekly-event-title">' + event.title + '</div>',
         '<div class="weekly-event-desc">' + event.description + '</div>',
