@@ -34,13 +34,22 @@
     cursor: pointer;
   }
 
+  .weekly-days {
+    border-bottom: @border;
+  }
+
   .weekly-scroller {
     height: @scrollerHeight;
     overflow: auto;
-  }
 
-  .weekly-days .weekly-day {
-    border-left: @border;
+    &::-webkit-scrollbar {
+      width: 15px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+      border-radius: 10px;
+    }
   }
 
   .weekly-times .weekly-time {
