@@ -1,4 +1,12 @@
 
+0.0.25 / 2013-08-06 
+==================
+
+  * Merge branch 'feature/timezoneOffset'
+  * Updated setTimezoneOffset to actually work correctly and not just offset everything.
+  * added timezone dropdown to example
+  * First version of timezone support.
+
 0.0.24 / 2013-08-05 
 ==================
 

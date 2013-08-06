@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.24
+ * v0.0.25
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -70,6 +70,11 @@
         span += TimeFormat('%M %d', last);
       }
       return span;
+    },
+    realTimezoneOffset: function(offset) {
+      var local = (new Date()).getTimezoneOffset() / -60;
+      var real = offset - local;
+      return real;
     }
   };
 
@@ -88,6 +93,7 @@
 
   var TimeFormat = function(format, time) {
     if(!time instanceof Date) return;
+
     // Implements PHP's date format syntax.
     return format.replace(/%d|%D|%j|%l|%S|%w|%F|%m|%M|%n|%Y|%y|%a|%A|%g|%G|%h|%H|%i|%s|%u|%e/g, function(match) {
       switch(match) {
@@ -175,7 +181,9 @@
       enableDelete: true,
       autoSplit: false,
       showToday: true,
-      allowPreviousWeeks: true
+      allowPreviousWeeks: true,
+      timezoneOffset: 0,
+      utcOffset: ((new Date()).getTimezoneOffset() / -60)
     },
 
     events: {
@@ -184,6 +192,8 @@
 
     init: function() {
       this.events = [];
+
+      this.oldDate = this.currentDate;
 
       if (this.readOnly) {
         this.enableResize = false;
@@ -247,7 +257,7 @@
     },
 
     highlightToday: function() {
-      var today = new Date();
+      var today = this.currentDate;
 
       this.el.find('.weekly-grid [data-date="' + TimeFormat('%Y-%n-%j', today) + '"]').addClass('weekly-today');
     },
@@ -430,10 +440,16 @@
     },
 
     renderEvent: function(event) {
-      var startDate = event.start.getFullYear() + "-" + event.start.getMonth() + "-" + event.start.getDate();
-      var startTime = event.start.toTimeString().slice(0,5);
-      var endDate = event.end.getFullYear() + "-" + event.end.getMonth() + "-" + event.end.getDate();
-      var endTime = event.end.toTimeString().slice(0,5);
+      var start = new Date(event.start.getTime());
+      var end = new Date(event.end.getTime());
+
+      start.setHours(start.getHours() + this.timezoneOffset);
+      end.setHours(end.getHours() + this.timezoneOffset);
+
+      var startDate = start.getFullYear() + "-" + start.getMonth() + "-" + start.getDate();
+      var startTime = start.toTimeString().slice(0,5);
+      var endDate = end.getFullYear() + "-" + event.end.getMonth() + "-" + end.getDate();
+      var endTime = end.toTimeString().slice(0,5);
 
       if(endTime === "00:00") {
         endTime = "24:00";
@@ -446,12 +462,15 @@
 
       eventTemplate.data(event);
 
+      eventTemplate.data('offset-start', start);
+      eventTemplate.data('offset-end', end);
+
       eventTemplate.css({
         top: topOffset + '%',
         bottom: bottomOffset + '%'
       }).append([
         '<button data-action="removeEvent" class="weekly-delete">&times;</button>',
-        '<div class="weekly-event-time">' + TimeFormat('%g:%i', event.start) + ' - ' + TimeFormat('%g:%i%a', event.end) + '</div>',
+        '<div class="weekly-event-time">' + TimeFormat('%g:%i', start) + ' - ' + TimeFormat('%g:%i%a', end) + '</div>',
         '<div class="weekly-event-title">' + event.title + '</div>',
         '<div class="weekly-event-desc">' + event.description + '</div>',
         '<div class="weekly-dragger"></div>'
@@ -580,6 +599,16 @@
       var el = $(e.currentTarget);
       var event = el.data();
       this.emit('eventClick', [event, el]);
+    },
+
+    setTimezoneOffset: function(offset) {
+      this.timezoneOffset = dateUtils.realTimezoneOffset(offset);
+
+      this.utcOffset = offset;
+
+      this.update();
+
+      return this;
     }
 
   });
