@@ -754,27 +754,41 @@ suite('weekly', function() {
   suite('change timezone', function(){
 
     test('positive utc offset', function(){
+      var date = new Date(2013, 4, 15);
+
       var el = $('.weekly').weekly({
-        startTime: 4,
-        endTime: 14,
-        startTimeScrollOffset: false
+        currentDate: date
       });
 
-      var times = el.weekly('setTimezoneOffset', +1);
+      el.weekly('addEvent', {
+        title: 'Test Event',
+        start: new Date(2013, 4, 13, 1, 0),
+        end: new Date(2013, 4, 13, 2, 0)
+      });
 
-      assert.equal(12, times.startTime);
+      el.weekly('setTimezoneOffset', +1);
+
+      assert.equal(9, el.find('.weekly-event').data('offset-start').getHours());
+      assert.equal(10, el.find('.weekly-event').data('offset-end').getHours());
     });
 
     test('negative utc offset', function(){
+      var date = new Date(2013, 4, 15);
+
       var el = $('.weekly').weekly({
-        startTime: 4,
-        endTime: 14,
-        startTimeScrollOffset: false
+        currentDate: date
       });
 
-      var times = el.weekly('setTimezoneOffset', -8);
+      el.weekly('addEvent', {
+        title: 'Test Event',
+        start: new Date(2013, 4, 13, 8, 0),
+        end: new Date(2013, 4, 13, 9, 0)
+      });
 
-      assert.equal(3, times.startTime);
+      el.weekly('setTimezoneOffset', -5);
+
+      assert.equal(10, el.find('.weekly-event').data('offset-start').getHours());
+      assert.equal(11, el.find('.weekly-event').data('offset-end').getHours());
     });
   });
 
