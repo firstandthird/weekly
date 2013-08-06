@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "assert": "*",
+    "timezones": "*",
     "jquery-simulate": "https://raw.github.com/jquery/jquery-ui/master/tests/jquery.simulate.js"
   }
 }

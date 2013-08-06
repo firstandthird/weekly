@@ -156,4 +156,21 @@ suite('dates', function() {
     });
 
   });
+
+  suite('realTimezoneOffset', function() {
+
+    test('positive UTC offset', function() {
+      var offset = +4;
+      var real = offset - ((new Date()).getTimezoneOffset() / -60);
+
+      assert.equal(real, dateUtils.realTimezoneOffset(offset));
+    });
+
+    test('negative UTC offset', function() {
+      var offset = -4;
+      var real = offset - ((new Date()).getTimezoneOffset() / -60);
+
+      assert.equal(real, dateUtils.realTimezoneOffset(offset));
+    });
+  });
 });
