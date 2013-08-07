@@ -488,6 +488,25 @@ suite('weekly', function() {
       assert.equal(inst.events.length, 4);
 
     });
+
+    test('events created after timezone change should have correct time', function(){
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      el.weekly('setTimezoneOffset', -5);
+
+      el.weekly('addEvent', {
+        title: 'Test Event',
+        start: new Date(2013, 4, 13, 8, 0),
+        end: new Date(2013, 4, 13, 9, 0)
+      });
+
+      assert.equal(8, el.find('.weekly-event').data('offset-start').getHours());
+      assert.equal(9, el.find('.weekly-event').data('offset-end').getHours());
+    });
   });
 
   suite('modify event', function() {
