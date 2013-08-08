@@ -53,5 +53,11 @@ suite('TimeFormat', function() {
 
       assert.equal(TimeFormat('%S', date), 'th');
     });
+
+    test('midnight should be 12', function() {
+      var date = new Date(2013, 4, 1);
+
+      assert.equal(12, TimeFormat('%g', date));
+    });
   });
 });
