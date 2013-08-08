@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.25
+ * v0.0.26
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -135,7 +135,7 @@
         case '%A':
           return time.getHours() > 11 ? 'PM' : 'AM';
         case '%g':
-          return time.getHours() > 12 ? time.getHours() -12 : time.getHours();
+          return time.getHours() > 12 ? time.getHours() -12 : (time.getHours() ? time.getHours() : 12);
         case '%G':
         return time.getHours();
         case '%h':
@@ -564,6 +564,9 @@
         }, e);
 
         e._index = this.events.length;
+
+        e.start.setHours(e.start.getHours() - this.timezoneOffset);
+        e.end.setHours(e.end.getHours() - this.timezoneOffset);
 
         if (e.start.getHours() >= this.startTime && e.end.getHours() <= (this.endTime + 12)) {
           this.renderEvent(e);

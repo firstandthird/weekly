@@ -1,4 +1,13 @@
 
+0.0.26 / 2013-08-07 
+==================
+
+  * Merge remote-tracking branch 'origin/bug/time-display-midnight'
+  * Merge remote-tracking branch 'origin/feature/timezoneOffset'
+  * removed moment-timezone from exclude
+  * Fixed problem with midnight display.
+  * Fixed issue with new events being offset when they didn't need to be.
+
 0.0.25 / 2013-08-06 
 ==================
 
