@@ -25,7 +25,6 @@ module.exports = function(grunt) {
         exclude: [
           'assert',
           'jquery',
-          'moment-timezone',
           'moment',
           'timezones',
           'jquery-simulate'
