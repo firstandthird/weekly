@@ -1,4 +1,11 @@
 
+0.0.27 / 2013-08-09 
+==================
+
+  * updated timezone should not trigger weekchange
+  * [grunt] don't run default on dev
+  * addEvent shouldn't offset time
+
 0.0.26 / 2013-08-07 
 ==================
 

@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.26
+ * v0.0.27
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -508,11 +508,13 @@
       }
 
       if (this.autoRender) {
-        this.update();
+        var data = this.update();
+        this.emit('weekChange', data);
       }
     },
 
     update: function() {
+
       var data = {
         timef: TimeFormat,
         getWeekSpan: dateUtils.getWeekSpan,
@@ -560,7 +562,8 @@
         el[0].scrollIntoView();
         $(window).scrollTop(top);
       }
-      this.emit('weekChange', { dates: data.dates, times: data.times });
+
+      return { dates: data.dates, times: data.times };
     },
 
     highlightToday: function() {
@@ -598,8 +601,8 @@
           var parsedDate = eventData.date.split('-');
 
           this.addEvent({
-            start: new Date(parsedDate[0], parsedDate[1], parsedDate[2], eventData.starttime),
-            end: new Date(parsedDate[0], parsedDate[1], parsedDate[2], eventData.endtime)
+            start: new Date(parsedDate[0], parsedDate[1], parsedDate[2], eventData.starttime - this.timezoneOffset),
+            end: new Date(parsedDate[0], parsedDate[1], parsedDate[2], eventData.endtime - this.timezoneOffset)
           });
 
           this.pendingEvent.remove();
@@ -743,7 +746,8 @@
         this.weekOffset += offsetWeek;
       }
 
-      this.update();
+      var data = this.update();
+      this.emit('weekChange', data);
     },
 
     renderEvent: function(event) {
@@ -871,9 +875,6 @@
         }, e);
 
         e._index = this.events.length;
-
-        e.start.setHours(e.start.getHours() - this.timezoneOffset);
-        e.end.setHours(e.end.getHours() - this.timezoneOffset);
 
         if (e.start.getHours() >= this.startTime && e.end.getHours() <= (this.endTime + 12)) {
           this.renderEvent(e);
