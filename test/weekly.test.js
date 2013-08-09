@@ -520,8 +520,29 @@ suite('weekly', function() {
         end: new Date(2013, 4, 13, 9, 0)
       });
 
-      assert.equal(8, el.find('.weekly-event').data('offset-start').getHours());
-      assert.equal(9, el.find('.weekly-event').data('offset-end').getHours());
+      assert.equal(10, el.find('.weekly-event').data('offset-start').getHours());
+      assert.equal(11, el.find('.weekly-event').data('offset-end').getHours());
+    });
+
+    test('click event render in correct place with timezone offset', function(done) {
+
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      el.weekly('setTimezoneOffset', -2);
+
+      var timeBlock = el.find('.weekly-grid .weekly-day').first();
+
+      el.one('addEvent', function(e, event) {
+        assert.equal(event.start.getHours(), 19);
+        done();
+      });
+
+      timeBlock.click();
+
     });
 
   });
@@ -826,6 +847,7 @@ suite('weekly', function() {
       assert.equal(10, el.find('.weekly-event').data('offset-start').getHours());
       assert.equal(11, el.find('.weekly-event').data('offset-end').getHours());
     });
+
   });
 
 });

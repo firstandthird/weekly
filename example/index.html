@@ -19,6 +19,7 @@
       Change Timezone:
       <select id="timezones"></select>
       <button data-action="clear">Clear</button>
+      <button data-action="add">Add Event</button>
     </div>
 
     <script src="../components/jquery/jquery.js"></script>
@@ -51,6 +52,12 @@
         end: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 8),
         id: '456'
       }
+      var event5 = {
+        title: 'Test 5',
+        start: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 12),
+        end: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 13),
+        id: '789'
+      }
 
       var w = $('.weekly')
         .weekly({
@@ -74,6 +81,9 @@
 
       $('[data-action=clear]').on('click', function() {
         w.weekly('clearEvents');
+      });
+      $('[data-action=add]').on('click', function() {
+        w.weekly('addEvent', event5);
       });
 
       $('#timezones')
