@@ -848,6 +848,21 @@ suite('weekly', function() {
       assert.equal(11, el.find('.weekly-event').data('offset-end').getHours());
     });
 
+    test('updating timezone should not call weekChange', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      el.on('weekChange', function() {
+        assert.equal(false, true);
+      });
+
+      el.weekly('setTimezoneOffset', -5);
+
+    });
+
   });
 
 });
