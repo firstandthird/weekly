@@ -173,4 +173,18 @@ suite('dates', function() {
       assert.equal(real, dateUtils.realTimezoneOffset(offset));
     });
   });
+
+  suite('isPastDate', function(){
+    test('past event should be true', function(){
+      var pastDate = '2013-1-18';
+
+      assert.equal(true, dateUtils.isPastDate(pastDate));
+    });
+
+    test('future event should be false', function(){
+      var future = '2220-1-18';
+
+      assert.equal(false, dateUtils.isPastDate(future));
+    });
+  });
 });
