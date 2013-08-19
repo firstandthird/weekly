@@ -5,7 +5,7 @@
   <title>weekly Tests</title>
   <link rel="stylesheet" href="../dist/weekly.css"/>
   <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
-  <script src="../components/assert/assert.js"></script>
+  <script src="../bower_components/assert/assert.js"></script>
   <script src="../node_modules/mocha/mocha.js"></script>
   <!--<script src="../components/blanket/dist/qunit/blanket.min.js" data-cover-adapter="../components/blanket/src/adapters/mocha-blanket.js"></script>-->
   <script>mocha.setup('tdd')</script>
@@ -14,14 +14,9 @@
   <div id="mocha"></div>
   <div id="fixture" style="display: none">
   </div>
-  <script src="../components/jquery/jquery.js"></script>
-  <script src="../components/jquery-simulate/index.js"></script>
-  <script src="../components/fidel/dist/fidel.js"></script>
-  <script src="../components/template/dist/template.js"></script>
-  <script src="../components/fidel-template/dist/fidel-template.js"></script>
-  <script src="../components/FitText.js/jquery.fittext.js"></script>
-  <script src="../lib/time.js" data-cover></script>
-  <script src="../dist/weekly.js" data-cover></script>
+  <script src="../bower_components/jquery/jquery.js"></script>
+  <script src="../bower_components/jquery-simulate/index.js"></script>
+  <script src="../dist/weekly.full.js" data-cover></script>
   <script src="dates.test.js"></script>
   <script>
     if (navigator.userAgent.indexOf('PhantomJS') < 0) {

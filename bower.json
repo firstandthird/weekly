@@ -7,9 +7,9 @@
   "copyright": "Greg Allen",
   "main": "dist/weekly.js",
   "dependencies": {
-    "jquery": "~1.9.0",
-    "fidel": "~2.2.1",
-    "fidel-template": "~0.2.0",
+    "jquery": "1.*",
+    "fidel": "2.*",
+    "fidel-template": "0.*",
     "FitText.js": "latest"
   },
   "devDependencies": {
