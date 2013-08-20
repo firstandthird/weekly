@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.28
+ * v0.0.29
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -463,6 +463,9 @@
       var local = (new Date()).getTimezoneOffset() / -60;
       var real = offset - local;
       return real;
+    },
+    isPastDate: function(past) {
+      return (past.split('-').join('') < TimeFormat('%Y%n%j', new Date()));
     }
   };
 
@@ -489,6 +492,7 @@
       autoSplit: false,
       showToday: true,
       allowPreviousWeeks: true,
+      allowPastEventCreation: false,
       timezoneOffset: 0,
       utcOffset: ((new Date()).getTimezoneOffset() / -60)
     },
@@ -584,6 +588,13 @@
 
       gridDays.on('mousedown', this.proxy(function(event){
         if(event.which !== 1 || $(event.target).is('.weekly-dragger')) return;
+
+        var target = $(event.currentTarget);
+
+        if(!this.allowPastEventCreation && dateUtils.isPastDate(target.data('date'))) {
+          return;
+        }
+
         this.mouseDown = true;
 
         if(this.pendingEvent) {
@@ -593,6 +604,8 @@
       }));
 
       gridDays.on('mouseup', this.proxy(function(){
+        if(!this.mouseDown) return;
+
         this.mouseDown = false;
 
         if(this.pendingEvent) {
@@ -618,6 +631,14 @@
       }));
 
       gridDays.on('click', this.proxy(function(event){
+        var target = $(event.currentTarget);
+
+        if(!this.allowPastEventCreation && dateUtils.isPastDate(target.data('date'))) {
+          return;
+        }
+
+        this.mouseDown = true;
+
         if($(event.target).is('.weekly-time,.weekly-day')) {
           this.createEvent(event);
           gridDays.trigger('mouseup');

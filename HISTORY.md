@@ -1,4 +1,11 @@
 
+0.0.29 / 2013-08-20 
+==================
+
+  * Merge branch 'feature/create-previous-events'
+  * updated build
+  * Added option to disable/enable creating past events.
+
 0.0.28 / 2013-08-19 
 ==================
 
