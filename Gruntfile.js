@@ -143,23 +143,19 @@ module.exports = function(grunt) {
     },
 
     mocha: {
+      options: {
+        run: true,
+        growl: true,
+        reporter: 'Spec'
+      },
       weekly: {
         src: 'test/index.html',
-        options: {
-          run: true
-        }
       },
       time: {
         src: 'test/time.html',
-        options: {
-          run: true
-        }
       },
       dates: {
         src: 'test/dates.html',
-        options: {
-          run: true
-        }
       }
     },
 
