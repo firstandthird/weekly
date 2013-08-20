@@ -396,7 +396,8 @@ suite('weekly', function() {
       var date = new Date(2013, 4, 15);
 
       var el = $('.weekly').weekly({
-        currentDate: date
+        currentDate: date,
+        allowPastEventCreation: true
       });
 
       var firstDate = el.find('.weekly-grid .weekly-day').first();
@@ -421,7 +422,8 @@ suite('weekly', function() {
       var date = new Date(2013, 4, 15);
 
       var el = $('.weekly').weekly({
-        currentDate: date
+        currentDate: date,
+        allowPastEventCreation: true
       });
 
       var firstDate = el.find('.weekly-grid .weekly-day').first();
@@ -529,7 +531,8 @@ suite('weekly', function() {
       var date = new Date(2013, 4, 15);
 
       var el = $('.weekly').weekly({
-        currentDate: date
+        currentDate: date,
+        allowPastEventCreation: true
       });
 
       el.weekly('setTimezoneOffset', -2);
@@ -863,6 +866,20 @@ suite('weekly', function() {
 
     });
 
+  });
+
+  suite('allowPastEventCreation', function(){
+    test('past events should not be allowed to be created', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        allowPastEventCreation: false
+      });
+
+      var firstDate = el.find('.weekly-grid .weekly-day').first().click();
+      assert.equal(firstDate.find('.weekly-event-pending').length, 0);
+    });
   });
 
 });
