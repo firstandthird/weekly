@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.29
+ * v0.0.30
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -280,11 +280,13 @@
       gridDays.unbind('mousedown mousemove mouseup mouseout click');
 
       gridDays.on('mousedown', this.proxy(function(event){
-        if(event.which !== 1 || $(event.target).is('.weekly-dragger')) return;
+        var target = $(event.target);
 
-        var target = $(event.currentTarget);
+        if(event.which !== 1 || target.is('.weekly-dragger') || target.is('.weekly-delete')) return;
 
-        if(!this.allowPastEventCreation && dateUtils.isPastDate(target.data('date'))) {
+        var currentTarget = $(event.currentTarget);
+
+        if(!this.allowPastEventCreation && dateUtils.isPastDate(currentTarget.data('date'))) {
           return;
         }
 
@@ -330,9 +332,8 @@
           return;
         }
 
-        this.mouseDown = true;
-
         if($(event.target).is('.weekly-time,.weekly-day')) {
+          this.mouseDown = true;
           this.createEvent(event);
           gridDays.trigger('mouseup');
         }

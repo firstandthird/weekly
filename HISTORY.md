@@ -1,4 +1,9 @@
 
+0.0.30 / 2013-08-21 
+==================
+
+  * Fixed issue when mouseDown would be set too early. Also added check for clicking on close button.
+
 0.0.29 / 2013-08-20 
 ==================
 
