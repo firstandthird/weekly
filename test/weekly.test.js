@@ -882,4 +882,29 @@ suite('weekly', function() {
     });
   });
 
+  suite('day offset', function(){
+    test('todayFirst should set dayOffset to current day of the week index', function() {
+      var date = new Date();
+
+      var el = $('.weekly').weekly({
+        todayFirst: true
+      });
+
+      assert.equal(date.getDay(), el.weekly('get', 'dayOffset'));
+    });
+
+    test('todayFirst should start week on today', function(){
+      var date = new Date(2013, 8, 23);
+
+      var el = $('.weekly').weekly({
+        todayFirst: true
+      });
+
+      var firstDay = el.find('.weekly-days .weekly-day').first().data('date');
+
+      // There is an issue with how month dates are displayed in the template
+      // They start at 0, which makes it one off.
+      assert.equal(firstDay, '2013-7-23');
+    });
+  });
 });
