@@ -894,9 +894,10 @@ suite('weekly', function() {
     });
 
     test('todayFirst should start week on today', function(){
-      var date = new Date(2013, 8, 23);
+      var date = new Date(2013, 7, 23);
 
       var el = $('.weekly').weekly({
+        currentDate: date,
         todayFirst: true
       });
 
