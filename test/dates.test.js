@@ -63,6 +63,13 @@ suite('dates', function() {
       var span = dateUtils.getWeekSpan(date, 1);
       assert.equal(span, 'May 19 - 25');
     });
+
+    test('day offset', function() {
+      var date = new Date(2013, 4, 15);
+
+      var span = dateUtils.getWeekSpan(date, 1, 1);
+      assert.equal(span, 'May 20 - 26');
+    });
   });
 
   suite('getdateUtils', function() {
@@ -127,6 +134,17 @@ suite('dates', function() {
       assert.equal(dates.length, 7);
       assert.equal(dates[0].toDateString(), 'Sun May 19 2013');
       assert.equal(dates[6].toDateString(), 'Sat May 25 2013');
+
+    });
+
+    test('take into consideration dayOffset', function() {
+
+      var date = new Date(2013, 4, 29);
+
+      var dates = dateUtils.getdateUtils(date, -1, 1);
+      assert.equal(dates.length, 7);
+      assert.equal(dates[0].toDateString(), 'Mon May 20 2013');
+      assert.equal(dates[6].toDateString(), 'Sun May 26 2013');
 
     });
   });
