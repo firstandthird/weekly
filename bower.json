@@ -1,7 +1,7 @@
 {
   "name": "weekly",
   "description": "jQuery Weekly Calendar Plugin",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "homepage": "https://github.com/jgallen23/weekly",
   "license": "MIT",
   "copyright": "Greg Allen",

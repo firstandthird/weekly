@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.30
+ * v0.0.31
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -407,6 +407,7 @@
     },
     getFirstDayOfWeek: function(date, offset) {
       offset = offset || 0;
+
       var first = date.getDate() - date.getDay();
       var newDate = new Date(date.getTime());
       newDate.setDate(first + (offset * 7));
@@ -414,12 +415,14 @@
     },
     getLastDayOfWeek: function(date, weekOffset) {
       weekOffset = weekOffset || 0;
+
       var first = date.getDate() - date.getDay();
       var newDate = new Date(date.getTime());
       newDate.setDate(first + 6 + (weekOffset * 7));
       return newDate;
     },
-    getdateUtils: function(date, weekOffset) {
+    getdateUtils: function(date, weekOffset, dayOffset) {
+      dayOffset = dayOffset || 0;
       var daysInWeek = 7;
 
       var days = [];
@@ -427,7 +430,7 @@
 
       for (var i = 0, c = daysInWeek; i < c; i++) {
         var d = new Date(sunday.getTime());
-        d.setDate(d.getDate() - d.getDay() + i);
+        d.setDate(d.getDate() - d.getDay() + dayOffset + i);
         days.push(d);
       }
       return days;
@@ -447,9 +450,13 @@
 
       return times;
     },
-    getWeekSpan: function(date, offset) {
+    getWeekSpan: function(date, offset, dayOffset) {
+      dayOffset = dayOffset || 0;
       var first = this.getFirstDayOfWeek(date, offset);
       var last = this.getLastDayOfWeek(date, offset);
+
+      first.setDate(first.getDate() + dayOffset);
+      last.setDate(last.getDate() + dayOffset);
 
       var span = TimeFormat('%M %d', first) + ' - ';
       if (first.getMonth() == last.getMonth()) {
@@ -494,7 +501,9 @@
       allowPreviousWeeks: true,
       allowPastEventCreation: false,
       timezoneOffset: 0,
-      utcOffset: ((new Date()).getTimezoneOffset() / -60)
+      utcOffset: ((new Date()).getTimezoneOffset() / -60),
+      todayFirst: false,
+      dayOffset: 0
     },
 
     events: {
@@ -511,10 +520,18 @@
         this.enableDelete = false;
       }
 
+      if (this.todayFirst) {
+        this.dayOffset = this.currentDate.getDay();
+      }
+
       if (this.autoRender) {
         var data = this.update();
         this.emit('weekChange', data);
       }
+    },
+
+    get: function(property) {
+      return this[property];
     },
 
     update: function() {
@@ -523,7 +540,7 @@
         timef: TimeFormat,
         getWeekSpan: dateUtils.getWeekSpan,
         currentDate: this.currentDate,
-        dates: dateUtils.getdateUtils(this.currentDate, this.weekOffset),
+        dates: dateUtils.getdateUtils(this.currentDate, this.weekOffset, this.dayOffset),
         times: dateUtils.getTimes(this.startTime, this.endTime),
         showPreviousWeekButton: (this.allowPreviousWeeks || (this.weekOffset !== 0))
       };
@@ -548,10 +565,10 @@
         this.el.find(".weekly-change-today-button").css('display', 'block');
       }
 
-      this.el.find('.weekly-time-navigation .weekly-previous-week .week').html(dateUtils.getWeekSpan(this.currentDate, this.weekOffset - 1));
-      this.el.find('.weekly-time-navigation .weekly-next-week .week').html(dateUtils.getWeekSpan(this.currentDate, this.weekOffset + 1));
+      this.el.find('.weekly-time-navigation .weekly-previous-week .week').html(dateUtils.getWeekSpan(this.currentDate, this.weekOffset - 1, this.dayOffset));
+      this.el.find('.weekly-time-navigation .weekly-next-week .week').html(dateUtils.getWeekSpan(this.currentDate, this.weekOffset + 1, this.dayOffset));
 
-      this.el.find('.weekly-time-navigation .weekly-header').html(dateUtils.getWeekSpan(this.currentDate, this.weekOffset));
+      this.el.find('.weekly-time-navigation .weekly-header').html(dateUtils.getWeekSpan(this.currentDate, this.weekOffset, this.dayOffset));
 
       if (this.fitText) {
         this.el.find(".weekly-days .weekly-day, .weekly-times .weekly-time").fitText(1, {

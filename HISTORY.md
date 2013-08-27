@@ -1,4 +1,10 @@
 
+0.0.31 / 2013-08-26 
+==================
+
+  * fixed tests
+  * Added support to start the week on any given week offset (0-6) or today.
+
 0.0.30 / 2013-08-21 
 ==================
 
