@@ -61,6 +61,11 @@
   line-height: 0;
   height: 0;
 }
+.weekly .weekly-grid .weekly-current-time {
+  display: none;
+  position: absolute;
+  width: 100%;
+}
 .weekly .weekly-grid .weekly-day {
   float: left;
   position: relative;
@@ -177,6 +182,10 @@
 .weekly .weekly-grid .weekly-event-pending {
   background-color: #34495e;
   border-radius: 3px;
+}
+.weekly .weekly-grid .weekly-current-time {
+  background: #c0392b;
+  height: 1px;
 }
 .weekly .weekly-today {
   background-color: rgba(241, 196, 15, 0.4);

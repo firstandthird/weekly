@@ -20,9 +20,24 @@ suite('weekly', function() {
 
     test('highlight current date', function() {
       var el = $('.weekly').weekly();
-      var today = new Date();
 
       assert.equal(el.find('.weekly-today').length, 1);
+    });
+
+    test('current time line visible on week of today', function() {
+      var el = $('.weekly').weekly();
+
+      assert.equal(el.find('.weekly-today').length, 1);
+      assert.equal(el.find('.weekly-current-time').css('display'), 'block');
+    });
+
+    test('current time line hidden', function() {
+      var el = $('.weekly').weekly();
+
+      el.weekly('prevWeek');
+
+      assert.equal(el.find('.weekly-today').length, 0);
+      assert.equal(el.find('.weekly-current-time').css('display'), 'none');
     });
 
     test('weekSpan updates on prev', function() {
