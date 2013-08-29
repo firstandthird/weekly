@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.31
+ * v0.0.32
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -33,7 +33,9 @@
       newDate.setDate(first + 6 + (weekOffset * 7));
       return newDate;
     },
-    getdateUtils: function(date, weekOffset, dayOffset) {
+    getDates: function(date, weekOffset, dayOffset) {
+      date = new Date(date);
+      date.setHours(0, 0, 0);
       dayOffset = dayOffset || 0;
       var daysInWeek = 7;
 
@@ -233,7 +235,7 @@
         timef: TimeFormat,
         getWeekSpan: dateUtils.getWeekSpan,
         currentDate: this.currentDate,
-        dates: dateUtils.getdateUtils(this.currentDate, this.weekOffset, this.dayOffset),
+        dates: dateUtils.getDates(this.currentDate, this.weekOffset, this.dayOffset),
         times: dateUtils.getTimes(this.startTime, this.endTime),
         showPreviousWeekButton: (this.allowPreviousWeeks || (this.weekOffset !== 0))
       };

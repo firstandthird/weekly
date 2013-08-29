@@ -1,4 +1,11 @@
 
+0.0.32 / 2013-08-29 
+==================
+
+  * moved livereload option to the top
+  * don't return time when calling getDates()
+  * renamed getdateUtils to getDates
+
 0.0.31 / 2013-08-26 
 ==================
 
