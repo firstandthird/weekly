@@ -101,15 +101,15 @@ module.exports = function(grunt) {
     },
 
     watch: {
+      options: {
+        livereload: true
+      },
       scripts: {
         files: [
           '<%= jshint.main %>',
           'lib/template.html'
         ],
-        tasks: 'scripts',
-        options: {
-          livereload: true
-        }
+        tasks: 'scripts'
       },
 
       styles: {
@@ -117,18 +117,12 @@ module.exports = function(grunt) {
           'less/*.less'
         ],
         tasks: 'styles',
-        options: {
-          livereload: true
-        }
       },
 
       example: {
         files: [
           'example/*'
-        ],
-        options: {
-          livereload: true
-        }
+        ]
       },
 
       ci: {
