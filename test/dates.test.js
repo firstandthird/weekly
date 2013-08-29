@@ -74,6 +74,19 @@ suite('dates', function() {
 
   suite('getDates', function() {
 
+    test('dates should not have a time', function() {
+
+      var date = new Date(2013, 4, 15, 5, 15);
+
+      var dates = dateUtils.getDates(date, 0);
+      assert.equal(dates.length, 7);
+      assert.equal(dates[0].getHours(), 0);
+      assert.equal(dates[0].getMinutes(), 0);
+      assert.equal(dates[6].getHours(), 0);
+      assert.equal(dates[6].getMinutes(), 0);
+
+    });
+
     test('get dates in middle of month', function() {
 
       var date = new Date(2013, 4, 15);
