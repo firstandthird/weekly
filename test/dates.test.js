@@ -72,13 +72,13 @@ suite('dates', function() {
     });
   });
 
-  suite('getdateUtils', function() {
+  suite('getDates', function() {
 
     test('get dates in middle of month', function() {
 
       var date = new Date(2013, 4, 15);
 
-      var dates = dateUtils.getdateUtils(date, 0);
+      var dates = dateUtils.getDates(date, 0);
       assert.equal(dates.length, 7);
       assert.equal(dates[0].toDateString(), 'Sun May 12 2013');
       assert.equal(dates[6].toDateString(), 'Sat May 18 2013');
@@ -88,7 +88,7 @@ suite('dates', function() {
 
       var date = new Date(2013, 4, 1);
 
-      var dates = dateUtils.getdateUtils(date, 0);
+      var dates = dateUtils.getDates(date, 0);
       assert.equal(dates.length, 7);
       assert.equal(dates[0].toDateString(), 'Sun Apr 28 2013');
       assert.equal(dates[6].toDateString(), 'Sat May 04 2013');
@@ -99,7 +99,7 @@ suite('dates', function() {
 
       var date = new Date(2013, 4, 5);
 
-      var dates = dateUtils.getdateUtils(date, 0);
+      var dates = dateUtils.getDates(date, 0);
       assert.equal(dates.length, 7);
       assert.equal(dates[0].toDateString(), 'Sun May 05 2013');
       assert.equal(dates[6].toDateString(), 'Sat May 11 2013');
@@ -109,7 +109,7 @@ suite('dates', function() {
 
       var date = new Date(2013, 4, 11);
 
-      var dates = dateUtils.getdateUtils(date, 0);
+      var dates = dateUtils.getDates(date, 0);
       assert.equal(dates.length, 7);
       assert.equal(dates[0].toDateString(), 'Sun May 05 2013');
       assert.equal(dates[6].toDateString(), 'Sat May 11 2013');
@@ -120,7 +120,7 @@ suite('dates', function() {
 
       var date = new Date(2013, 4, 29);
 
-      var dates = dateUtils.getdateUtils(date, 0);
+      var dates = dateUtils.getDates(date, 0);
       assert.equal(dates.length, 7);
       assert.equal(dates[0].toDateString(), 'Sun May 26 2013');
       assert.equal(dates[6].toDateString(), 'Sat Jun 01 2013');
@@ -130,7 +130,7 @@ suite('dates', function() {
 
       var date = new Date(2013, 4, 29);
 
-      var dates = dateUtils.getdateUtils(date, -1);
+      var dates = dateUtils.getDates(date, -1);
       assert.equal(dates.length, 7);
       assert.equal(dates[0].toDateString(), 'Sun May 19 2013');
       assert.equal(dates[6].toDateString(), 'Sat May 25 2013');
@@ -141,7 +141,7 @@ suite('dates', function() {
 
       var date = new Date(2013, 4, 29);
 
-      var dates = dateUtils.getdateUtils(date, -1, 1);
+      var dates = dateUtils.getDates(date, -1, 1);
       assert.equal(dates.length, 7);
       assert.equal(dates[0].toDateString(), 'Mon May 20 2013');
       assert.equal(dates[6].toDateString(), 'Sun May 26 2013');

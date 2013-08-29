@@ -595,7 +595,7 @@ suite('weekly', function() {
 
       el.weekly('nextWeek');
 
-      var dates = dateUtils.getdateUtils(date, 1);
+      var dates = dateUtils.getDates(date, 1);
       assert.equal(dates.length, 7);
       assert.equal(dates[0].toDateString(), 'Sun May 26 2013');
       assert.equal(dates[6].toDateString(), 'Sat Jun 01 2013');
@@ -611,7 +611,7 @@ suite('weekly', function() {
 
       el.weekly('prevWeek');
 
-      var dates = dateUtils.getdateUtils(date, -1);
+      var dates = dateUtils.getDates(date, -1);
       assert.equal(dates.length, 7);
       assert.equal(dates[0].toDateString(), 'Sun May 26 2013');
       assert.equal(dates[6].toDateString(), 'Sat Jun 01 2013');
@@ -629,7 +629,7 @@ suite('weekly', function() {
 
       el.weekly('jumpToday');
 
-      var dates = dateUtils.getdateUtils(date, 0);
+      var dates = dateUtils.getDates(date, 0);
       assert.equal(dates.length, 7);
       assert.equal(dates[0].toDateString(), 'Sun Jun 02 2013');
       assert.equal(dates[6].toDateString(), 'Sat Jun 08 2013');
