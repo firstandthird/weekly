@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.32
+ * v0.0.33
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -86,7 +86,8 @@
       return real;
     },
     isPastDate: function(past) {
-      return (past.split('-').join('') < TimeFormat('%Y%n%j', new Date()));
+      var pastParts = past.split('-');
+      return (TimeFormat('%Y%m%d', new Date(pastParts[0], pastParts[1], pastParts[2])) < TimeFormat('%Y%m%d', new Date()));
     }
   };
 
