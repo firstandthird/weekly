@@ -213,7 +213,7 @@ suite('dates', function() {
     });
 
     test('future event should be false', function(){
-      var future = '2220-1-18';
+      var future = '2014-12-31';
 
       assert.equal(false, dateUtils.isPastDate(future));
     });

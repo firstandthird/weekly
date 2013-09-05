@@ -436,6 +436,21 @@ suite('weekly', function() {
       firstDate.click();
     });
 
+    test('create event a week out', function(done) {
+      var el = $('.weekly').weekly();
+
+      el.weekly('nextWeek');
+
+      var firstDate = el.find('.weekly-grid .weekly-day').first();
+
+      el.one('addEvent', function() {
+        assert.equal(firstDate.find('.weekly-event').length, 1);
+        done();
+      });
+
+      firstDate.click();
+    });
+
     test('readonly mode', function() {
       var date = new Date(2013, 4, 15);
 
