@@ -70,9 +70,19 @@
       position: relative;
 
       .weekly-time {
+        position: relative;
         padding: @padding;
         height: @gridHeight;
         line-height: @gridHeight;
+
+        &:after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 0;
+          right: 0;
+          border-top: 1px solid @halfHourBorder;
+        }
       }
 
       .weekly-event {
