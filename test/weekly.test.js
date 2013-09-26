@@ -392,6 +392,20 @@ suite('weekly', function() {
       assert.equal(el.weekly('toFraction', "8"), 8);
     });
 
+    test('convert decimal to minutes', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      assert.equal(el.weekly('fromDecimal', 0.50), 30);
+      assert.equal(el.weekly('fromDecimal', 0.75), 45);
+      assert.equal(el.weekly('fromDecimal', 0.25), 15);
+      assert.equal(el.weekly('fromDecimal', 1.00), 0);
+      assert.equal(el.weekly('fromDecimal', 3.50), 30);
+    });
+
     test('drag to create', function(done) {
       var date = new Date(2013, 4, 15);
 

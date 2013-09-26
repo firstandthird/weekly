@@ -164,17 +164,10 @@ module.exports = function(grunt) {
     connect: {
       server:{
         options: {
-          hostname: '*'
+          hostname: '*',
+          livereload: true
         }
       },
-
-      plato: {
-        port: 8000,
-        base: 'reports',
-        options: {
-          keepalive: true
-        }
-      }
     },
     bytesize: {
       scripts: {
@@ -190,5 +183,4 @@ module.exports = function(grunt) {
   grunt.registerTask('styles', ['less']);
   grunt.registerTask('default', ['scripts', 'styles']);
   grunt.registerTask('dev', ['connect:server', 'watch']);
-  grunt.registerTask('reports', ['plato', 'connect:plato']);
 };
