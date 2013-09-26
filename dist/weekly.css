@@ -66,9 +66,18 @@
   position: relative;
 }
 .weekly .weekly-grid .weekly-day .weekly-time {
+  position: relative;
   padding: 0 10px;
   height: 38px;
   line-height: 38px;
+}
+.weekly .weekly-grid .weekly-day .weekly-time:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #f5f7f7;
 }
 .weekly .weekly-grid .weekly-day .weekly-event {
   position: absolute;
@@ -87,7 +96,7 @@
   background: 0;
   border: 0;
   cursor: pointer;
-  padding: 5px 7px;
+  padding: 0px 5px 5px 5px;
 }
 .weekly .weekly-grid .weekly-day .weekly-event .weekly-dragger {
   position: absolute;
@@ -136,10 +145,10 @@
   float: left;
 }
 .weekly .weekly-calendar {
-  border: 1px solid #ecf0f1;
+  border: 1px solid #e3e7e8;
 }
 .weekly .weekly-days {
-  border-bottom: 1px solid #ecf0f1;
+  border-bottom: 1px solid #e3e7e8;
 }
 .weekly .weekly-scroller {
   height: 400px;
@@ -153,11 +162,11 @@
   border-radius: 10px;
 }
 .weekly .weekly-times .weekly-time {
-  border-top: 1px solid #ecf0f1;
+  border-top: 1px solid #e3e7e8;
 }
 .weekly .weekly-grid .weekly-day .weekly-time {
-  border-left: 1px solid #ecf0f1;
-  border-top: 1px solid #ecf0f1;
+  border-left: 1px solid #e3e7e8;
+  border-top: 1px solid #e3e7e8;
 }
 .weekly .weekly-grid .weekly-day .weekly-event {
   background-color: #3498db;

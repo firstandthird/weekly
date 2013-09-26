@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.33
+ * v0.0.34
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -329,8 +329,8 @@
           var parsedDate = eventData.date.split('-');
 
           this.addEvent({
-            start: new Date(parsedDate[0], parsedDate[1], parsedDate[2], eventData.starttime - this.timezoneOffset),
-            end: new Date(parsedDate[0], parsedDate[1], parsedDate[2], eventData.endtime - this.timezoneOffset)
+            start: new Date(parsedDate[0], parsedDate[1], parsedDate[2], ~~(eventData.starttime) - this.timezoneOffset, this.fromDecimal(eventData.starttime)),
+            end: new Date(parsedDate[0], parsedDate[1], parsedDate[2], ~~(eventData.endtime) - this.timezoneOffset, this.fromDecimal(eventData.endtime))
           });
 
           this.pendingEvent.remove();
@@ -410,9 +410,10 @@
       var mouseOffsetTop = event.pageY - targetOffset.top;
       var dayHeight = $(event.currentTarget).height();
       var hourHeight = Math.round(dayHeight / this.timeDifference);
+      var halfHeight = hourHeight/2;
 
-      var tempStart = Math.floor(mouseOffsetTop / hourHeight) * hourHeight;
-      var tempEnd = Math.ceil(mouseOffsetTop / hourHeight) * hourHeight;
+      var tempStart = Math.floor(mouseOffsetTop / halfHeight) * halfHeight;
+      var tempEnd = Math.ceil(mouseOffsetTop / halfHeight) * halfHeight;
 
       if(this.pendingEventStart === null) {
         this.pendingEventStart = tempStart;
@@ -443,8 +444,9 @@
       var mouseOffsetTop = event.pageY - targetOffset.top;
       var dayHeight = $(event.currentTarget).height();
       var hourHeight = Math.round(dayHeight / this.timeDifference);
+      var halfHeight = hourHeight/2;
 
-      var tempEnd = Math.ceil(mouseOffsetTop / hourHeight) * hourHeight;
+      var tempEnd = Math.ceil(mouseOffsetTop / halfHeight) * halfHeight;
 
       if(tempEnd < (targetOffset.top + dayHeight)) {
         target.css({
@@ -454,7 +456,8 @@
 
       var duration = target.outerHeight() / hourHeight;
       var end = new Date(target.data('start'));
-      end.setHours(end.getHours() + duration);
+      end.setHours(end.getHours() + ~~(duration));
+      end.setMinutes(this.fromDecimal(duration));
       target.data('end', end);
 
       this.events[target.data('_index')].end = end;
@@ -554,6 +557,11 @@
       var parts = time.toString().split(':');
 
       return parseFloat(parts[0] + '.' + 100/(60/parts[1]));
+    },
+
+    // This just gets the minutes in the decimal
+    fromDecimal: function(time) {
+      return Math.round(60 * (time % 1));
     },
 
     getTimeOffsetPercent: function(time) {

@@ -1,4 +1,17 @@
 
+0.0.34 / 2013-09-26 
+==================
+
+  * tweaked layout of delete button
+  * added livereload to grunt-connect
+  * Killed plato (hehe).
+  * Updated tests files.
+  * Added test for fromDecimal
+  * Allows events to be created in 30 minute intervals.
+  * Tweaked time border colors.
+  * Added half hour guides.
+  * load-grunt-tasks and bower ignore
+
 0.0.33 / 2013-09-05 
 ==================
 
