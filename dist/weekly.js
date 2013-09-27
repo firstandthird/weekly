@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.34
+ * v0.0.35
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -199,7 +199,10 @@
       timezoneOffset: 0,
       utcOffset: ((new Date()).getTimezoneOffset() / -60),
       todayFirst: false,
-      dayOffset: 0
+      dayOffset: 0,
+
+      // How many minutes to draw a divider line
+      interval: 30
     },
 
     events: {
@@ -218,6 +221,10 @@
 
       if (this.todayFirst) {
         this.dayOffset = this.currentDate.getDay();
+      }
+
+      if(this.interval < 1 || this.interval > 60) {
+        this.interval = 60;
       }
 
       if (this.autoRender) {
@@ -410,10 +417,10 @@
       var mouseOffsetTop = event.pageY - targetOffset.top;
       var dayHeight = $(event.currentTarget).height();
       var hourHeight = Math.round(dayHeight / this.timeDifference);
-      var halfHeight = hourHeight/2;
+      var intervalHeight = hourHeight / (60 / this.interval);
 
-      var tempStart = Math.floor(mouseOffsetTop / halfHeight) * halfHeight;
-      var tempEnd = Math.ceil(mouseOffsetTop / halfHeight) * halfHeight;
+      var tempStart = Math.floor(mouseOffsetTop / intervalHeight) * intervalHeight;
+      var tempEnd = Math.ceil(mouseOffsetTop / intervalHeight) * intervalHeight;
 
       if(this.pendingEventStart === null) {
         this.pendingEventStart = tempStart;
@@ -444,9 +451,9 @@
       var mouseOffsetTop = event.pageY - targetOffset.top;
       var dayHeight = $(event.currentTarget).height();
       var hourHeight = Math.round(dayHeight / this.timeDifference);
-      var halfHeight = hourHeight/2;
+      var intervalHeight = hourHeight / (60 / this.interval);
 
-      var tempEnd = Math.ceil(mouseOffsetTop / halfHeight) * halfHeight;
+      var tempEnd = Math.ceil(mouseOffsetTop / intervalHeight) * intervalHeight;
 
       if(tempEnd < (targetOffset.top + dayHeight)) {
         target.css({
@@ -580,14 +587,14 @@
 
     splitEvent: function(event) {
       var diff = event.end.getTime() - event.start.getTime();
-      var hour = 60 * 60 * 1000;
-      var count = Math.ceil(diff / hour); //divide by 1 hour
+      var interval = this.interval * 60 * 1000;
+      var count = Math.ceil(diff / interval); //divide by 1 hour
       var startTime = event.start.getTime();
       var events = [];
       for (var i = 0; i < count; i++) {
         var newEvent = $.extend({}, event); //clone event
-        newEvent.start = new Date(startTime + (hour * i));
-        newEvent.end = new Date(startTime + (hour * (i+1)));
+        newEvent.start = new Date(startTime + (interval * i));
+        newEvent.end = new Date(startTime + (interval * (i+1)));
         events.push(newEvent);
       }
       return events;

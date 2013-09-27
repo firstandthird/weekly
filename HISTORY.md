@@ -1,4 +1,10 @@
 
+0.0.35 / 2013-09-27 
+==================
+
+  * fixed split event to support interval
+  * Added ability to pass in interval.
+
 0.0.34 / 2013-09-26 
 ==================
 
