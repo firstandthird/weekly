@@ -724,7 +724,8 @@ suite('weekly', function() {
       };
 
       var el = $('.weekly').weekly({
-        autoRender: false
+        autoRender: false,
+        interval: 60
       });
 
       var span = el.weekly('splitEvent', event);
@@ -745,12 +746,13 @@ suite('weekly', function() {
   });
 
   suite('auto split', function() {
-    test('auto split events by interval', function() {
+    test('auto split events by 60 min interval', function() {
       var date = new Date(2013, 4, 15);
 
       var el = $('.weekly').weekly({
         autoSplit: true,
-        currentDate: date
+        currentDate: date,
+        interval: 60
       });
 
       el.weekly('addEvent', {
@@ -760,6 +762,24 @@ suite('weekly', function() {
       });
 
       assert.equal(el.find('.weekly-event').length, 3);
+    });
+
+    test('auto split events by 30 min interval', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        autoSplit: true,
+        currentDate: date,
+        interval: 30
+      });
+
+      el.weekly('addEvent', {
+        title: 'Test Event',
+        start: new Date(2013, 4, 13, 9, 0),
+        end: new Date(2013, 4, 13, 12, 0)
+      });
+
+      assert.equal(el.find('.weekly-event').length, 6);
     });
 
     test('pass in array of events', function() {
@@ -778,7 +798,8 @@ suite('weekly', function() {
 
       var el = $('.weekly').weekly({
         autoSplit: true,
-        currentDate: date
+        currentDate: date,
+        interval: 60
       });
 
       el.weekly('addEvent', events);
@@ -792,7 +813,8 @@ suite('weekly', function() {
 
       var el = $('.weekly').weekly({
         autoSplit: true,
-        currentDate: date
+        currentDate: date,
+        interval: 60
       });
 
       var count = 0;
