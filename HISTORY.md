@@ -1,4 +1,11 @@
 
+0.0.36 / 2013-10-02 
+==================
+
+  * added property to set autoSplitInterval independant from interval
+  * updated example to toggle autosplit
+  * method to setAutoSplit
+
 0.0.35 / 2013-09-27 
 ==================
 

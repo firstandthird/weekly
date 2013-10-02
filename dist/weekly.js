@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.35
+ * v0.0.36
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -193,6 +193,7 @@
       enableResize: true,
       enableDelete: true,
       autoSplit: false,
+      autoSplitInterval: 30,
       showToday: true,
       allowPreviousWeeks: true,
       allowPastEventCreation: false,
@@ -585,9 +586,13 @@
       return percent;
     },
 
+    setAutoSplit: function(val) {
+      this.autoSplit = val;
+    },
+
     splitEvent: function(event) {
       var diff = event.end.getTime() - event.start.getTime();
-      var interval = this.interval * 60 * 1000;
+      var interval = this.autoSplitInterval * 60 * 1000;
       var count = Math.ceil(diff / interval); //divide by 1 hour
       var startTime = event.start.getTime();
       var events = [];
