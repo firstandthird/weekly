@@ -833,6 +833,27 @@ suite('weekly', function() {
       assert.equal(count, 1);
 
     });
+
+    test('set split interval with setSplitInterval method', function() {
+
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        autoSplit: true,
+        currentDate: date
+      });
+
+      el.weekly('setSplitInterval', 60);
+
+      el.weekly('addEvent', {
+        title: 'Test Event',
+        start: new Date(2013, 4, 13, 9, 0),
+        end: new Date(2013, 4, 13, 12, 0)
+      });
+
+      assert.equal(el.find('.weekly-event').length, 3);
+
+    });
   });
 
   suite('triggered events', function() {
