@@ -1,6 +1,6 @@
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.36
+ * v0.0.37
  * https://github.com/jgallen23/weekly
  * copyright Greg Allen 2013
  * MIT License
@@ -588,6 +588,10 @@
 
     setAutoSplit: function(val) {
       this.autoSplit = val;
+    },
+
+    setSplitInterval: function(val) {
+      this.autoSplitInterval = val;
     },
 
     splitEvent: function(event) {
