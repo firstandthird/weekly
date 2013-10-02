@@ -725,7 +725,7 @@ suite('weekly', function() {
 
       var el = $('.weekly').weekly({
         autoRender: false,
-        interval: 60
+        autoSplitInterval: 60
       });
 
       var span = el.weekly('splitEvent', event);
@@ -752,7 +752,7 @@ suite('weekly', function() {
       var el = $('.weekly').weekly({
         autoSplit: true,
         currentDate: date,
-        interval: 60
+        autoSplitInterval: 60
       });
 
       el.weekly('addEvent', {
@@ -770,7 +770,7 @@ suite('weekly', function() {
       var el = $('.weekly').weekly({
         autoSplit: true,
         currentDate: date,
-        interval: 30
+        autoSplitInterval: 30
       });
 
       el.weekly('addEvent', {
@@ -799,7 +799,7 @@ suite('weekly', function() {
       var el = $('.weekly').weekly({
         autoSplit: true,
         currentDate: date,
-        interval: 60
+        autoSplitInterval: 60
       });
 
       el.weekly('addEvent', events);
@@ -814,7 +814,7 @@ suite('weekly', function() {
       var el = $('.weekly').weekly({
         autoSplit: true,
         currentDate: date,
-        interval: 60
+        autoSplitInterval: 60
       });
 
       var count = 0;
