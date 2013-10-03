@@ -10,6 +10,7 @@ lib:
 test:
   files:
     - '<%= jshint.test %>'
+    - 'test/index.html'
   tasks:
     - 'mocha'
 example:
@@ -20,5 +21,4 @@ build:
     - 'bower.json'
     - 'Gruntfile.js'
     - 'grunt/*.yaml'
-    - 'test/index.html'
   tasks: 'default'
