@@ -1,0 +1,6 @@
+dist:
+  src: 'lib/template.html'
+  dest: 'dist/<%= name %>.js'
+full:
+  src: 'lib/template.html'
+  dest: 'dist/<%= name %>.full.js'

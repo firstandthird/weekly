@@ -1,0 +1,8 @@
+options:
+  banner: '<%= meta.banner %>'
+dist:
+  src: 'dist/<%= name %>.js'
+  dest: 'dist/<%= name %>.min.js'
+full:
+  src: 'dist/<%= name %>.full.js'
+  dest: 'dist/<%= name %>.full.min.js'

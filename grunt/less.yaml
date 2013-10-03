@@ -1,0 +1,3 @@
+default:
+  src: 'less/theme1.less'
+  dest: 'dist/<%= name %>.css'
