@@ -4,9 +4,11 @@ lib:
   files:
     - '<%= jshint.lib %>'
   tasks:
-    - 'script-dist'
-    - 'mocha'
-    - 'notify:generic'
+    - 'default'
+    #- 'script-dist'
+    #- 'script-full'
+    #- 'mocha'
+    #- 'notify:generic'
 test:
   files:
     - '<%= jshint.test %>'
