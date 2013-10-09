@@ -21,6 +21,7 @@
       <button data-action="clear">Clear</button>
       <button data-action="add">Add Event</button>
       <button data-action="autoSplit">Toggle Autosplit</button>
+      <button data-action="readonly">Toggle Readonly</button>
     </div>
 
     <script src="../bower_components/jquery/jquery.js"></script>
@@ -94,6 +95,12 @@
       $('[data-action=autoSplit]').on('click', function() {
         autoSplit = !autoSplit;
         w.weekly('setAutoSplit', autoSplit);
+      });
+
+      var readonly = false;
+      $('[data-action=readonly]').on('click', function() {
+        readonly = !readonly;
+        w.weekly('setReadOnly', readonly);
       });
 
       $('#timezones')
