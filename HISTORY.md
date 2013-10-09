@@ -1,4 +1,12 @@
 
+0.0.38 / 2013-10-08 
+==================
+
+  * added setReadOnly method
+  * updated grunt to just run default on watch
+  * few changes to the build scripts
+  * updated to use load-grunt-config
+
 0.0.37 / 2013-10-02 
 ==================
 
