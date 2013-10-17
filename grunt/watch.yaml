@@ -7,6 +7,7 @@ lib:
     - 'jshint'
     - 'script-dist'
     - 'script-full'
+    - 'template2js'
     - 'mocha'
     - 'notify:generic'
 test:
