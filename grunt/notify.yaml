@@ -1,3 +1,9 @@
 generic:
   options:
-    message: '<%= name %> build complete'
+    message: 'Build complete'
+watch:
+  options:
+    message: 'Watch started'
+tests:
+  options:
+    message: 'Tests complete'

@@ -2,9 +2,9 @@
   "name": "weekly",
   "description": "jQuery Weekly Calendar Plugin",
   "version": "0.0.37",
-  "homepage": "https://github.com/jgallen23/weekly",
+  "homepage": "https://github.com/firstandthird/weekly",
   "license": "MIT",
-  "copyright": "Greg Allen",
+  "copyright": "First + Third",
   "main": "dist/weekly.js",
   "dependencies": {
     "jquery": "1.*",
@@ -24,6 +24,7 @@
     "lib",
     "Gruntfile.js",
     "package.json",
+    "grunt",
     "tasks"
   ]
 }
