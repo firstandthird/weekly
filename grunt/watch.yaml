@@ -6,6 +6,7 @@ lib:
   tasks:
     - 'jshint'
     - 'script-dist'
+    - 'script-full'
     - 'mocha'
     - 'notify:generic'
 test:
