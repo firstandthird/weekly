@@ -1,14 +1,9 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.38
-<<<<<<< HEAD
+ * v0.0.39
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2013
-=======
- * https://github.com/jgallen23/weekly
- * copyright Greg Allen 2013
->>>>>>> 72dda116aa26a00174818bc4e1800ec85fc2f2ca
  * MIT License
 */
 /**
