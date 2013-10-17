@@ -470,6 +470,7 @@ suite('weekly', function() {
 
       var el = $('.weekly').weekly({
         currentDate: date,
+        allowPastEventCreation: true,
         readOnly: true
       });
 
@@ -477,7 +478,24 @@ suite('weekly', function() {
 
       firstDate.click();
 
-      assert.equal(firstDate.find('.weekly-event-pending').length, 0);
+      assert.equal(firstDate.find('.weekly-event').length, 0);
+    });
+
+    test('set readonly from method', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        allowPastEventCreation: true
+      });
+
+      el.weekly('setReadOnly', true);
+
+      var firstDate = el.find('.weekly-grid .weekly-day').first();
+
+      firstDate.click();
+
+      assert.equal(firstDate.find('.weekly-event').length, 0);
     });
 
     test('don\'t render event outside of time range', function() {

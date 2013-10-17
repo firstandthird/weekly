@@ -1,5 +1,5 @@
 
-0.0.38 / 2013-10-17 
+0.0.39 / 2013-10-17 
 ==================
 
   * remove auto split code.  fixes #6
@@ -7,6 +7,12 @@
   * if 30 min event and has title, don't show time. fixes #7
   * build full version on watch
   * updated build scripts
+
+0.0.38 / 2013-10-08 
+==================
+
+  * added setReadOnly method
+  * updated grunt to just run default on watch
   * few changes to the build scripts
   * updated to use load-grunt-config
 
