@@ -20,7 +20,6 @@
       <select id="timezones"></select>
       <button data-action="clear">Clear</button>
       <button data-action="add">Add Event</button>
-      <button data-action="autoSplit">Toggle Autosplit</button>
     </div>
 
     <script src="../bower_components/jquery/jquery.js"></script>
@@ -65,10 +64,8 @@
           //startTime: 1,
           //endTime: 12
           //allowPreviousWeeks: false
-          //autoSplit: true,
           //enableResize: false
           //interval: 60,
-          autoSplitInterval: 90,
           todayFirst: true
         })
         .on('addEvent', function(e, evnt) {
@@ -88,12 +85,6 @@
       });
       $('[data-action=add]').on('click', function() {
         w.weekly('addEvent', event5);
-      });
-
-      var autoSplit = false;
-      $('[data-action=autoSplit]').on('click', function() {
-        autoSplit = !autoSplit;
-        w.weekly('setAutoSplit', autoSplit);
       });
 
       $('#timezones')
