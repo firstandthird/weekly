@@ -577,6 +577,59 @@ suite('weekly', function() {
 
     });
 
+    test('if >30 min event, don\'t show time', function() {
+
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      el.weekly('addEvent', {
+        title: 'Test Event',
+        start: new Date(2013, 4, 13, 9, 0),
+        end: new Date(2013, 4, 13, 10, 0)
+      });
+
+      assert.equal(el.find('.weekly-event').length, 1);
+      assert.equal(el.find('.weekly-event-time').css('display'), 'block');
+    });
+
+    test('if 30 min event, don\'t show time', function() {
+
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      el.weekly('addEvent', {
+        title: 'Test Event',
+        start: new Date(2013, 4, 13, 9, 0),
+        end: new Date(2013, 4, 13, 9, 30)
+      });
+
+      assert.equal(el.find('.weekly-event').length, 1);
+      assert.equal(el.find('.weekly-event-time').css('display'), 'none');
+    });
+
+    test('if 30 min event and no title, show time', function() {
+
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      el.weekly('addEvent', {
+        start: new Date(2013, 4, 13, 9, 0),
+        end: new Date(2013, 4, 13, 9, 30)
+      });
+
+      assert.equal(el.find('.weekly-event').length, 1);
+      assert.equal(el.find('.weekly-event-time').css('display'), 'block');
+    });
+
   });
 
   suite('modify event', function() {
