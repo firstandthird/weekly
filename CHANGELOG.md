@@ -1,4 +1,15 @@
 
+0.0.38 / 2013-10-17 
+==================
+
+  * remove auto split code.  fixes #6
+  * added template2js to watch
+  * if 30 min event and has title, don't show time. fixes #7
+  * build full version on watch
+  * updated build scripts
+  * few changes to the build scripts
+  * updated to use load-grunt-config
+
 0.0.37 / 2013-10-02 
 ==================
 

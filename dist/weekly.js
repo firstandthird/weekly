@@ -1,8 +1,9 @@
+
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.37
- * https://github.com/jgallen23/weekly
- * copyright Greg Allen 2013
+ * v0.0.38
+ * https://github.com/firstandthird/weekly
+ * copyright First + Third 2013
  * MIT License
 */
 /**
@@ -192,8 +193,6 @@
       readOnly: false,
       enableResize: true,
       enableDelete: true,
-      autoSplit: false,
-      autoSplitInterval: 30,
       showToday: true,
       allowPreviousWeeks: true,
       allowPastEventCreation: false,
@@ -549,8 +548,14 @@
 
       selectedDay.append(eventTemplate);
 
+      var diff = end.getTime() - start.getTime();
+
+      if (event.title && diff <= 1000*60*30) {
+        eventTemplate.find('.weekly-event-time').hide();
+      }
+
       if (this.fitText) {
-        selectedDay.find(".weekly-event-title").fitText(1, {
+        selectedDay.find('.weekly-event-title').fitText(1, {
           'minFontSize': this.fitTextMin,
           'maxFontSize': this.fitTextMax
         });
@@ -586,29 +591,6 @@
       return percent;
     },
 
-    setAutoSplit: function(val) {
-      this.autoSplit = val;
-    },
-
-    setSplitInterval: function(val) {
-      this.autoSplitInterval = val;
-    },
-
-    splitEvent: function(event) {
-      var diff = event.end.getTime() - event.start.getTime();
-      var interval = this.autoSplitInterval * 60 * 1000;
-      var count = Math.ceil(diff / interval); //divide by 1 hour
-      var startTime = event.start.getTime();
-      var events = [];
-      for (var i = 0; i < count; i++) {
-        var newEvent = $.extend({}, event); //clone event
-        newEvent.start = new Date(startTime + (interval * i));
-        newEvent.end = new Date(startTime + (interval * (i+1)));
-        events.push(newEvent);
-      }
-      return events;
-    },
-
     addEvent: function(event) {
       if(event instanceof Array) {
         for(var i = 0, c = event.length; i < c; i++) {
@@ -617,32 +599,21 @@
         return;
       }
 
-      if (this.autoSplit) {
-        event = this.splitEvent(event);
-      } else {
-        event = [event];
+      event = $.extend({
+        title: '',
+        description: '',
+        start: null,
+        end: null
+      }, event);
+
+      event._index = this.events.length;
+
+      if (event.start.getHours() >= this.startTime && event.end.getHours() <= (this.endTime + 12)) {
+        this.renderEvent(event);
       }
+      this.events.push(event);
 
-      for (var x = 0, y = event.length; x < y; x++) {
-        var e = event[x];
-
-        e = $.extend({
-          title: '',
-          description: '',
-          start: null,
-          end: null
-        }, e);
-
-        e._index = this.events.length;
-
-        if (e.start.getHours() >= this.startTime && e.end.getHours() <= (this.endTime + 12)) {
-          this.renderEvent(e);
-        }
-        this.events.push(e);
-      }
-
-      var eventData = (this.autoSplit) ? event : event[0];
-      this.emit('addEvent', [eventData]);
+      this.emit('addEvent', [event]);
     },
 
     removeEvent: function(e) {
