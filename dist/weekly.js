@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.39
+ * v0.0.40
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2013
  * MIT License
@@ -213,11 +213,6 @@
       this.events = [];
 
       this.oldDate = this.currentDate;
-
-      if (this.readOnly) {
-        this.enableResize = false;
-        this.enableDelete = false;
-      }
 
       if (this.todayFirst) {
         this.dayOffset = this.currentDate.getDay();
@@ -538,11 +533,11 @@
         '<div class="weekly-dragger"></div>'
       ].join(''));
 
-      if (!this.enableResize) {
+      if (this.readOnly || !this.enableResize) {
         eventTemplate.find('.weekly-dragger').remove();
       }
 
-      if (!this.enableDelete) {
+      if (this.readOnly || !this.enableDelete) {
         eventTemplate.find('.weekly-delete').remove();
       }
 
@@ -660,8 +655,6 @@
 
     setReadOnly: function(val) {
       this.readOnly = val;
-      this.enableResize = !val;
-      this.enableDelete = !val;
       this.update();
       return this;
 

@@ -1,4 +1,10 @@
 
+0.0.40 / 2013-10-21 
+==================
+
+  * don't change resize and delete on change readonly
+  * split up scripts in test/index.html for code coverage
+
 0.0.39 / 2013-10-17 
 ==================
 
