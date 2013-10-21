@@ -498,6 +498,39 @@ suite('weekly', function() {
       assert.equal(firstDate.find('.weekly-event').length, 0);
     });
 
+    test.skip('if readonly, no delete or resize', function() {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        allowPastEventCreation: true
+      });
+
+      el.weekly('addEvent', {
+        title: 'Test Event',
+        start: new Date(2013, 4, 12, 9, 05),
+        end: new Date(2013, 4, 12, 9, 45)
+      });
+
+      var firstDate = el.find('.weekly-grid .weekly-day').first();
+
+      assert.equal(firstDate.find('.weekly-event').length, 1);
+      assert.equal(firstDate.find('.weekly-dragger').length, 1);
+      assert.equal(firstDate.find('.weekly-delete').length, 1);
+
+      el.weekly('setReadOnly', true);
+
+      assert.equal(firstDate.find('.weekly-event').length, 1);
+      assert.equal(firstDate.find('.weekly-dragger').length, 0);
+      assert.equal(firstDate.find('.weekly-delete').length, 0);
+
+      el.weekly('setReadOnly', false);
+
+      assert.equal(firstDate.find('.weekly-event').length, 1);
+      assert.equal(firstDate.find('.weekly-dragger').length, 1);
+      assert.equal(firstDate.find('.weekly-delete').length, 1);
+    });
+
     test('don\'t render event outside of time range', function() {
 
       var date = new Date(2013, 4, 15);
