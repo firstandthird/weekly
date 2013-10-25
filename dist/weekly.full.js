@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.40
+ * v0.0.41
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2013
  * MIT License
@@ -330,7 +330,7 @@
     return format.replace(/%d|%D|%j|%l|%S|%w|%F|%m|%M|%n|%Y|%y|%a|%A|%g|%G|%h|%H|%i|%s|%u|%e/g, function(match) {
       switch(match) {
         case '%d':
-          return ("0" + time.getDate()).substr(-2,2);
+          return ("0" + time.getDate()).slice(-2);
         case '%D':
           return days[time.getDay()].substr(0,3);
         case '%j':
@@ -353,7 +353,7 @@
         case '%F':
           return months[time.getMonth()];
         case '%m':
-          return ("0" + (time.getMonth() + 1)).substr(-2,2);
+          return ("0" + (time.getMonth() + 1)).slice(-2);
         case '%M':
           return months[time.getMonth()].substr(0,3);
         case '%n':
@@ -361,7 +361,7 @@
         case '%Y':
           return time.getFullYear();
         case '%y':
-          return time.getFullYear().toString().substr(-2,2);
+          return time.getFullYear().toString().slice(-2);
         case '%a':
           return time.getHours() > 11 ? 'pm' : 'am';
         case '%A':
@@ -371,13 +371,13 @@
         case '%G':
         return time.getHours();
         case '%h':
-          return ("0" + (time.getHours() > 12 ? time.getHours() -12 : time.getHours())).substr(-2,2);
+          return ("0" + (time.getHours() > 12 ? time.getHours() -12 : time.getHours())).slice(-2);
         case '%H':
-          return ("0" + time.getHours()).substr(-2,2);
+          return ("0" + time.getHours()).slice(-2);
         case '%i':
-          return ("0" + time.getMinutes()).substr(-2,2);
+          return ("0" + time.getMinutes()).slice(-2);
         case '%s':
-          return ("0" + time.getSeconds()).substr(-2,2);
+          return ("0" + time.getSeconds()).slice(-2);
         case '%u':
           return time.getMilliseconds();
         case '%e':
@@ -394,6 +394,7 @@
   w.TimeFormat = TimeFormat;
 
 })(window);
+
 /**
  * Date helpers
  */

@@ -1,4 +1,10 @@
 
+0.0.41 / 2013-10-25 
+==================
+
+  * IE8 support for time format lib
+  * added other tests to mocha
+
 0.0.40 / 2013-10-21 
 ==================
 
