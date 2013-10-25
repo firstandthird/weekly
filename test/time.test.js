@@ -6,12 +6,20 @@ suite('TimeFormat', function() {
       var date = new Date(2013, 4, 8);
 
       assert.equal(TimeFormat('%d %j %D %l', date), '08 8 Wed Wednesday');
+
+      var date2 = new Date(2013, 4, 10);
+
+      assert.equal(TimeFormat('%d %j %D %l', date2), '10 10 Fri Friday');
     });
 
     test('month', function() {
       var date = new Date(2013, 3, 15);
 
       assert.equal(TimeFormat('%n %F %m %M', date), '3 April 04 Apr');
+
+      var date2 = new Date(2013, 11, 15);
+
+      assert.equal(TimeFormat('%n %F %m %M', date2), '11 December 12 Dec');
     });
 
     test('week', function() {
