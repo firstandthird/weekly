@@ -5,5 +5,3 @@ options:
 all:
   src: 
     - 'test/index.html'
-    - 'test/time.html'
-    - 'test/date.html'
