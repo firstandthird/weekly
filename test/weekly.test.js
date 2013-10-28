@@ -817,6 +817,62 @@ suite('weekly', function() {
       el.weekly('prevWeek');
 
     });
+
+    suite('#jumpTo', function() {
+      test('jumpTo week', function(done) {
+
+        var date = new Date(2013, 5, 5);
+
+        var el = $('.weekly').weekly({
+          currentDate: date
+        });
+
+        el.on('weekChange', function(ev, data) {
+          assert.equal(data.dates[0].toDateString(), 'Sun Oct 27 2013');
+          done();
+        });
+
+        el.weekly('jumpTo', new Date(2013, 9, 28));
+
+      });
+
+      test('jumpTo day', function(done) {
+
+        var date = new Date(2013, 5, 5);
+
+        var el = $('.weekly').weekly({
+          currentDate: date,
+          todayFirst: true
+        });
+
+        el.on('weekChange', function(ev, data) {
+          assert.equal(data.dates[0].toDateString(), 'Mon Oct 28 2013');
+          done();
+        });
+
+        el.weekly('jumpTo', new Date(2013, 9, 28));
+
+      });
+
+      test('jumpTo christmas', function(done) {
+
+        var date = new Date(2013, 9, 27);
+
+        var el = $('.weekly').weekly({
+          //currentDate: date,
+          todayFirst: true
+        });
+
+        el.on('weekChange', function(ev, data) {
+          assert.equal(data.dates[0].toDateString(), 'Wed Dec 25 2013');
+          done();
+        });
+
+        el.weekly('jumpTo', new Date(2013, 11, 25));
+
+      });
+    });
+
   });
 
   suite('triggered events', function() {

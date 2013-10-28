@@ -218,4 +218,68 @@ suite('dates', function() {
       assert.equal(false, dateUtils.isPastDate(future));
     });
   });
+
+  suite('getWeekOffset', function() {
+
+    test('offset with same week', function() {
+
+      var dateA = new Date(2013, 10, 28);
+      var dateB = new Date(2013, 10, 30);
+
+      var offset = dateUtils.getWeekOffset(dateA, dateB);
+
+      assert.equal(offset, 0);
+
+    });
+
+    test('offset with different months', function() {
+
+      var dateA = new Date(2013, 10, 28);
+      var dateB = new Date(2013, 11, 7);
+
+      var offset = dateUtils.getWeekOffset(dateA, dateB);
+
+      assert.equal(offset, 1);
+
+    });
+
+    test('offset entire year', function() {
+
+      var dateA = new Date(2013, 0, 1);
+      var dateB = new Date(2013, 11, 31);
+
+      var offset = dateUtils.getWeekOffset(dateA, dateB);
+
+      assert.equal(offset, 52);
+
+    });
+
+    test('offset with times', function() {
+
+      var dateA = new Date(2013, 9, 27, 19, 27);
+      var dateB = new Date(2013, 10, 6);
+
+      var offset = dateUtils.getWeekOffset(dateA, dateB);
+
+      assert.equal(offset, 1);
+
+    });
+
+  });
+
+  suite('getDateWithoutTime', function() {
+
+    test('basic', function() {
+
+      var date = new Date(2013, 9, 27, 9, 45);
+      var out = dateUtils.getDateWithoutTime(date);
+
+      assert.equal(date.getHours(), 9);
+      assert.equal(date.getMinutes(), 45);
+      assert.equal(out.getHours(), 0);
+      assert.equal(out.getMinutes(), 0);
+
+    });
+
+  });
 });

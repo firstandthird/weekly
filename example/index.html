@@ -21,6 +21,7 @@
       <button data-action="clear">Clear</button>
       <button data-action="add">Add Event</button>
       <button data-action="readonly">Toggle Readonly</button>
+      <button data-action="jumpChristmas">Jump to Christmas</button>
     </div>
 
     <script src="../bower_components/jquery/jquery.js"></script>
@@ -78,6 +79,9 @@
         .on('clearEvents', function() {
           console.log('events cleared');
         })
+        .on('weekChange', function(e, data) {
+          console.log('change', data);
+        })
         .weekly('addEvent', [event1, event2, event3, event4]);
 
 
@@ -92,6 +96,10 @@
       $('[data-action=readonly]').on('click', function() {
         readonly = !readonly;
         w.weekly('setReadOnly', readonly);
+      });
+
+      $('[data-action=jumpChristmas]').on('click', function() {
+        w.weekly('jumpTo', new Date(2013, 11, 25));
       });
 
       $('#timezones')
