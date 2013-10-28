@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.42
+ * v0.0.43
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2013
  * MIT License
@@ -503,7 +503,6 @@
       this.weekOffset = dateUtils.getWeekOffset(this.currentDate, date);
 
       var data = this.update();
-      console.log(this.currentDate, this.weekOffset, data, this.dayOffset);
       this.emit('weekChange', data);
 
       return this;
