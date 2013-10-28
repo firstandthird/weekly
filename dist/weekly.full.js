@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.41
+ * v0.0.42
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2013
  * MIT License
@@ -478,6 +478,15 @@
     isPastDate: function(past) {
       var pastParts = past.split('-');
       return (TimeFormat('%Y%m%d', new Date(pastParts[0], pastParts[1], pastParts[2])) < TimeFormat('%Y%m%d', new Date()));
+    },
+    getWeekOffset: function(dateA, dateB) {
+      var weekA = this.getFirstDayOfWeek(this.getDateWithoutTime(dateA));
+      var weekB = this.getFirstDayOfWeek(this.getDateWithoutTime(dateB));
+      var diff = Math.floor((weekB.getTime() - weekA.getTime()) / (1000*60*60*24*7));
+      return diff;
+    },
+    getDateWithoutTime: function(date) {
+      return new Date(date.getFullYear(), date.getMonth(), date.getDate());
     }
   };
 
@@ -791,6 +800,21 @@
 
     jumpToday: function() {
       this.changeDate(0);
+    },
+
+    jumpTo: function(date) {
+
+      if (this.todayFirst !== false) {
+        this.dayOffset = date.getDay();
+      }
+      this.weekOffset = dateUtils.getWeekOffset(this.currentDate, date);
+
+      var data = this.update();
+      console.log(this.currentDate, this.weekOffset, data, this.dayOffset);
+      this.emit('weekChange', data);
+
+      return this;
+
     },
 
     changeDate: function(offsetWeek) {
