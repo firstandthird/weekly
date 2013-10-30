@@ -681,6 +681,36 @@ suite('weekly', function() {
       assert.equal(el.find('.weekly-event-time').css('display'), 'block');
     });
 
+    test.skip('if click right on hour line, event should still be one interval high', function() {
+
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        allowPastEventCreation: true,
+        interval: 30
+      });
+
+      var firstDate = el.find('.weekly-grid .weekly-day').first();
+
+      el.one('addEvent', function(event, data) {
+        setTimeout(function(){
+          assert.equal(firstDate.find('.weekly-event').outerHeight(), 1);
+          done();
+        }, 100);
+      });
+
+      firstDate.simulate('mousedown');
+
+      firstDate.simulate('mousemove', {
+        handle: 'corner',
+        dx: 0,
+        dy: 0
+      });
+
+      firstDate.simulate('mouseup');
+    });
+
   });
 
   suite('modify event', function() {
