@@ -1,4 +1,9 @@
 
+0.0.44 / 2013-11-05 
+==================
+
+  * Fix for clicking right on an hour divider line creating weird events.
+
 0.0.43 / 2013-10-28 
 ==================
 

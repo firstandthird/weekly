@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.43
+ * v0.0.44
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2013
  * MIT License
@@ -432,6 +432,11 @@
 
       var tempStart = Math.floor(mouseOffsetTop / intervalHeight) * intervalHeight;
       var tempEnd = Math.ceil(mouseOffsetTop / intervalHeight) * intervalHeight;
+
+      // Ensure end is at least intervalHeight greater than start
+      if(tempStart === tempEnd) {
+        tempEnd += intervalHeight;
+      }
 
       if(this.pendingEventStart === null) {
         this.pendingEventStart = tempStart;
