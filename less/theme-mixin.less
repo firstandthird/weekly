@@ -11,6 +11,7 @@
   @eventSpacing: 1px;
   @scrollerHeight: 400px;
   @halfHourBorder: #F5F7F7;
+  @weekendColor: rgba(236, 240, 241, .4);
   ) {
 
   .weekly-layout();
@@ -91,6 +92,10 @@
 
   .weekly-today {
     background-color: @today;
+  }
+
+  .weekly-weekend {
+    background-color: @weekendColor;
   }
   
   .weekly-time-navigation {

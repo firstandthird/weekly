@@ -1029,4 +1029,12 @@ suite('weekly', function() {
       assert.equal(firstDay, '2013-7-23');
     });
   });
+
+  suite('weekends', function(){
+    test('weekends should have a class', function(){
+      var el = $('.weekly').weekly();
+
+      assert.equal($('.weekly-weekend').length, 2);
+    });
+  });
 });
