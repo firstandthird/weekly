@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.44
+ * v0.0.45
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2013
  * MIT License
@@ -571,6 +571,7 @@
       this.registerModifyEvent();
 
       this.highlightToday();
+      this.highlightWeekend();
 
       if(!this.showToday || !this.weekOffset) {
         this.el.find(".weekly-change-today-button").css('display', 'none');
@@ -604,6 +605,18 @@
       var today = this.currentDate;
 
       this.el.find('.weekly-grid [data-date="' + TimeFormat('%Y-%n-%j', today) + '"]').addClass('weekly-today');
+    },
+
+    highlightWeekend: function() {
+      this.el.find('.weekly-grid .weekly-day').each(function(){
+        var $this = $(this);
+        var parsedDate = $this.data('date').split('-');
+        var weekDay = new Date(parsedDate[0], parsedDate[1], parsedDate[2]);
+
+        if(weekDay.getDay()%6===0) {
+          $this.addClass('weekly-weekend');
+        }
+      });
     },
 
     registerClickToCreate: function() {

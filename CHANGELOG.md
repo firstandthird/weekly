@@ -1,4 +1,10 @@
 
+0.0.45 / 2013-11-07 
+==================
+
+  * Merge pull request #11 from firstandthird/feature/class-weekend
+  * Add class to weekends.
+
 0.0.44 / 2013-11-05 
 ==================
 
