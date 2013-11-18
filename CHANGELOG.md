@@ -1,4 +1,10 @@
 
+0.0.46 / 2013-11-18 
+==================
+
+ * Merge pull request #13 from firstandthird/feature/12-highlight-day-label
+ * Highlights day label.
+
 0.0.45 / 2013-11-07 
 ==================
 

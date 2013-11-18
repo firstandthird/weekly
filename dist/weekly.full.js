@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.45
+ * v0.0.46
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2013
  * MIT License
@@ -603,8 +603,9 @@
 
     highlightToday: function() {
       var today = this.currentDate;
+      var dateString = TimeFormat('%Y-%n-%j', today);
 
-      this.el.find('.weekly-grid [data-date="' + TimeFormat('%Y-%n-%j', today) + '"]').addClass('weekly-today');
+      this.el.find('.weekly-grid [data-date="' + dateString + '"], .weekly-days [data-date="' + dateString + '"]').addClass('weekly-today');
     },
 
     highlightWeekend: function() {
