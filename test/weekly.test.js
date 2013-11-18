@@ -22,7 +22,8 @@ suite('weekly', function() {
       var el = $('.weekly').weekly();
       var today = new Date();
 
-      assert.equal(el.find('.weekly-today').length, 1);
+      assert.equal(el.find('.weekly-grid .weekly-today').length, 1);
+      assert.equal(el.find('.weekly-days .weekly-today').length, 1);
     });
 
     test('weekSpan updates on prev', function() {
