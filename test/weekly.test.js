@@ -1,3 +1,13 @@
+Date.prototype.stdTimezoneOffset = function() {
+    var jan = new Date(this.getFullYear(), 0, 1);
+    var jul = new Date(this.getFullYear(), 6, 1);
+    return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+};
+
+Date.prototype.dst = function() {
+    return this.getTimezoneOffset() < this.stdTimezoneOffset();
+};
+
 
 suite('weekly', function() {
 
@@ -595,7 +605,9 @@ suite('weekly', function() {
         currentDate: date
       });
 
-      el.weekly('setTimezoneOffset', -5);
+      var offset = (date.dst()) ? -6 : -5;
+
+      el.weekly('setTimezoneOffset', offset);
 
       el.weekly('addEvent', {
         title: 'Test Event',
@@ -616,7 +628,9 @@ suite('weekly', function() {
         allowPastEventCreation: true
       });
 
-      el.weekly('setTimezoneOffset', -2);
+      var offset = (date.dst()) ? -3 : -2;
+
+      el.weekly('setTimezoneOffset', offset);
 
       var timeBlock = el.find('.weekly-grid .weekly-day').first();
 
@@ -948,7 +962,9 @@ suite('weekly', function() {
         end: new Date(2013, 4, 13, 2, 0)
       });
 
-      el.weekly('setTimezoneOffset', +1);
+      var offset = (date.dst()) ? 0 : 1;
+
+      el.weekly('setTimezoneOffset', offset);
 
       assert.equal(9, el.find('.weekly-event').data('offset-start').getHours());
       assert.equal(10, el.find('.weekly-event').data('offset-end').getHours());
@@ -967,7 +983,10 @@ suite('weekly', function() {
         end: new Date(2013, 4, 13, 9, 0)
       });
 
-      el.weekly('setTimezoneOffset', -5);
+
+      var offset = (date.dst()) ? -6 : -5;
+
+      el.weekly('setTimezoneOffset', offset);
 
       assert.equal(10, el.find('.weekly-event').data('offset-start').getHours());
       assert.equal(11, el.find('.weekly-event').data('offset-end').getHours());
