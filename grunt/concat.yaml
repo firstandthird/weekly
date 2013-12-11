@@ -3,13 +3,11 @@ options:
 dist:
   src:
     - 'lib/dates.js'
-    - 'lib/time.js'
     - 'lib/<%= name %>.js'
   dest: 'dist/<%= name %>.js'
 full:
   src:
     - 'dist/_bower.js'
-    - 'lib/time.js'
     - 'lib/dates.js'
     - 'lib/<%= name %>.js'
   dest: 'dist/<%= name %>.full.js'
