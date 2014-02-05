@@ -3,12 +3,12 @@
  * weekly - jQuery Weekly Calendar Plugin
  * v0.0.46
  * https://github.com/firstandthird/weekly
- * copyright First + Third 2013
+ * copyright First + Third 2014
  * MIT License
 */
 /*global jQuery */
 /*!
-* FitText.js 1.1
+* FitText.js 1.2
 *
 * Copyright 2011, Dave Rupert http://daverupert.com
 * Released under the WTFPL license
@@ -51,9 +51,9 @@
 })( jQuery );
 /*!
  * fidel - a ui view controller
- * v2.2.3
+ * v2.2.5
  * https://github.com/jgallen23/fidel
- * copyright Greg Allen 2013
+ * copyright Greg Allen 2014
  * MIT License
 */
 (function(w, $) {
@@ -65,6 +65,7 @@
   Fidel.prototype.__init = function(options) {
     $.extend(this, this.obj);
     this.id = _id++;
+    this.namespace = '.fidel' + this.id;
     this.obj.defaults = this.obj.defaults || {};
     $.extend(this, this.obj.defaults, options);
     $('body').trigger('FidelPreInit', this);
@@ -79,8 +80,8 @@
   Fidel.prototype.setElement = function(el) {
     this.el = el;
     this.getElements();
-    this.delegateEvents();
     this.dataElements();
+    this.delegateEvents();
     this.delegateActions();
   };
 
@@ -112,7 +113,6 @@
   };
 
   Fidel.prototype.delegateEvents = function() {
-    var self = this;
     if (!this.events)
       return;
     for (var key in this.events) {
@@ -123,12 +123,12 @@
       var method = this.proxy(this[methodName]);
 
       if (selector === '') {
-        this.el.on(eventName, method);
+        this.el.on(eventName + this.namespace, method);
       } else {
         if (this[selector] && typeof this[selector] != 'function') {
-          this[selector].on(eventName, method);
+          this[selector].on(eventName + this.namespace, method);
         } else {
-          this.el.on(eventName, selector, method);
+          this.el.on(eventName + this.namespace, selector, method);
         }
       }
     }
@@ -136,7 +136,7 @@
 
   Fidel.prototype.delegateActions = function() {
     var self = this;
-    self.el.on('click', '[data-action]', function(e) {
+    self.el.on('click'+this.namespace, '[data-action]', function(e) {
       var el = $(this);
       var action = el.attr('data-action');
       if (self[action]) {
@@ -146,15 +146,15 @@
   };
 
   Fidel.prototype.on = function(eventName, cb) {
-    this.el.on(eventName+'.fidel'+this.id, cb);
+    this.el.on(eventName+this.namespace, cb);
   };
 
   Fidel.prototype.one = function(eventName, cb) {
-    this.el.one(eventName+'.fidel'+this.id, cb);
+    this.el.one(eventName+this.namespace, cb);
   };
 
   Fidel.prototype.emit = function(eventName, data, namespaced) {
-    var ns = (namespaced) ? '.fidel'+this.id : '';
+    var ns = (namespaced) ? this.namespace : '';
     this.el.trigger(eventName+ns, data);
   };
 
@@ -178,7 +178,7 @@
   Fidel.prototype.destroy = function() {
     this.el.empty();
     this.emit('destroy');
-    this.el.unbind('.fidel'+this.id);
+    this.el.unbind(this.namespace);
   };
 
   Fidel.declare = function(obj) {
@@ -298,7 +298,7 @@
 
 /*!
  * fidel-template - A fidel plugin to render a clientside template
- * v0.2.1
+ * v0.3.0
  * https://github.com/jgallen23/fidel-template
  * copyright Greg Allen 2013
  * MIT License
@@ -307,9 +307,10 @@
 (function(Fidel) {
   Fidel.template = template.noConflict();
 
-  Fidel.prototype.render = function(data) {
+  Fidel.prototype.render = function(data, el) {
     var tmpl = (this.template) ? this.template : $('#'+this.templateId).html();
-    this.el.html(Fidel.template(tmpl, data));
+    el = el || this.el;
+    el.html(Fidel.template(tmpl, data));
   };
 })(window.Fidel);
 
@@ -500,6 +501,7 @@
       startTime: 0,
       endTime: 12,
       startTimeScrollOffset: '8:00 AM',
+      scrollFirstEvent: false, // '2014-02-05' or 'today' or 'everyday' or Date() or false
       weekOffset: 0,
       currentDate: new Date(),
       autoRender: true,
@@ -551,6 +553,8 @@
 
     update: function() {
 
+      this.firstEvent = null;
+
       var data = {
         timef: TimeFormat,
         getWeekSpan: dateUtils.getWeekSpan,
@@ -591,9 +595,10 @@
         });
       }
 
-      if (this.startTimeScrollOffset) {
-        var top = $(window).scrollTop();
-        var el = this.el.find('[data-time="'+this.startTimeScrollOffset+'"]');
+      if(this.startTimeScrollOffset && !this.first) {
+        var top = $(window).scrollTop(),
+            el = this.el.find('[data-time="'+this.startTimeScrollOffset+'"]');
+
         el[0].scrollIntoView();
         $(window).scrollTop(top);
       }
@@ -911,6 +916,8 @@
           'maxFontSize': this.fitTextMax
         });
       }
+
+      this.updateEventScroll(startDate);
     },
 
     toFraction: function(time) {
@@ -1008,6 +1015,54 @@
       this.update();
       return this;
 
+    },
+
+    setScrollFirstEvent: function(val) {
+      this.scrollFirstEvent = val;
+      this.update();
+      return this;
+    },
+
+    updateEventScroll: function(startDate) {
+      clearTimeout(this.scrollTimer);
+
+      this.scrollTimer = setTimeout(this.proxy(function(){
+        if(this.scrollFirstEvent) {
+          var top = $(window).scrollTop(),
+              scrollDate = this.scrollFirstEvent,
+              el;
+
+          if(this.scrollFirstEvent === 'today') {
+            scrollDate = TimeFormat('%Y-%n-%j', new Date());
+          } else if(this.scrollFirstEvent instanceof Date) {
+            scrollDate = TimeFormat('%Y-%n-%j', this.scrollFirstEvent);
+          } else if(this.scrollFirstEvent !== 'everyday') {
+            var parsedDate = this.scrollFirstEvent.split('-');
+            scrollDate = TimeFormat('%Y-%n-%j', new Date(parsedDate[0], parsedDate[1] - 1, parsedDate[2]));
+          }
+          
+          if(this.scrollFirstEvent === 'everyday') {
+            el = this.el.find('.weekly-event');
+          } else {
+            el = this.el.find('.weekly-grid [data-date="' + scrollDate + '"] .weekly-event');
+          }
+
+          if(el.length) {
+            var first = this.firstEvent;
+
+            el.each(function(){
+              if(!first || this.offsetTop < first.offsetTop) {
+                first = this;
+              }
+            });
+
+            first.scrollIntoView();
+            $(window).scrollTop(top);
+
+            this.firstEvent = first;
+          }
+        }
+      }), 0);
     }
 
   });
