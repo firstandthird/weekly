@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.46
+ * v0.0.47
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2014
  * MIT License
@@ -73,11 +73,11 @@
       first.setDate(first.getDate() + dayOffset);
       last.setDate(last.getDate() + dayOffset);
 
-      var span = TimeFormat('%M %d', first) + ' - ';
+      var span = dateFormat('%M %d', first) + ' - ';
       if (first.getMonth() == last.getMonth()) {
-        span += TimeFormat('%d', last);
+        span += dateFormat('%d', last);
       } else {
-        span += TimeFormat('%M %d', last);
+        span += dateFormat('%M %d', last);
       }
       return span;
     },
@@ -88,7 +88,7 @@
     },
     isPastDate: function(past) {
       var pastParts = past.split('-');
-      return (TimeFormat('%Y%m%d', new Date(pastParts[0], pastParts[1], pastParts[2])) < TimeFormat('%Y%m%d', new Date()));
+      return (dateFormat('%Y%m%d', new Date(pastParts[0], pastParts[1], pastParts[2])) < dateFormat('%Y%m%d', new Date()));
     },
     getWeekOffset: function(dateA, dateB) {
       var weekA = this.getFirstDayOfWeek(this.getDateWithoutTime(dateA));
@@ -102,88 +102,6 @@
   };
 
   w.dateUtils = dateUtils;
-})(window);
-
-/**
- * Simple date and time formatter based on php's date() syntax.
- */
-
-(function(w) {
-  var oldRef = w.TimeFormat;
-
-  var months = 'January|February|March|April|May|June|July|August|September|October|November|December'.split('|');
-  var days = 'Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday'.split('|');
-
-  var TimeFormat = function(format, time) {
-    if(!time instanceof Date) return;
-
-    // Implements PHP's date format syntax.
-    return format.replace(/%d|%D|%j|%l|%S|%w|%F|%m|%M|%n|%Y|%y|%a|%A|%g|%G|%h|%H|%i|%s|%u|%e/g, function(match) {
-      switch(match) {
-        case '%d':
-          return ("0" + time.getDate()).slice(-2);
-        case '%D':
-          return days[time.getDay()].substr(0,3);
-        case '%j':
-          return time.getDate();
-        case '%l':
-          return days[time.getDay()];
-        case '%S':
-          if(time.getDate() === 1) {
-            return 'st';
-          } else if(time.getDate() === 2) {
-            return 'nd';
-          } else if(time.getDate() === 3) {
-            return 'rd';
-          } else {
-            return 'th';
-          }
-          break;
-        case '%w':
-          return time.getDay();
-        case '%F':
-          return months[time.getMonth()];
-        case '%m':
-          return ("0" + (time.getMonth() + 1)).slice(-2);
-        case '%M':
-          return months[time.getMonth()].substr(0,3);
-        case '%n':
-          return time.getMonth();
-        case '%Y':
-          return time.getFullYear();
-        case '%y':
-          return time.getFullYear().toString().slice(-2);
-        case '%a':
-          return time.getHours() > 11 ? 'pm' : 'am';
-        case '%A':
-          return time.getHours() > 11 ? 'PM' : 'AM';
-        case '%g':
-          return time.getHours() > 12 ? time.getHours() -12 : (time.getHours() ? time.getHours() : 12);
-        case '%G':
-        return time.getHours();
-        case '%h':
-          return ("0" + (time.getHours() > 12 ? time.getHours() -12 : time.getHours())).slice(-2);
-        case '%H':
-          return ("0" + time.getHours()).slice(-2);
-        case '%i':
-          return ("0" + time.getMinutes()).slice(-2);
-        case '%s':
-          return ("0" + time.getSeconds()).slice(-2);
-        case '%u':
-          return time.getMilliseconds();
-        case '%e':
-          return time.getTimezoneOffset();
-      }
-    });
-  };
-
-  TimeFormat.noConflict = function() {
-    w.TimeFormat = oldRef;
-    return TimeFormat;
-  };
-
-  w.TimeFormat = TimeFormat;
-
 })(window);
 
 (function($) {
@@ -248,7 +166,7 @@
       this.firstEvent = null;
 
       var data = {
-        timef: TimeFormat,
+        timef: dateFormat,
         getWeekSpan: dateUtils.getWeekSpan,
         currentDate: this.currentDate,
         dates: dateUtils.getDates(this.currentDate, this.weekOffset, this.dayOffset),
@@ -300,7 +218,7 @@
 
     highlightToday: function() {
       var today = this.currentDate;
-      var dateString = TimeFormat('%Y-%n-%j', today);
+      var dateString = dateFormat('%Y-%n-%j', today);
 
       this.el.find('.weekly-grid [data-date="' + dateString + '"], .weekly-days [data-date="' + dateString + '"]').addClass('weekly-today');
     },
@@ -574,7 +492,7 @@
         bottom: bottomOffset + '%'
       }).append([
         '<button data-action="removeEvent" class="weekly-delete">&times;</button>',
-        '<div class="weekly-event-time">' + TimeFormat('%g:%i', start) + ' - ' + TimeFormat('%g:%i%a', end) + '</div>',
+        '<div class="weekly-event-time">' + dateFormat('%g:%i', start) + ' - ' + dateFormat('%g:%i%a', end) + '</div>',
         '<div class="weekly-event-title">' + event.title + '</div>',
         '<div class="weekly-event-desc">' + event.description + '</div>',
         '<div class="weekly-dragger"></div>'

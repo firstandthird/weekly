@@ -1,4 +1,13 @@
 
+0.0.47 / 2014-02-05 
+==================
+
+  * Added support for Date() in scrollFirstEvent and fixed date parse issue.
+  * Adds ability to scroll to first event on a given date (or every date).
+  * Switched out Timeformat to use dateFormat from bower.
+  * Merge pull request #14 from firstandthird/feature/10-working-tests
+  * Fixed tests around timezone changes.
+
 0.0.46 / 2013-11-18 
 ==================
 
