@@ -1057,4 +1057,48 @@ suite('weekly', function() {
       assert.equal($('.weekly-weekend').length, 2);
     });
   });
+
+  suite('special timezones', function(){
+    test(':30 timezones', function(){
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      el.weekly('addEvent', {
+        title: 'Test Event',
+        start: new Date(2013, 4, 13, 1, 0),
+        end: new Date(2013, 4, 13, 2, 0)
+      });
+
+      el.weekly('setTimezoneOffset', 9.5);
+
+      assert.equal(18, el.find('.weekly-event').data('offset-start').getHours());
+      assert.equal(30, el.find('.weekly-event').data('offset-start').getMinutes());
+      assert.equal(19, el.find('.weekly-event').data('offset-end').getHours());
+      assert.equal(30, el.find('.weekly-event').data('offset-end').getMinutes());
+    });
+
+    test(':45 timezones', function(){
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date
+      });
+
+      el.weekly('addEvent', {
+        title: 'Test Event',
+        start: new Date(2013, 4, 13, 1, 0),
+        end: new Date(2013, 4, 13, 2, 0)
+      });
+
+      el.weekly('setTimezoneOffset', 9.75);
+
+      assert.equal(18, el.find('.weekly-event').data('offset-start').getHours());
+      assert.equal(45, el.find('.weekly-event').data('offset-start').getMinutes());
+      assert.equal(19, el.find('.weekly-event').data('offset-end').getHours());
+      assert.equal(45, el.find('.weekly-event').data('offset-end').getMinutes());
+    });
+  });
 });
