@@ -34,11 +34,11 @@
       newDate.setDate(first + 6 + (weekOffset * 7));
       return newDate;
     },
-    getDates: function(date, weekOffset, dayOffset) {
+    getDates: function(date, weekOffset, dayOffset, daysDisplay) {
       date = new Date(date);
       date.setHours(0, 0, 0);
       dayOffset = dayOffset || 0;
-      var daysInWeek = 7;
+      var daysInWeek = daysDisplay || 7;
 
       var days = [];
       var sunday = this.getFirstDayOfWeek(date, weekOffset);
@@ -79,6 +79,15 @@
       } else {
         span += dateFormat('%M %d', last);
       }
+      return span;
+    },
+    getDaySpan: function(date, offset, dayOffset) {
+      dayOffset = dayOffset || 0;
+      var first = this.getFirstDayOfWeek(date, offset);
+
+      first.setDate(first.getDate() + dayOffset);
+
+      var span = dateFormat('%M %d', first);
       return span;
     },
     realTimezoneOffset: function(offset) {
