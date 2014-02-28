@@ -11,3 +11,15 @@ full:
     - 'lib/dates.js'
     - 'lib/<%= name %>.js'
   dest: 'dist/<%= name %>.full.js'
+
+distMobile:
+  src:
+    - 'lib/dates.js'
+    - 'lib/<%= name %>-mobile.js'
+  dest: 'dist/<%= name %>-mobile.js'
+fullMobile:
+  src:
+    - 'dist/_bower.js'
+    - 'lib/dates.js'
+    - 'lib/<%= name %>-mobile.js'
+  dest: 'dist/<%= name %>-mobile.full.js'

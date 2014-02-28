@@ -143,20 +143,36 @@
     &:after {
       .weekly-clearfix();
     }
-    .weekly-header {
+    .weekly-header, .weekly-day-header {
       text-align: center;
     }
 
     .weekly-change-week-button {
-      &.weekly-previous-week {
+      &.weekly-previous-week, &.weekly-previous-day {
         float: left;
       }
-      &.weekly-next-week {
+      &.weekly-next-week, &.weekly-next-day {
         float: right;
       }
     }
     .weekly-jump-today {
       float: left;
+    }
+  }
+
+
+  .mobile {
+    .weekly-times {
+      width: 26%;
+    }
+
+    .weekly-grid {
+      width: 74%;
+    }
+
+    .weekly-scroller {
+      overflow: visible;
+      height: auto;
     }
   }
 

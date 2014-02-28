@@ -2,7 +2,7 @@ options:
   livereload: true
 lib:
   files:
-    - '<%= jshint.lib %>'
+    - 'lib/*'
   tasks:
     - 'scripts'
     #- 'jshint'
@@ -11,6 +11,11 @@ lib:
     #- 'template2js'
     #- 'mocha'
     #- 'notify:generic'
+styles:
+  files:
+    - 'less/*'
+  tasks:
+    - 'less'
 test:
   files:
     - '<%= jshint.test %>'

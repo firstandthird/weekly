@@ -6,3 +6,9 @@ dist:
 full:
   src: 'dist/<%= name %>.full.js'
   dest: 'dist/<%= name %>.full.min.js'
+distMobile:
+  src: 'dist/<%= name %>-mobile.js'
+  dest: 'dist/<%= name %>-mobile.min.js'
+fullMobile:
+  src: 'dist/<%= name %>-mobile.full.js'
+  dest: 'dist/<%= name %>-mobile.full.min.js'

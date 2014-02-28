@@ -4,3 +4,9 @@ dist:
 full:
   src: 'lib/template.html'
   dest: 'dist/<%= name %>.full.js'
+distMobile:
+  src: 'lib/template-mobile.html'
+  dest: 'dist/<%= name %>-mobile.js'
+fullMobile:
+  src: 'lib/template-mobile.html'
+  dest: 'dist/<%= name %>-mobile.full.js'
