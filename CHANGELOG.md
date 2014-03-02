@@ -1,4 +1,11 @@
 
+0.0.48 / 2014-03-02 
+==================
+
+  * Updated jquery path.
+  * Disabled readonly and tweaked styles.
+  * mobile lib
+
 0.0.47 / 2014-02-05 
 ==================
 
