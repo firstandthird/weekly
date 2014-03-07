@@ -133,7 +133,11 @@
           var key = $(this).val();
           var offset = $('option[value="'+key+'"]').data('offset');
 
-          w.weekly('setTimezoneOffset', parseInt(offset, 10));
+          // Handle odd timezones
+          offset = offset.replace(':30', '.5');
+          offset = offset.replace(':45', '.75');
+
+          w.weekly('setTimezoneOffset', parseFloat(offset, 10));
         });
 
 

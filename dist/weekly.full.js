@@ -875,8 +875,10 @@
       var start = new Date(event.start.getTime());
       var end = new Date(event.end.getTime());
 
-      start.setHours(start.getHours() + this.timezoneOffset);
-      end.setHours(end.getHours() + this.timezoneOffset);
+      start.setHours(start.getHours() + ~~this.timezoneOffset);
+      end.setHours(end.getHours() + ~~this.timezoneOffset);
+      start.setMinutes(start.getMinutes() + (60 * (this.timezoneOffset % 1)));
+      end.setMinutes(end.getMinutes() + (60 * (this.timezoneOffset % 1)));
 
       var startDate = start.getFullYear() + "-" + start.getMonth() + "-" + start.getDate();
       var startTime = start.toTimeString().slice(0,5);
