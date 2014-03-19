@@ -1123,4 +1123,47 @@ suite('weekly', function() {
       assert.equal(45, el.find('.weekly-event').data('offset-end').getMinutes());
     });
   });
+
+  suite('overlap', function() {
+    test('events shouldn\'t overlap', function(){
+      var date = new Date(2014, 1, 1);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        allowOverlap: false
+      });
+
+      el.weekly('addEvent', {
+        title: 'event 1',
+        start: new Date(2014, 1, 1, 1, 0),
+        end: new Date(2014, 1, 1, 2, 0)
+      });
+
+      el.weekly('addEvent', {
+        title: 'event 2',
+        start: new Date(2014, 1, 1, 1, 30),
+        end: new Date(2014, 1, 1, 2, 30)
+      });
+
+      el.weekly('addEvent', {
+        title: 'event 3',
+        start: new Date(2014, 1, 1, 2, 0),
+        end: new Date(2014, 1, 1, 3, 30)
+      });
+
+      el.weekly('addEvent', {
+        title: 'event 4',
+        start: new Date(2014, 1, 1, 0, 0),
+        end: new Date(2014, 1, 1, 4, 30)
+      });
+
+      el.weekly('addEvent', {
+        title: 'event 5',
+        start: new Date(2014, 1, 1, 1, 0),
+        end: new Date(2014, 1, 1, 2, 0)
+      });
+
+      assert.equal(2, el.find('.weekly-event').length);
+    });
+  });
 });
