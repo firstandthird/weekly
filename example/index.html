@@ -77,7 +77,8 @@
           //allowPreviousWeeks: false
           //enableResize: false
           //interval: 60,
-          todayFirst: true
+          todayFirst: true,
+          allowOverlap: false
         })
         .on('addEvent', function(e, evnt) {
           console.log('event added', evnt);
