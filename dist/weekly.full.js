@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.49
+ * v0.0.50
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2014
  * MIT License
@@ -488,7 +488,7 @@
 
       first.setDate(first.getDate() + dayOffset);
 
-      var span = dateFormat('%M %d', first);
+      var span = dateFormat('%D, %M %d', first);
       return span;
     },
     realTimezoneOffset: function(offset) {
@@ -539,6 +539,7 @@
       utcOffset: ((new Date()).getTimezoneOffset() / -60),
       todayFirst: false,
       dayOffset: 0,
+      allowOverlap: true,
 
       // How many minutes to draw a divider line
       interval: 30
@@ -779,6 +780,13 @@
       var tempStart = Math.floor(mouseOffsetTop / intervalHeight) * intervalHeight;
       var tempEnd = Math.ceil(mouseOffsetTop / intervalHeight) * intervalHeight;
 
+      var dateSplit = target.data('date').split('-');
+
+      var temp = {
+        start: this.pendingEventStart,
+        end: this.pendingEventEnd
+      };
+
       // Ensure end is at least intervalHeight greater than start
       if(tempStart === tempEnd) {
         tempEnd += intervalHeight;
@@ -792,6 +800,19 @@
         this.pendingEventEnd = tempEnd;
       }
 
+      var startTime = ((this.pendingEventStart / hourHeight) || 0) + this.startTime;
+      var endTime = ((this.pendingEventEnd / hourHeight) || 1) + this.startTime;
+
+      var start = new Date(dateSplit[0], dateSplit[1], dateSplit[2], startTime - this.timezoneOffset, this.fromDecimal(startTime));
+      var end = new Date(dateSplit[0], dateSplit[1], dateSplit[2], endTime - this.timezoneOffset, this.fromDecimal(endTime));
+
+      if(!this.allowOverlap && this.overlaps(start.getTime(), end.getTime())) {
+        // don't drag anymore and reset values
+        this.pendingEventStart = temp.start;
+        this.pendingEventEnd = temp.end;
+        return;
+      }
+
       if(!this.pendingEvent) {
         target.append('<div class="weekly-event-pending"></div>');
         this.pendingEvent = target.find('.weekly-event-pending');
@@ -803,8 +824,8 @@
         bottom: dayHeight - this.pendingEventEnd
       });
 
-      this.pendingEvent.data('starttime', ((this.pendingEventStart / hourHeight) || 0) + this.startTime);
-      this.pendingEvent.data('endtime', ((this.pendingEventEnd / hourHeight) || 1) + this.startTime);
+      this.pendingEvent.data('starttime', startTime);
+      this.pendingEvent.data('endtime', endTime);
     },
 
     modifyEvent: function(event) {
@@ -817,17 +838,27 @@
 
       var tempEnd = Math.ceil(mouseOffsetTop / intervalHeight) * intervalHeight;
 
+      var duration = target.outerHeight() / hourHeight;
+      var start = new Date(target.data('start'));
+      var end = new Date(target.data('start'));
+          end.setHours(end.getHours() + ~~(duration));
+          end.setMinutes(this.fromDecimal(duration));
+
+      if(this.intersects(target).length) {
+        this.currentDragger.trigger('mouseup');
+        target.css({
+          bottom: dayHeight - tempEnd + intervalHeight
+        });
+        return;
+      }
+
+      target.data('end', end);
+
       if(tempEnd < (targetOffset.top + dayHeight)) {
         target.css({
           bottom: dayHeight - tempEnd
         });
       }
-
-      var duration = target.outerHeight() / hourHeight;
-      var end = new Date(target.data('start'));
-      end.setHours(end.getHours() + ~~(duration));
-      end.setMinutes(this.fromDecimal(duration));
-      target.data('end', end);
 
       this.events[target.data('_index')].end = end;
 
@@ -988,6 +1019,11 @@
 
       event._index = this.events.length;
 
+      if(!this.allowOverlap && this.overlaps(event.start.getTime(), event.end.getTime())) {
+        this.emit('addEventOverlapError', [event]);
+        return;
+      }
+
       if (event.start.getHours() >= this.startTime && event.end.getHours() <= (this.endTime + 12)) {
         this.renderEvent(event);
       }
@@ -1085,6 +1121,36 @@
           }
         }
       }), 0);
+    },
+
+    overlaps: function(start, end, id) {
+      for(var i = this.events.length; i--;) {
+        if(parseInt(id, 10) === i) continue;
+
+        if(end > this.events[i].start.getTime() && start < this.events[i].end.getTime()) {
+          return true;
+        }
+      }
+
+      return false;
+    },
+
+    intersects: function(target) {
+      var matches = [];
+      var offset = target.offset();
+      var targetY = [offset.top, offset.top + target.outerHeight()];
+
+      target.siblings('.weekly-event').each(function() {
+        var $this = $(this);
+        var pos = $this.offset();
+        var sibY = [pos.top, pos.top + $this.outerHeight()];
+
+        if(targetY[0] < sibY[1] && targetY[1] > sibY[0]) {
+          matches.push($this);
+        }
+
+      });
+      return matches;
     }
 
   });

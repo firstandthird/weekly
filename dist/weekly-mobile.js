@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.49
+ * v0.0.50
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2014
  * MIT License
@@ -87,7 +87,7 @@
 
       first.setDate(first.getDate() + dayOffset);
 
-      var span = dateFormat('%M %d', first);
+      var span = dateFormat('%D, %M %d', first);
       return span;
     },
     realTimezoneOffset: function(offset) {

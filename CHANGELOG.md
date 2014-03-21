@@ -1,4 +1,11 @@
 
+0.0.50 / 2014-03-21 
+==================
+
+  * overlap: false.
+  * Added day to header on mobile.
+  * passing tests that failed due to dst change.
+
 0.0.49 / 2014-03-06 
 ==================
 
