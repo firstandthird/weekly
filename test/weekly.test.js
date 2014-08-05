@@ -1166,4 +1166,32 @@ suite('weekly', function() {
       assert.equal(2, el.find('.weekly-event').length);
     });
   });
+
+  suite('Select certain days', function () {
+    test('Using an array as value of selectableDates should add a canAdd function that is an indexOf of that array', function () {
+      var el = $('.weekly').weekly({
+        selectableDates : ['foo', 'bar']
+      });
+      var weekly = el.data('weekly');
+
+      assert.equal(weekly.canAdd('foo'), true);
+      assert.equal(weekly.canAdd('bar'), true);
+      assert.equal(weekly.canAdd('baz'), false);
+    });
+    test('Using a function as value of selectableDate should use the function to determine if the day can be added or not', function () {
+      var called = false,
+        mock = function (date) {
+          called = true;
+          assert.equal(date, 'foo');
+        };
+
+      var el = $('.weekly').weekly({
+        selectableDates : mock
+      });
+      var weekly = el.data('weekly');
+
+      weekly.canAdd('foo');
+      assert.ok(called);
+    });
+  });
 });
