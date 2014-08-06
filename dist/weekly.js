@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.0.50
+ * v0.1.0
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2014
  * MIT License
@@ -136,6 +136,7 @@
       allowPastEventCreation: false,
       timezoneOffset: 0,
       utcOffset: ((new Date()).getTimezoneOffset() / -60),
+      selectableDates: null,
       todayFirst: false,
       dayOffset: 0,
       allowOverlap: true,
@@ -164,6 +165,22 @@
       if (this.autoRender) {
         var data = this.update();
         this.emit('weekChange', data);
+      }
+
+      if (this.selectableDates !== null){
+        if ($.type(this.selectableDates) === 'function'){
+          this.canAdd = this.selectableDates;
+        }
+        else {
+          this.canAdd = function (date) {
+            return this.selectableDates.indexOf(date) > -1;
+          };
+        }
+      }
+      else {
+        this.canAdd = function () {
+          return true;
+        };
       }
     },
 
@@ -266,7 +283,7 @@
 
         var currentTarget = $(event.currentTarget);
 
-        if(!this.allowPastEventCreation && dateUtils.isPastDate(currentTarget.data('date'))) {
+        if((!this.allowPastEventCreation && dateUtils.isPastDate(currentTarget.data('date'))) || !this.canAdd(currentTarget.data('date'))) {
           return;
         }
 
@@ -308,7 +325,7 @@
       gridDays.on('click', this.proxy(function(event){
         var target = $(event.currentTarget);
 
-        if(!this.allowPastEventCreation && dateUtils.isPastDate(target.data('date'))) {
+        if((!this.allowPastEventCreation && dateUtils.isPastDate(target.data('date'))) || !this.canAdd(target.data('date'))) {
           return;
         }
 
