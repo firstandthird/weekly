@@ -453,7 +453,8 @@ suite('weekly', function() {
 
       var firstDate = el.find('.weekly-grid .weekly-day').first();
 
-      el.one('addEvent', function() {
+      el.one('addEvent', function(e, evt) {
+        assert.equal(evt.start.toISOString(), '2013-05-12T07:00:00.000Z');
         assert.equal(firstDate.find('.weekly-event-pending').length, 1);
         done();
       });
@@ -1046,7 +1047,7 @@ suite('weekly', function() {
 
       // There is an issue with how month dates are displayed in the template
       // They start at 0, which makes it one off.
-      assert.equal(firstDay, '2013-7-23');
+      assert.equal(firstDay, '2013-08-23');
     });
   });
 
