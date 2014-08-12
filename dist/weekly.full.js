@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.2.0
+ * v0.3.0
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2014
  * MIT License
@@ -537,7 +537,7 @@
       fitText: true,
       fitTextMin: 12,
       fitTextMax: 15,
-      template: '<div class="weekly-time-navigation">  <% if (showPreviousWeekButton) { %>  <button class="weekly-previous-week weekly-change-week-button" data-action="prevWeek">&laquo; <span class="week"></span></button>  <% } %>  <button class="weekly-next-week weekly-change-week-button" data-action="nextWeek"><span class="week"></span> &raquo;</button>  <button class="weekly-jump-today weekly-change-today-button" data-action="jumpToday">Today</button>  <div class="weekly-header"></div></div><div class="weekly-calendar">  <div class="weekly-days">  <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>    <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%m-%d\', date) %>">      <%= timef(\'%D %m/%d\', date) %>    </div>  <% } %>  </div>  <div class="weekly-scroller">    <div class="weekly-times">    <% for (var i = 0; i < times.length; i++) { var time = times[i]; %>      <div class="weekly-time" data-time="<%= time %>"><%= time %></div>    <% } %>    </div>    <div class="weekly-grid">    <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>      <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%m-%d\', date) %>">        <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>          <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>        <% } %>      </div>    <% } %>    </div>  </div></div>',
+      template: '<div class="weekly-time-navigation">  <% if (showPreviousWeekButton) { %>  <button class="weekly-previous-week weekly-change-week-button" data-action="prevWeek">&laquo; <span class="week"></span></button>  <% } %>  <button class="weekly-next-week weekly-change-week-button" data-action="nextWeek"><span class="week"></span> &raquo;</button>  <button class="weekly-jump-today weekly-change-today-button" data-action="jumpToday">Today</button>  <div class="weekly-header"></div></div><div class="weekly-calendar">  <div class="weekly-days">  <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>    <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%m-%d\', date) %>">      <%= timef(\'%D %m/%d\', date) %>    </div>  <% } %>  </div>  <div class="weekly-scroller">    <div class="weekly-times">    <% for (var i = 0; i < times.length; i++) { var time = times[i]; %>      <div class="weekly-time" data-time="<%= time %>"><%= time %></div>    <% } %>    </div>    <div class="weekly-grid">    <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>      <div class="weekly-day <% if (!canAdd(timef(\'%Y-%m-%d\', date))) { %>weekly-unavailable<% } %>" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%m-%d\', date) %>">        <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>          <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>        <% } %>      </div>    <% } %>    </div>  </div></div>',
       readOnly: false,
       enableResize: true,
       enableDelete: true,
@@ -572,12 +572,13 @@
         this.interval = 60;
       }
 
+      this.setSelectableDates(this.selectableDates);
+
       if (this.autoRender) {
         var data = this.update();
         this.emit('weekChange', data);
       }
 
-      this.setSelectableDates(this.selectableDates);
 
     },
 
@@ -591,6 +592,7 @@
 
       var data = {
         timef: dateFormat,
+        canAdd: this.canAdd,
         getWeekSpan: dateUtils.getWeekSpan,
         currentDate: this.currentDate,
         dates: dateUtils.getDates(this.currentDate, this.weekOffset, this.dayOffset),
@@ -1172,6 +1174,12 @@
 
     setSelectableDates: function(dates) {
       if (dates !== null){
+        //convert array of date objects to strings
+        for (var i = 0, c = dates.length; i < c; i++) {
+          if (typeof dates[i] == 'object') {
+            dates[i] = dateFormat('%Y-%m-%d', dates[i]);
+          }
+        }
         if ($.type(dates) === 'function'){
           this.canAdd = dates;
         } else {

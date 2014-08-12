@@ -1,4 +1,11 @@
 
+0.3.0 / 2014-08-12 
+==================
+
+  * added weekly-unavailable class to days that can't be selected
+  * added a ui test for selectableDates
+  * allow native date objects to be passed to selectableDates
+
 0.2.0 / 2014-08-12 
 ==================
 
