@@ -1204,5 +1204,24 @@ suite('weekly', function() {
 
       assert.equal(weekly.canAdd('2014-08-14'), true);
     });
+
+    test('test ui', function() {
+
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        selectableDates: [new Date()],
+        allowPastEventCreation: true
+      });
+
+      var firstDate = el.find('.weekly-grid .weekly-day').first();
+
+      el.one('addEvent', function(e, evt) {
+        throw new Error('should not be called');
+      });
+
+      firstDate.click();
+    });
   });
 });
