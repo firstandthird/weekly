@@ -1194,5 +1194,15 @@ suite('weekly', function() {
       weekly.canAdd('foo');
       assert.ok(called);
     });
+
+    test('allow date objects to be used', function() {
+      var d = new Date(2014, 7, 14);
+      var el = $('.weekly').weekly({
+        selectableDates : [d]
+      });
+      var weekly = el.data('weekly');
+
+      assert.equal(weekly.canAdd('2014-08-14'), true);
+    });
   });
 });
