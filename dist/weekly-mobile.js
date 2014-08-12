@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.1.0
+ * v0.2.0
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2014
  * MIT License
@@ -113,6 +113,7 @@
   w.dateUtils = dateUtils;
 })(window);
 
+/* global dateFormat, dateUtils */
 (function($) {
 
   $.declare('weeklyMobile', {
@@ -127,7 +128,7 @@
       fitText: true,
       fitTextMin: 12,
       fitTextMax: 15,
-      template: '<div class="mobile">  <div class="weekly-time-navigation">    <% if (showPreviousWeekButton) { %>    <button class="weekly-previous-day weekly-change-week-button" data-action="prevDay">&laquo; <span class="day"></span></button>    <% } %>    <button class="weekly-next-day weekly-change-week-button" data-action="nextDay"><span class="day"></span> &raquo;</button>    <button class="weekly-jump-today weekly-change-today-button" data-action="jumpToday">Today</button>    <div class="weekly-day-header"></div>  </div>  <div class="weekly-calendar">    <div class="weekly-scroller">      <div class="weekly-times">      <% for (var i = 0; i < times.length; i++) { var time = times[i]; %>        <div class="weekly-time" data-time="<%= time %>"><%= time %></div>      <% } %>      </div>      <div class="weekly-grid">      <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>        <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%n-%j\', date) %>">          <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>            <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>          <% } %>        </div>      <% } %>      </div>    </div>  </div></div>',
+      template: '<div class="mobile">  <div class="weekly-time-navigation">    <% if (showPreviousWeekButton) { %>    <button class="weekly-previous-day weekly-change-week-button" data-action="prevDay">&laquo; <span class="day"></span></button>    <% } %>    <button class="weekly-next-day weekly-change-week-button" data-action="nextDay"><span class="day"></span> &raquo;</button>    <button class="weekly-jump-today weekly-change-today-button" data-action="jumpToday">Today</button>    <div class="weekly-day-header"></div>  </div>  <div class="weekly-calendar">    <div class="weekly-scroller">      <div class="weekly-times">      <% for (var i = 0; i < times.length; i++) { var time = times[i]; %>        <div class="weekly-time" data-time="<%= time %>"><%= time %></div>      <% } %>      </div>      <div class="weekly-grid">      <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>        <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%m-%d\', date) %>">          <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>            <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>          <% } %>        </div>      <% } %>      </div>    </div>  </div></div>',
       readOnly: false,
       enableResize: true,
       enableDelete: true,
@@ -232,7 +233,7 @@
 
     highlightToday: function() {
       var today = this.currentDate;
-      var dateString = dateFormat('%Y-%n-%j', today);
+      var dateString = dateFormat('%Y-%m-%d', today);
 
       this.el.find('.weekly-grid [data-date="' + dateString + '"], .weekly-days [data-date="' + dateString + '"]').addClass('weekly-today');
     },
@@ -676,12 +677,12 @@
               el;
 
           if(this.scrollFirstEvent === 'today') {
-            scrollDate = TimeFormat('%Y-%n-%j', new Date());
+            scrollDate = dateFormat('%Y-%m-%d', new Date());
           } else if(this.scrollFirstEvent instanceof Date) {
-            scrollDate = TimeFormat('%Y-%n-%j', this.scrollFirstEvent);
+            scrollDate = dateFormat('%Y-%m-%d', this.scrollFirstEvent);
           } else if(this.scrollFirstEvent !== 'everyday') {
             var parsedDate = this.scrollFirstEvent.split('-');
-            scrollDate = TimeFormat('%Y-%n-%j', new Date(parsedDate[0], parsedDate[1] - 1, parsedDate[2]));
+            scrollDate = dateFormat('%Y-%m-%d', new Date(parsedDate[0], parsedDate[1] - 1, parsedDate[2]));
           }
           
           if(this.scrollFirstEvent === 'everyday') {

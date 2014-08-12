@@ -1,4 +1,15 @@
 
+0.2.0 / 2014-08-12 
+==================
+
+  * added selectable dates example
+  * removed console.log
+  * jshint stuff
+  * added setter for selectable dates
+  * updated datefmt lib
+  * changed date format to be %Y-%m-%d
+  * tests: console.log to terminal
+
 0.1.0 / 2014-08-06 
 ==================
 
