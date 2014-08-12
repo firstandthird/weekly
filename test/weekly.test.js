@@ -1223,5 +1223,19 @@ suite('weekly', function() {
 
       firstDate.click();
     });
+
+    test.only('should add a weekly-unavailble class to dates that aren\'t selectable', function() {
+
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        selectableDates: [date],
+        allowPastEventCreation: true
+      });
+
+      assert.equal($('[data-date=2013-05-15]').hasClass('weekly-unavailable'), false);
+      assert.equal($('[data-date=2013-05-16]').hasClass('weekly-unavailable'), true);
+    });
   });
 });

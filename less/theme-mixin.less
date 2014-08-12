@@ -12,6 +12,7 @@
   @scrollerHeight: 400px;
   @halfHourBorder: #F5F7F7;
   @weekendColor: rgba(236, 240, 241, .4);
+  @unavailableColor: rgba(0, 0, 0, .2);
   ) {
 
   .weekly-layout();
@@ -96,6 +97,10 @@
 
   .weekly-weekend {
     background-color: @weekendColor;
+  }
+
+  .weekly-unavailable {
+    background-color: @unavailableColor;
   }
   
   .weekly-time-navigation {

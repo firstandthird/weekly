@@ -25,7 +25,7 @@
 
     <div class="weekly-grid">
     <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>
-      <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef('%Y-%m-%d', date) %>">
+      <div class="weekly-day <% if (!canAdd(timef('%Y-%m-%d', date))) { %>weekly-unavailable<% } %>" style="width:<%= 100/dates.length %>%" data-date="<%= timef('%Y-%m-%d', date) %>">
         <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>
           <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>
         <% } %>
