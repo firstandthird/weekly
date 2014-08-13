@@ -1180,19 +1180,18 @@ suite('weekly', function() {
       assert.equal(weekly.canAdd('baz'), false);
     });
     test('Using a function as value of selectableDate should use the function to determine if the day can be added or not', function () {
-      var called = false,
-        mock = function (date) {
-          called = true;
-          assert.equal(date, 'foo');
-        };
+      var calledCount = 0;
+      var mock = function (date) {
+        calledCount++;
+        return true;
+      };
 
       var el = $('.weekly').weekly({
         selectableDates : mock
       });
       var weekly = el.data('weekly');
 
-      weekly.canAdd('foo');
-      assert.ok(called);
+      assert.equal(calledCount, 7);
     });
 
     test('allow date objects to be used', function() {
@@ -1224,7 +1223,7 @@ suite('weekly', function() {
       firstDate.click();
     });
 
-    test.only('should add a weekly-unavailble class to dates that aren\'t selectable', function() {
+    test('should add a weekly-unavailble class to dates that aren\'t selectable', function() {
 
       var date = new Date(2013, 4, 15);
 
@@ -1237,5 +1236,7 @@ suite('weekly', function() {
       assert.equal($('[data-date=2013-05-15]').hasClass('weekly-unavailable'), false);
       assert.equal($('[data-date=2013-05-16]').hasClass('weekly-unavailable'), true);
     });
+
+
   });
 });
