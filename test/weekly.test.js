@@ -1237,6 +1237,22 @@ suite('weekly', function() {
       assert.equal($('[data-date=2013-05-16]').hasClass('weekly-unavailable'), true);
     });
 
+    test('should update after calling setSelectableDates', function() {
+
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        allowPastEventCreation: true
+      });
+
+      assert.equal($('[data-date=2013-05-15]').hasClass('weekly-unavailable'), false);
+      assert.equal($('[data-date=2013-05-16]').hasClass('weekly-unavailable'), false);
+      el.weekly('setSelectableDates', [date]);
+      assert.equal($('[data-date=2013-05-15]').hasClass('weekly-unavailable'), false);
+      assert.equal($('[data-date=2013-05-16]').hasClass('weekly-unavailable'), true);
+    });
+
 
   });
 });
