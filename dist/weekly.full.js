@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.3.1
+ * v0.3.2
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2014
  * MIT License
@@ -1173,7 +1173,7 @@
     },
 
     setSelectableDates: function(dates, skipUpdate) {
-      if (dates !== null){
+      if (dates){
         //convert array of date objects to strings
         for (var i = 0, c = dates.length; i < c; i++) {
           if (typeof dates[i] == 'object') {

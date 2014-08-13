@@ -1,4 +1,10 @@
 
+0.3.2 / 2014-08-13 
+==================
+
+  * change logic for checking if dates
+  * [mobile] dummy function for setSelectableDates
+
 0.3.1 / 2014-08-13 
 ==================
 

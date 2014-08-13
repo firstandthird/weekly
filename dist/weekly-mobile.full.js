@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.3.1
+ * v0.3.2
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2014
  * MIT License
@@ -1116,6 +1116,10 @@
           }
         }
       }), 0);
+    },
+
+    setSelectableDates: function() {
+      //TODO: logic here
     }
 
   });
