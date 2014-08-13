@@ -1253,6 +1253,18 @@ suite('weekly', function() {
       assert.equal($('[data-date=2013-05-16]').hasClass('weekly-unavailable'), true);
     });
 
+    test('should not let anything be set if passing in empty array', function() {
+
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        selectableDates: []
+      });
+
+      assert.equal($('.weekly-unavailable').length, 7);
+    });
+
 
   });
 });
