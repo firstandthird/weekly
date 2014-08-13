@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.3.0
+ * v0.3.1
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2014
  * MIT License
@@ -572,7 +572,7 @@
         this.interval = 60;
       }
 
-      this.setSelectableDates(this.selectableDates);
+      this.setSelectableDates(this.selectableDates, true);
 
       if (this.autoRender) {
         var data = this.update();
@@ -1172,7 +1172,7 @@
       return matches;
     },
 
-    setSelectableDates: function(dates) {
+    setSelectableDates: function(dates, skipUpdate) {
       if (dates !== null){
         //convert array of date objects to strings
         for (var i = 0, c = dates.length; i < c; i++) {
@@ -1191,6 +1191,9 @@
         this.canAdd = function () {
           return true;
         };
+      }
+      if (!skipUpdate) {
+        this.update();
       }
     }
   });

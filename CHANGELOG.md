@@ -1,4 +1,10 @@
 
+0.3.1 / 2014-08-13 
+==================
+
+  * call this.update when setting selectableDates
+  * fixed test
+
 0.3.0 / 2014-08-12 
 ==================
 
