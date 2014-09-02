@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.3.2
+ * v0.3.3
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2014
  * MIT License
@@ -708,9 +708,13 @@
 
           var parsedDate = eventData.date.split('-');
 
+          var startHours = eventData.starttime - ~~this.timezoneOffset;
+          var startMins = this.fromDecimal(eventData.starttime) - (60 * (this.timezoneOffset % 1));
+          var endHours = eventData.endtime - ~~this.timezoneOffset;
+          var endMins = this.fromDecimal(eventData.endtime) - (60 * (this.timezoneOffset % 1));
           this.addEvent({
-            start: new Date(parsedDate[0], parsedDate[1]-1, parsedDate[2], ~~(eventData.starttime) - this.timezoneOffset, this.fromDecimal(eventData.starttime)),
-            end: new Date(parsedDate[0], parsedDate[1]-1, parsedDate[2], ~~(eventData.endtime) - this.timezoneOffset, this.fromDecimal(eventData.endtime))
+            start: new Date(parsedDate[0], parsedDate[1]-1, parsedDate[2], startHours, startMins),
+            end: new Date(parsedDate[0], parsedDate[1]-1, parsedDate[2], endHours, endMins)
           });
 
           this.pendingEvent.remove();
