@@ -644,6 +644,30 @@ suite('weekly', function() {
 
     });
 
+    test('click event render in correct place with timezone offset .5', function(done) {
+
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        allowPastEventCreation: true
+      });
+
+      var offset = (date.dst()) ? 5.5 : 6.5;
+
+      el.weekly('setTimezoneOffset', offset);
+
+      var timeBlock = el.find('.weekly-grid .weekly-day').first();
+
+      el.one('addEvent', function(e, event) {
+        assert.equal(event.start.getHours(), 11);
+        assert.equal(event.start.getMinutes(), 30);
+        done();
+      });
+
+      timeBlock.click();
+
+    });
     test('if >30 min event, don\'t show time', function() {
 
       var date = new Date(2013, 4, 15);
