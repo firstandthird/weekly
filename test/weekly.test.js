@@ -659,15 +659,23 @@ suite('weekly', function() {
 
       var timeBlock = el.find('.weekly-grid .weekly-day').first();
 
+      var calledCount = 0;
       el.one('addEvent', function(e, event) {
+        calledCount++;
         assert.equal(event.start.getHours(), 11);
         assert.equal(event.start.getMinutes(), 30);
         done();
       });
 
       timeBlock.click();
+      assert.equal(calledCount, 1);
 
     });
+
+    test('click event render if duration 45 and timezone offset .5', function() {
+      assert.equal(false, true);
+    });
+
     test('if >30 min event, don\'t show time', function() {
 
       var date = new Date(2013, 4, 15);
@@ -1032,6 +1040,33 @@ suite('weekly', function() {
 
     });
 
+  /*
+  suite.skip('getDateWithTimezone', function() {
+
+    var weekly;
+    var date = new Date(2014, 9, 19, 2, 30);
+    var localTimezoneOffset = date.getTimezoneOffset()/60;
+    beforeEach(function(done) {
+      var el = $('.weekly').weekly();
+      weekly = el.data('weekly');
+      done();
+    });
+
+    test('should handle null offset', function() {
+    });
+
+    test('should handle positive offsets', function() {
+    });
+
+    test('should handle negative offsets', function() {
+    });
+
+    test('should handle 5.5 offset', function() {
+    });
+  });
+  */
+
+});
   });
 
   suite('allowPastEventCreation', function(){
@@ -1291,4 +1326,4 @@ suite('weekly', function() {
 
 
   });
-});
+
