@@ -10,7 +10,7 @@
 <div class="weekly-calendar">
   <div class="weekly-days">
   <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>
-    <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef('%Y-%m-%d', date) %>">
+  <div class="weekly-day <% if (!canAdd(timef('%Y-%m-%d', date))) { %>weekly-day-unavailable<% } else { %>weekly-day-available<% } %>" style="width:<%= 100/dates.length %>%" data-date="<%= timef('%Y-%m-%d', date) %>">
       <%= timef('%D %m/%d', date) %>
     </div>
   <% } %>
