@@ -1,4 +1,9 @@
 
+0.4.0 / 2014-10-06 
+==================
+
+  * add weekly-day-available and weekly-day-unavailable to weekly-days element
+
 0.3.3 / 2014-09-02 
 ==================
 
