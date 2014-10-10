@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.4.0
+ * v0.4.1
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2014
  * MIT License
@@ -537,7 +537,7 @@
       fitText: true,
       fitTextMin: 12,
       fitTextMax: 15,
-      template: '<div class="mobile">  <div class="weekly-time-navigation">    <% if (showPreviousWeekButton) { %>    <button class="weekly-previous-day weekly-change-week-button" data-action="prevDay">&laquo; <span class="day"></span></button>    <% } %>    <button class="weekly-next-day weekly-change-week-button" data-action="nextDay"><span class="day"></span> &raquo;</button>    <button class="weekly-jump-today weekly-change-today-button" data-action="jumpToday">Today</button>    <div class="weekly-day-header"></div>  </div>  <div class="weekly-calendar">    <div class="weekly-scroller">      <div class="weekly-times">      <% for (var i = 0; i < times.length; i++) { var time = times[i]; %>        <div class="weekly-time" data-time="<%= time %>"><%= time %></div>      <% } %>      </div>      <div class="weekly-grid">      <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>        <div class="weekly-day" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%m-%d\', date) %>">          <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>            <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>          <% } %>        </div>      <% } %>      </div>    </div>  </div></div>',
+      template: '<div class="mobile">  <div class="weekly-time-navigation">    <% if (showPreviousWeekButton) { %>    <button class="weekly-previous-day weekly-change-week-button" data-action="prevDay">&laquo; <span class="day"></span></button>    <% } %>    <button class="weekly-next-day weekly-change-week-button" data-action="nextDay"><span class="day"></span> &raquo;</button>    <button class="weekly-jump-today weekly-change-today-button" data-action="jumpToday">Today</button>    <div class="weekly-day-header"></div>  </div>  <div class="weekly-calendar">    <div class="weekly-scroller">      <div class="weekly-times">      <% for (var i = 0; i < times.length; i++) { var time = times[i]; %>        <div class="weekly-time" data-time="<%= time %>"><%= time %></div>      <% } %>      </div>      <div class="weekly-grid">      <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>        <div class="weekly-day <% if (!canAdd(timef(\'%Y-%m-%d\', date))) { %>weekly-unavailable<% } %>" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%m-%d\', date) %>">          <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>            <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>          <% } %>        </div>      <% } %>      </div>    </div>  </div></div>',
       readOnly: false,
       enableResize: true,
       enableDelete: true,
@@ -546,6 +546,7 @@
       allowPastEventCreation: false,
       timezoneOffset: 0,
       utcOffset: ((new Date()).getTimezoneOffset() / -60),
+      selectableDates: null,
       todayFirst: false,
       dayOffset: 0,
       daysToDisplay: 7,
@@ -571,10 +572,14 @@
         this.interval = 60;
       }
 
+      this.setSelectableDates(this.selectableDates, true);
+
       if (this.autoRender) {
         var data = this.update();
         this.emit('weekChange', data);
       }
+
+
     },
 
     get: function(property) {
@@ -587,6 +592,7 @@
 
       var data = {
         timef: dateFormat,
+        canAdd: this.canAdd,
         getWeekSpan: dateUtils.getWeekSpan,
         currentDate: this.currentDate,
         dates: dateUtils.getDates(this.currentDate, this.weekOffset, this.dayOffset, this.daysToDisplay),
@@ -651,7 +657,7 @@
       this.el.find('.weekly-grid .weekly-day').each(function(){
         var $this = $(this);
         var parsedDate = $this.data('date').split('-');
-        var weekDay = new Date(parsedDate[0], parsedDate[1], parsedDate[2]);
+        var weekDay = new Date(parsedDate[0], parsedDate[1]-1, parsedDate[2]);
 
         if(weekDay.getDay()%6===0) {
           $this.addClass('weekly-weekend');
@@ -676,11 +682,13 @@
       gridDays.on('mousedown', this.proxy(function(event){
         var target = $(event.target);
 
-        if(event.which !== 1 || target.is('.weekly-dragger') || target.is('.weekly-delete')) return;
+        if(event.which !== 1 || target.is('.weekly-dragger') || target.is('.weekly-delete')) {
+          return;
+        }
 
         var currentTarget = $(event.currentTarget);
 
-        if(!this.allowPastEventCreation && dateUtils.isPastDate(currentTarget.data('date'))) {
+        if((!this.allowPastEventCreation && dateUtils.isPastDate(currentTarget.data('date'))) || !this.canAdd(currentTarget.data('date'))) {
           return;
         }
 
@@ -702,9 +710,13 @@
 
           var parsedDate = eventData.date.split('-');
 
+          var startHours = eventData.starttime - ~~this.timezoneOffset;
+          var startMins = this.fromDecimal(eventData.starttime) - (60 * (this.timezoneOffset % 1));
+          var endHours = eventData.endtime - ~~this.timezoneOffset;
+          var endMins = this.fromDecimal(eventData.endtime) - (60 * (this.timezoneOffset % 1));
           this.addEvent({
-            start: new Date(parsedDate[0], parsedDate[1], parsedDate[2], ~~(eventData.starttime) - this.timezoneOffset, this.fromDecimal(eventData.starttime)),
-            end: new Date(parsedDate[0], parsedDate[1], parsedDate[2], ~~(eventData.endtime) - this.timezoneOffset, this.fromDecimal(eventData.endtime))
+            start: new Date(parsedDate[0], parsedDate[1]-1, parsedDate[2], startHours, startMins),
+            end: new Date(parsedDate[0], parsedDate[1]-1, parsedDate[2], endHours, endMins)
           });
 
           this.pendingEvent.remove();
@@ -722,7 +734,7 @@
       gridDays.on('click', this.proxy(function(event){
         var target = $(event.currentTarget);
 
-        if(!this.allowPastEventCreation && dateUtils.isPastDate(target.data('date'))) {
+        if((!this.allowPastEventCreation && dateUtils.isPastDate(target.data('date'))) || !this.canAdd(target.data('date'))) {
           return;
         }
 
@@ -908,12 +920,14 @@
       var start = new Date(event.start.getTime());
       var end = new Date(event.end.getTime());
 
-      start.setHours(start.getHours() + this.timezoneOffset);
-      end.setHours(end.getHours() + this.timezoneOffset);
+      start.setHours(start.getHours() + ~~this.timezoneOffset);
+      end.setHours(end.getHours() + ~~this.timezoneOffset);
+      start.setMinutes(start.getMinutes() + (60 * (this.timezoneOffset % 1)));
+      end.setMinutes(end.getMinutes() + (60 * (this.timezoneOffset % 1)));
 
-      var startDate = start.getFullYear() + "-" + start.getMonth() + "-" + start.getDate();
+      var startDate = dateFormat('%Y-%m-%d', start);
       var startTime = start.toTimeString().slice(0,5);
-      var endDate = end.getFullYear() + "-" + event.end.getMonth() + "-" + end.getDate();
+      var endDate = dateFormat('%Y-%m-%d', end);
       var endTime = end.toTimeString().slice(0,5);
 
       if(endTime === "00:00") {
@@ -1118,8 +1132,29 @@
       }), 0);
     },
 
-    setSelectableDates: function() {
-      //TODO: logic here
+    setSelectableDates: function(dates, skipUpdate) {
+      if (dates){
+        //convert array of date objects to strings
+        for (var i = 0, c = dates.length; i < c; i++) {
+          if (typeof dates[i] == 'object') {
+            dates[i] = dateFormat('%Y-%m-%d', dates[i]);
+          }
+        }
+        if ($.type(dates) === 'function'){
+          this.canAdd = dates;
+        } else {
+          this.canAdd = function (date) {
+            return dates.indexOf(date) > -1;
+          };
+        }
+      } else {
+        this.canAdd = function () {
+          return true;
+        };
+      }
+      if (!skipUpdate) {
+        this.update();
+      }
     }
 
   });
