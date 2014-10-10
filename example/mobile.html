@@ -52,10 +52,12 @@
         id: '789'
       }
 
+      var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
       var w = $('.weekly')
         .weeklyMobile({
           todayFirst: true,
-          daysToDisplay: 1
+          daysToDisplay: 1,
+          selectableDates: [new Date(), tomorrow],
         })
         .on('addEvent', function(e, evnt) {
           console.log('event added', evnt);
