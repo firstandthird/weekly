@@ -19,7 +19,8 @@
     "jquery": "1.*",
     "fidel": "2.*",
     "fidel-template": "0.*",
-    "FitText.js": "*"
+    "FitText.js": "*",
+    "dateformat": "~0.4.1"
   },
   "devDependencies": {
     "assert": "~0.1.0",
