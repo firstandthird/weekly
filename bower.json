@@ -6,19 +6,6 @@
   "license": "MIT",
   "copyright": "First + Third",
   "main": "dist/weekly.js",
-  "dependencies": {
-    "jquery": "1.*",
-    "fidel": "2.*",
-    "fidel-template": "0.*",
-    "FitText.js": "latest",
-    "dateformat": "~0.4.0"
-  },
-  "devDependencies": {
-    "assert": "*",
-    "blanket": "*",
-    "timezones": "*",
-    "jquery-simulate": "https://raw.github.com/jquery/jquery-ui/master/tests/jquery.simulate.js"
-  },
   "ignore": [
     "test",
     "example",
@@ -27,5 +14,18 @@
     "package.json",
     "grunt",
     "tasks"
-  ]
+  ],
+  "dependencies": {
+    "jquery": "1.*",
+    "fidel": "2.*",
+    "fidel-template": "0.*",
+    "FitText.js": "*",
+    "dateformat": "~0.4.1"
+  },
+  "devDependencies": {
+    "assert": "~0.1.0",
+    "blanket": "~1.1.5",
+    "timezones": "~0.0.4",
+    "jquery-simulate": "~1.0.0"
+  }
 }
