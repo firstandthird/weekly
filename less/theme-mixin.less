@@ -5,6 +5,7 @@
   @eventColor: #3498DB;
   @eventForegroundColor: #fff;
   @eventPendingColor: #34495e;
+  @eventPreviewColor: fade(#34495e, 80%);
   @today: rgba(241, 196, 15,.4);
   @eventBorderRadius: 3px;
   @buttonColor: #8e44ad;
@@ -87,6 +88,11 @@
     }
     .weekly-event-pending {
       background-color: @eventPendingColor;
+      .event-border();
+    }
+
+    .weekly-event-preview {
+      background-color: @eventPreviewColor;
       .event-border();
     }
   }

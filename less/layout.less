@@ -92,6 +92,7 @@
       .weekly-event {
         position: absolute;
         padding: 5px;
+        z-index: 2;
 
         .weekly-event-time {
           font-size: 10px;
@@ -132,10 +133,14 @@
         
       }
 
-      .weekly-event-pending {
+      .weekly-event-pending, .weekly-event-preview {
         position: absolute;
         left: 5px;
         right: 5px;
+      }
+
+      .weekly-event-preview {
+        z-index: 0;
       }
     }
   }
