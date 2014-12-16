@@ -11,7 +11,7 @@ Date.prototype.dst = function() {
 
 suite('weekly', function() {
 
-  beforeEach(function() {
+  setup(function() {
     $('#fixture').html('<div class="weekly"></div>');
     $('.weekly').data('weekly', null);
   });
@@ -749,6 +749,28 @@ suite('weekly', function() {
       });
 
       firstDate.simulate('mouseup');
+    });
+
+    test.skip('Should use minDuration', function(done) {
+      var date = new Date(2013, 4, 15);
+
+      var el = $('.weekly').weekly({
+        currentDate: date,
+        allowPastEventCreation: true,
+        interval: 15
+      });
+
+      var firstDate = el.find('.weekly-grid .weekly-day .weekly-time').first();
+
+      el.one('addEvent', function(e, evt) {
+        assert.equal(evt.start.toISOString(), '2013-05-12T07:00:00.000Z');
+        assert.equal(evt.end.toISOString(), '2013-05-12T07:30:00.000Z');
+        done();
+      });
+
+      $('.weekly-scroller').scrollTop(0,0);
+      var pos = firstDate.offset();
+      $(document.elementFromPoint(pos.left + 10, pos.top + 10)).click();
     });
 
   });
