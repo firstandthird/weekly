@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.4.1
+ * v0.5.0
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2014
  * MIT License
@@ -550,9 +550,11 @@
       todayFirst: false,
       dayOffset: 0,
       allowOverlap: true,
+      hoverPreviewDelay: 250,
 
       // How many minutes to draw a divider line
-      interval: 30
+      interval: 30,
+      minDuration: 30
     },
 
     events: {
@@ -579,6 +581,17 @@
         this.emit('weekChange', data);
       }
 
+      this.hoverPreviewTimer = null;
+      if(this.hoverPreviewDelay !== false) {
+        this.el.on('mousemove', '.weekly-day', this.proxy(function(e) {
+          this.removePreviewEvent();
+          this.hoverPreviewTimer = setTimeout(this.proxy(function() {
+            this.showPreviewEvent(e);
+          }), this.hoverPreviewDelay);
+        })).on('mouseleave', '.weekly-day', this.proxy(function() {
+          this.removePreviewEvent();
+        }));
+      }
 
     },
 
@@ -736,7 +749,7 @@
           return;
         }
 
-        if($(event.target).is('.weekly-time,.weekly-day')) {
+        if($(event.target).is('.weekly-time,.weekly-day,.weekly-event-preview')) {
           this.mouseDown = true;
           this.createEvent(event);
           gridDays.trigger('mouseup');
@@ -825,6 +838,10 @@
 
       var startTime = ((this.pendingEventStart / hourHeight) || 0) + this.startTime;
       var endTime = ((this.pendingEventEnd / hourHeight) || 1) + this.startTime;
+
+      if(endTime - startTime < this.minDuration / 60) {
+        endTime = startTime + (this.minDuration / 60);
+      }
 
       var start = new Date(dateSplit[0], dateSplit[1]-1, dateSplit[2], startTime - this.timezoneOffset, this.fromDecimal(startTime));
       var end = new Date(dateSplit[0], dateSplit[1]-1, dateSplit[2], endTime - this.timezoneOffset, this.fromDecimal(endTime));
@@ -1199,6 +1216,34 @@
       if (!skipUpdate) {
         this.update();
       }
+    },
+
+    showPreviewEvent: function(event) {
+      var previewEvent;
+
+      var target = $(event.currentTarget);
+      var targetOffset = target.parent().offset();
+      var mouseOffsetTop = event.pageY - targetOffset.top;
+      var dayHeight = $(event.currentTarget).height();
+      var hourHeight = Math.round(dayHeight / this.timeDifference);
+      var intervalHeight = hourHeight / (60 / this.interval);
+      var minHeight = hourHeight / (60 / this.minDuration);
+
+      var tempStart = Math.floor(mouseOffsetTop / intervalHeight) * intervalHeight;
+      var tempEnd = tempStart + minHeight;
+
+      target.append('<div class="weekly-event-preview"></div>');
+      previewEvent = target.find('.weekly-event-preview');
+
+      previewEvent.css({
+        top: tempStart,
+        bottom: dayHeight - tempEnd
+      });
+    },
+
+    removePreviewEvent: function() {
+      clearTimeout(this.hoverPreviewTimer);
+      this.el.find('.weekly-event-preview').remove();
     }
   });
 

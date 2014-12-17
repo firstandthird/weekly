@@ -1,4 +1,11 @@
 
+0.5.0 / 2014-12-16 
+==================
+
+  * Added event preview on hover.
+  * Added dateformat to bower
+  * Added minDuration
+
 0.4.1 / 2014-10-10 
 ==================
 

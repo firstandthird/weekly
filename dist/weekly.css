@@ -85,6 +85,7 @@
 .weekly .weekly-grid .weekly-day .weekly-event {
   position: absolute;
   padding: 5px;
+  z-index: 2;
 }
 .weekly .weekly-grid .weekly-day .weekly-event .weekly-event-time {
   font-size: 10px;
@@ -118,10 +119,14 @@
 .weekly .weekly-grid .weekly-day .weekly-event:hover .weekly-dragger {
   display: block;
 }
-.weekly .weekly-grid .weekly-day .weekly-event-pending {
+.weekly .weekly-grid .weekly-day .weekly-event-pending,
+.weekly .weekly-grid .weekly-day .weekly-event-preview {
   position: absolute;
   left: 5px;
   right: 5px;
+}
+.weekly .weekly-grid .weekly-day .weekly-event-preview {
+  z-index: 0;
 }
 .weekly .weekly-time-navigation {
   margin: 15px 0;
@@ -207,6 +212,10 @@
 }
 .weekly .weekly-grid .weekly-event-pending {
   background-color: #34495e;
+  border-radius: 3px;
+}
+.weekly .weekly-grid .weekly-event-preview {
+  background-color: rgba(52, 73, 94, 0.8);
   border-radius: 3px;
 }
 .weekly .weekly-today {
