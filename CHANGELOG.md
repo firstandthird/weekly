@@ -1,4 +1,10 @@
 
+0.5.1 / 2014-12-19 
+==================
+
+  * check if readonly when showing preview
+  * Shows the time in the preview event placeholder.
+
 0.5.0 / 2014-12-16 
 ==================
 
