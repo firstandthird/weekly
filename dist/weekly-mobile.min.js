@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.5.0
+ * v0.5.2
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2014
  * MIT License

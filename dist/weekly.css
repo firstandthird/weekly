@@ -126,7 +126,13 @@
   right: 5px;
 }
 .weekly .weekly-grid .weekly-day .weekly-event-preview {
+  position: absolute;
+  padding: 5px;
   z-index: 0;
+}
+.weekly .weekly-grid .weekly-day .weekly-event-preview .weekly-event-time {
+  font-size: 10px;
+  margin-bottom: 4px;
 }
 .weekly .weekly-time-navigation {
   margin: 15px 0;
@@ -216,6 +222,7 @@
 }
 .weekly .weekly-grid .weekly-event-preview {
   background-color: rgba(52, 73, 94, 0.8);
+  color: #ffffff;
   border-radius: 3px;
 }
 .weekly .weekly-today {

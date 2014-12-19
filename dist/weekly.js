@@ -1,7 +1,7 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.5.0
+ * v0.5.2
  * https://github.com/firstandthird/weekly
  * copyright First + Third 2014
  * MIT License
@@ -153,6 +153,7 @@
     },
 
     init: function() {
+      var self = this;
       this.events = [];
 
       this.oldDate = this.currentDate;
@@ -175,11 +176,17 @@
       this.hoverPreviewTimer = null;
       if(this.hoverPreviewDelay !== false) {
         this.el.on('mousemove', '.weekly-day', this.proxy(function(e) {
+          if (self.readOnly) {
+            return;
+          }
           this.removePreviewEvent();
           this.hoverPreviewTimer = setTimeout(this.proxy(function() {
             this.showPreviewEvent(e);
           }), this.hoverPreviewDelay);
         })).on('mouseleave', '.weekly-day', this.proxy(function() {
+          if (self.readOnly) {
+            return;
+          }
           this.removePreviewEvent();
         }));
       }
@@ -823,7 +830,19 @@
       var tempStart = Math.floor(mouseOffsetTop / intervalHeight) * intervalHeight;
       var tempEnd = tempStart + minHeight;
 
-      target.append('<div class="weekly-event-preview"></div>');
+      var dateSplit = target.data('date').split('-');
+
+      var startTime = ((tempStart / hourHeight) || 0) + this.startTime;
+      var endTime = ((tempEnd / hourHeight) || 1) + this.startTime;
+
+      if(endTime - startTime < this.minDuration / 60) {
+        endTime = startTime + (this.minDuration / 60);
+      }
+
+      var start = new Date(dateSplit[0], dateSplit[1]-1, dateSplit[2], startTime - this.timezoneOffset, this.fromDecimal(startTime));
+      var end = new Date(dateSplit[0], dateSplit[1]-1, dateSplit[2], endTime - this.timezoneOffset, this.fromDecimal(endTime));
+
+      target.append('<div class="weekly-event-preview"><div class="weekly-event-time">' + dateFormat('%g:%i', start) + ' - ' + dateFormat('%g:%i%a', end) + '</div></div>');
       previewEvent = target.find('.weekly-event-preview');
 
       previewEvent.css({
