@@ -1,9 +1,9 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.5.2
+ * v0.6.0
  * https://github.com/firstandthird/weekly
- * copyright First + Third 2014
+ * copyright First + Third 2015
  * MIT License
 */
 /**
@@ -128,7 +128,7 @@
       fitText: true,
       fitTextMin: 12,
       fitTextMax: 15,
-      template: '<div class="weekly-time-navigation">  <% if (showPreviousWeekButton) { %>  <button class="weekly-previous-week weekly-change-week-button" data-action="prevWeek">&laquo; <span class="week"></span></button>  <% } %>  <button class="weekly-next-week weekly-change-week-button" data-action="nextWeek"><span class="week"></span> &raquo;</button>  <button class="weekly-jump-today weekly-change-today-button" data-action="jumpToday">Today</button>  <div class="weekly-header"></div></div><div class="weekly-calendar">  <div class="weekly-days">  <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day <% if (!canAdd(timef(\'%Y-%m-%d\', date))) { %>weekly-day-unavailable<% } else { %>weekly-day-available<% } %>" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%m-%d\', date) %>">      <%= timef(\'%D %m/%d\', date) %>    </div>  <% } %>  </div>  <div class="weekly-scroller">    <div class="weekly-times">    <% for (var i = 0; i < times.length; i++) { var time = times[i]; %>      <div class="weekly-time" data-time="<%= time %>"><%= time %></div>    <% } %>    </div>    <div class="weekly-grid">    <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>      <div class="weekly-day <% if (!canAdd(timef(\'%Y-%m-%d\', date))) { %>weekly-unavailable<% } %>" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%m-%d\', date) %>">        <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>          <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>        <% } %>      </div>    <% } %>    </div>  </div></div>',
+      template: '<div class="weekly-time-navigation">  <button <% if (!showPreviousWeekButton) { %> style="visibility: hidden;" <% } %> class="weekly-previous-week weekly-change-week-button" data-action="prevWeek">&laquo; <span class="week"></span></button>  <button class="weekly-next-week weekly-change-week-button" data-action="nextWeek"><span class="week"></span> &raquo;</button>  <button class="weekly-jump-today weekly-change-today-button" data-action="jumpToday">Today</button>  <div class="weekly-header"></div></div><div class="weekly-calendar">  <div class="weekly-days">  <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>  <div class="weekly-day <% if (!canAdd(timef(\'%Y-%m-%d\', date))) { %>weekly-day-unavailable<% } else { %>weekly-day-available<% } %>" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%m-%d\', date) %>">      <%= timef(\'%D %m/%d\', date) %>    </div>  <% } %>  </div>  <div class="weekly-scroller">    <div class="weekly-times">    <% for (var i = 0; i < times.length; i++) { var time = times[i]; %>      <div class="weekly-time" data-time="<%= time %>"><%= time %></div>    <% } %>    </div>    <div class="weekly-grid">    <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>      <div class="weekly-day <% if (!canAdd(timef(\'%Y-%m-%d\', date))) { %>weekly-unavailable<% } %>" style="width:<%= 100/dates.length %>%" data-date="<%= timef(\'%Y-%m-%d\', date) %>">        <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>          <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>        <% } %>      </div>    <% } %>    </div>  </div></div>',
       readOnly: false,
       enableResize: true,
       enableDelete: true,

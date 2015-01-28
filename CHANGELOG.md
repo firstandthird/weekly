@@ -1,4 +1,9 @@
 
+0.6.0 / 2015-01-28 
+==================
+
+  * Update to template that sets visibility of previous button to hidden versus remove it from the DOM.  Removing it from the DOM affects the layout of the elements around it causing the date display in the middle of the header to shift left.
+
 0.5.2 / 2014-12-19 
 ==================
 
