@@ -1,7 +1,5 @@
 <div class="weekly-time-navigation">
-  <% if (showPreviousWeekButton) { %>
-  <button class="weekly-previous-week weekly-change-week-button" data-action="prevWeek">&laquo; <span class="week"></span></button>
-  <% } %>
+  <button <% if (!showPreviousWeekButton) { %> style="visibility: hidden;" <% } %> class="weekly-previous-week weekly-change-week-button" data-action="prevWeek">&laquo; <span class="week"></span></button>
   <button class="weekly-next-week weekly-change-week-button" data-action="nextWeek"><span class="week"></span> &raquo;</button>
   <button class="weekly-jump-today weekly-change-today-button" data-action="jumpToday">Today</button>
   <div class="weekly-header"></div>
