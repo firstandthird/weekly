@@ -1,4 +1,10 @@
 
+0.6.1 / 2015-02-02
+==================
+
+  * fixed hover time with timezone offsets
+  * fix issue when clicking on preview time
+
 0.6.0 / 2015-01-28 
 ==================
 

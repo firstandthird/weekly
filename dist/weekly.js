@@ -1,9 +1,9 @@
 
 /*!
  * weekly - jQuery Weekly Calendar Plugin
- * v0.6.0
+ * v0.6.1
  * https://github.com/firstandthird/weekly
- * copyright First + Third 2015
+ * copyright First+Third 2015
  * MIT License
 */
 /**
@@ -347,7 +347,7 @@
           return;
         }
 
-        if($(event.target).is('.weekly-time,.weekly-day,.weekly-event-preview')) {
+        if($(event.target).is('.weekly-time,.weekly-day,.weekly-event-preview,.weekly-event-preview-time')) {
           this.mouseDown = true;
           this.createEvent(event);
           gridDays.trigger('mouseup');
@@ -839,10 +839,10 @@
         endTime = startTime + (this.minDuration / 60);
       }
 
-      var start = new Date(dateSplit[0], dateSplit[1]-1, dateSplit[2], startTime - this.timezoneOffset, this.fromDecimal(startTime));
-      var end = new Date(dateSplit[0], dateSplit[1]-1, dateSplit[2], endTime - this.timezoneOffset, this.fromDecimal(endTime));
+      var start = new Date(dateSplit[0], dateSplit[1]-1, dateSplit[2], startTime, this.fromDecimal(startTime));
+      var end = new Date(dateSplit[0], dateSplit[1]-1, dateSplit[2], endTime, this.fromDecimal(endTime));
 
-      target.append('<div class="weekly-event-preview"><div class="weekly-event-time">' + dateFormat('%g:%i', start) + ' - ' + dateFormat('%g:%i%a', end) + '</div></div>');
+      target.append('<div class="weekly-event-preview"><div class="weekly-event-preview-time weekly-event-time">' + dateFormat('%g:%i', start) + ' - ' + dateFormat('%g:%i%a', end) + '</div></div>');
       previewEvent = target.find('.weekly-event-preview');
 
       previewEvent.css({
