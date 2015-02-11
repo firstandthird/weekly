@@ -20,7 +20,7 @@
       <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>
         <div class="weekly-day <% if (!canAdd(timef('%Y-%m-%d', date))) { %>weekly-unavailable<% } %>" style="width:<%= 100/dates.length %>%" data-date="<%= timef('%Y-%m-%d', date) %>">
           <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>
-            <div class="weekly-time<% if (!canAdd(timef('%Y-%m-%d', date), time)) { %> weekly-unavailable<% } %>" data-time="<%= time %>">&nbsp;</div>
+            <div class="weekly-time<% if (!canAdd(timef('%Y-%m-%d', date), time.replace(':00', ':01'))) { %> weekly-unavailable<% } %>" data-time="<%= time %>">&nbsp;</div>
           <% } %>
         </div>
       <% } %>
