@@ -12,7 +12,7 @@
     <div class="weekly-scroller">
       <div class="weekly-times">
       <% for (var i = 0; i < times.length; i++) { var time = times[i]; %>
-        <div class="weekly-time" data-time="<%= time %>"><%= time %></div>
+        <div class="weekly-time<% if (!canAdd(null, time)) { %> weekly-unavailable<% } %>" data-time="<%= time %>"><%= time %></div>
       <% } %>
       </div>
 
@@ -20,7 +20,7 @@
       <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>
         <div class="weekly-day <% if (!canAdd(timef('%Y-%m-%d', date))) { %>weekly-unavailable<% } %>" style="width:<%= 100/dates.length %>%" data-date="<%= timef('%Y-%m-%d', date) %>">
           <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>
-            <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>
+            <div class="weekly-time<% if (!canAdd(null, time)) { %> weekly-unavailable<% } %>" data-time="<%= time %>">&nbsp;</div>
           <% } %>
         </div>
       <% } %>
