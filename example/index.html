@@ -71,6 +71,9 @@
       }
 
       var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+      var tomorrowAvailableStart = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate(), 8, 0, 0);
+      var tomorrowAvailableEnd = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate(), 18, 0, 0);
+      var dayAfterTomorrow = new Date(new Date().getTime() + 72 * 60 * 60 * 1000);
       var w = $('.weekly')
         .weekly({
           //startTime: 1,
@@ -81,8 +84,14 @@
           interval: 15,
           minDuration: 90,
           todayFirst: true,
-          selectableDates: [new Date(), tomorrow],
-          allowOverlap: false
+          allowOverlap: false,
+          whitelistedTimes: [
+	          {
+		          start: tomorrowAvailableStart,
+		          end: tomorrowAvailableEnd
+	          },
+	          dayAfterTomorrow
+          ]
         })
         .on('addEvent', function(e, evnt) {
           console.log('event added', evnt);
