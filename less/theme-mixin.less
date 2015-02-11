@@ -40,6 +40,10 @@
 
   .weekly-days {
     border-bottom: @border;
+
+    .weekly-today {
+      background-color: @today;
+    }
   }
 
   .weekly-scroller {
@@ -98,7 +102,7 @@
     }
   }
 
-  .weekly-today {
+  .weekly-today .weekly-time:not(.weekly-unavailable) {
     background-color: @today;
   }
 
