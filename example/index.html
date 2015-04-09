@@ -34,7 +34,8 @@
     </div>
 
     <script src="../bower_components/jquery/dist/jquery.js"></script>
-    <script src="../bower_components/timezones/dist/timezones.full.js"></script>
+    <script src="../bower_components/moment/moment.js"></script>
+    <script src="../bower_components/moment-timezone/moment-timezone.js"></script>
     <script src="timezone-data.js"></script>
     <script src="../dist/weekly.full.js"></script>
     <script>
@@ -132,18 +133,18 @@
         w.weekly('setScrollFirstEvent', '2014-02-05');
       });
 
-      $('#timezones')
-        .timezones({ tz: momentTZ })
-        .on('change', function() {
-          var key = $(this).val();
-          var offset = $('option[value="'+key+'"]').data('offset');
-
-          // Handle odd timezones
-          offset = offset.replace(':30', '.5');
-          offset = offset.replace(':45', '.75');
-
-          w.weekly('setTimezoneOffset', parseFloat(offset, 10));
-        });
+//      $('#timezones')
+//        .timezones({ tz: momentTZ })
+//        .on('change', function() {
+//          var key = $(this).val();
+//          var offset = $('option[value="'+key+'"]').data('offset');
+//
+//          // Handle odd timezones
+//          offset = offset.replace(':30', '.5');
+//          offset = offset.replace(':45', '.75');
+//
+//          w.weekly('setTimezoneOffset', parseFloat(offset, 10));
+//        });
 
 
     </script>
