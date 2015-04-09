@@ -8,7 +8,7 @@
 <div class="weekly-calendar">
   <div class="weekly-days">
   <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>
-  <div class="weekly-day <% if (!date.canAdd) { %>weekly-day-unavailable<% } else { %>weekly-day-available<% } %>" style="width:<%= 100/dates.length %>%" data-date="<%= date.formatted %>">
+  <div class="weekly-day <% if (date.canAdd) { %>weekly-day-available<% } else { %>weekly-day-unavailable<% } %><% if (date.isToday) { %> weekly-today<% } else if(date.isWeekend) { %> weekly-weekend<% } %>" style="width:<%= 100/dates.length %>%" data-date="<%= date.formatted %>">
       <%= date.pretty %>
     </div>
   <% } %>
@@ -23,7 +23,7 @@
 
     <div class="weekly-grid">
     <% for (var i = 0; i < dates.length; i++) { var date = dates[i]; %>
-      <div class="weekly-day <% if (!date.canAdd) { %>weekly-unavailable<% } %>" style="width:<%= 100/dates.length %>%" data-date="<%= date.formatted %>">
+      <div class="weekly-day<% if (!date.canAdd) { %> weekly-unavailable<% } %><% if (date.isToday) { %> weekly-today<% } else if(date.isWeekend) { %> weekly-weekend<% } %>" style="width:<%= 100/dates.length %>%" data-date="<%= date.formatted %>">
         <% for (var ii = 0; ii < times.length; ii++) { var time = times[ii]; %>
           <div class="weekly-time" data-time="<%= time %>">&nbsp;</div>
         <% } %>
