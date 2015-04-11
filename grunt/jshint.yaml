@@ -2,6 +2,9 @@ build:
   - 'Gruntfile.js'
   - 'bower.json'
 lib:
-  - 'lib/**/*.js'
+  options:
+    '-W014': true
+  src:
+    - 'lib/**/*.js'
 test:
   - 'test/*.js'
