@@ -1,4 +1,4 @@
 lib:
-  src: '<%= jshint.lib %>'
+  src: '<%= jshint.lib.src %>'
   options:
     config: 'node_modules/ft-jscs/jscs.json'
